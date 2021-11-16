@@ -1,0 +1,27 @@
+.reveal{
+	transition: all 1s ease-out;
+}
+
+.reveal.hidden{
+	opacity: 0;
+}
+
+.reveal.hidden.fromLeft{
+	transform: translateX(-15vw);
+}
+
+.reveal.hidden.fromRight{
+	transform: translateX(15vw);
+}
+
+.reveal.hidden.fromBottom{
+	transform: translateY(5vh);
+}
+
+.reveal.hidden.fromTop{
+	transform: translateY(-5vh);
+}
+
+.reveal.shown{
+	opacity: 1;
+}

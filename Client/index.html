@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+
+<!-- Metadata about the page itself for search engines -->
+<head>
+	<!-- shared for all pages -->
+	<meta charset="UTF-8">
+	<link rel="icon" href="Assets/Logo/favicon.ico" type="image/x-icon">
+	<meta name="keywords" content="">
+
+	<meta name="author" content="Group 44">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="refresh" content="600">
+	<link rel="stylesheet" type="text/css" href="StyleSheets/CommonStyles/CommonStyle.css">
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script> <!-- used to load in the shared components -->
+
+	<!-- just this page -->
+	<title>TODO Add Title</title>
+	<meta name="description" content="TODO ADD description">
+</head>
+
+<body class="dark">
+
+	<div class="content">
+
+		<div id="Header">
+			<script>$("#Header").load("SharedComponents/Header/Header.html");</script>
+		</div>
+
+		<div class="centeredFrame">
+			<h1 class="center reveal fromBottom">Should we put some stuff here at some point?</h1>
+			<p class="center reveal fromBottom"> Yes I feel we should</p>
+
+			<h2 class="center reveal fromBottom">When should we?</h2>
+			<p class="center reveal fromBottom">After we have finished more of the planning</p>
+
+			<h2 class="center reveal fromBottom">What should we add?</h2>
+			<p class="center reveal fromBottom">the plan will tell us</p>
+
+		</div>
+
+		<!-- Shared common footer -->
+		<footer id="footer">
+			<script>$("#footer").load("SharedComponents/Footer/Footer.html");</script>
+		</footer>
+
+		<script src="JavaScript/AnimateOnAppear.js"></script>
+	</div>
+
+	<!-- Shared common loader -->
+	<div id="loaderHolder">
+		<script>$("#loaderHolder").load("SharedComponents/Loader/Loader.html");</script>
+	</div>
+	<script src="JavaScript/Loader.js"></script>
+</body>
+</html>
