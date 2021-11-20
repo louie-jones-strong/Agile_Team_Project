@@ -16,7 +16,7 @@ function HideContent()
 
 function ShowContent()
 {
-	$("#loaderHolder").fadeOut("slow");
+	$("#PageLoaderHolder").fadeOut("slow");
 
 	var contents = document.getElementsByClassName("content");
 
