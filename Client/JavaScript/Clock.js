@@ -20,14 +20,13 @@ class Clock
 			<h3 id='${this.Id}_DigitalTime'>xx:xx:xx</h3>
 		</div>`
 
-		this.HandSeconds =	document.getElementById(`${this.Id}_SecondsHand`);
-		this.HandMinutes =	document.getElementById(`${this.Id}_MinutesHand`);
-		this.HandHours	 =	document.getElementById(`${this.Id}_HoursHand`);
-
-		this.DigitalTime =	document.getElementById(`${this.Id}_DigitalTime`);
-
 		var title = document.getElementById(`${this.Id}_TimeTitle`);
-		title.innerHTML = name;
+		title.innerHTML = `${name} `;
+
+		if (this.Timezone >= 0){
+			title.innerHTML += "+";
+		}
+		title.innerHTML += this.Timezone;
 
 		Clocks.push(this);
 		ClockCount += 1;
@@ -35,6 +34,11 @@ class Clock
 	}
 
 	Draw() {
+		var handSeconds =	document.getElementById(`${this.Id}_SecondsHand`);
+		var handMinutes =	document.getElementById(`${this.Id}_MinutesHand`);
+		var handHours	 =	document.getElementById(`${this.Id}_HoursHand`);
+		var digitalTime =	document.getElementById(`${this.Id}_DigitalTime`);
+
 		var now = new Date();
 
 		var seconds = now.getUTCSeconds();
@@ -45,17 +49,17 @@ class Clock
 		var drawMinutes = ((minutes / 60) * 360);
 		var drawHours = ((hours / 12) * 360);
 
-		this.HandSeconds.style.transform = `rotate(${drawSeconds}deg)`;
-		this.HandMinutes.style.transform = `rotate(${drawMinutes}deg)`;
-		this.HandHours.style.transform = `rotate(${drawHours}deg)`;
+		handSeconds.style.transform = `rotate(${drawSeconds}deg)`;
+		handMinutes.style.transform = `rotate(${drawMinutes}deg)`;
+		handHours.style.transform = `rotate(${drawHours}deg)`;
 
-		this.DigitalTime.innerHTML = `${hours}:${minutes}:${seconds}`;
+		digitalTime.innerHTML = `${hours}:${minutes}:${seconds}`;
 
 		// fix for animation bump on when clock hands hit zero
 		if (drawSeconds === 354 || drawSeconds === 0) {
-			this.HandSeconds.style.transition = "all 0s ease 0s";
+			handSeconds.style.transition = "all 0s ease 0s";
 		} else {
-			this.HandSeconds.style.transition = "all 0.05s cubic-bezier(0, 0, 0.52, 2.51) 0s";
+			handSeconds.style.transition = "all 0.05s cubic-bezier(0, 0, 0.52, 2.51) 0s";
 		}
 	}
 }
@@ -64,7 +68,7 @@ new Clock("UTC", 0);
 new Clock("London", 0);
 new Clock("Eastern Time", -5);
 
-setTimeout(UpdateClocks, 500);
+UpdateClocks();
 
 function UpdateClocks()
 {
@@ -72,5 +76,5 @@ function UpdateClocks()
 		Clocks[loop].Draw();
 	}
 
-	setTimeout(UpdateClocks, 500);
+	setTimeout(UpdateClocks, 250);
 }
