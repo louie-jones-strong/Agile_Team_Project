@@ -1,0 +1,60 @@
+#clockHolder{
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	overflow: hidden;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-around;
+}
+
+.clock{
+	text-align: center;
+}
+
+.clockFace{
+
+	--ClockRadius: 10em;
+	width: calc(var(--ClockRadius) * 2);
+	height: calc(var(--ClockRadius) * 2);
+
+	border-radius: 50%;
+	margin: 100px auto 0px auto;
+	position: relative;
+	border:20px solid var(--ColourAccent);
+}
+
+
+.hand{
+	position: absolute;
+	transform-origin: bottom center;
+	border-radius: 4px;
+	top: calc(var(--ClockRadius) - var(--HandLength));
+	left: calc(var(--ClockRadius) - var(--HandWidth));
+
+	width: var(--HandWidth);
+	height: var(--HandLength);
+}
+
+.hour{
+
+	--HandWidth: calc(var(--ClockRadius) * 0.05);
+	--HandLength: calc(var(--ClockRadius) * 0.4);
+	background-color: var(--ColourMain);
+	z-index: 8;
+}
+
+.minute{
+	--HandWidth: calc(var(--ClockRadius) * 0.025);
+	--HandLength: calc(var(--ClockRadius) * 0.65);
+	background-color: var(--ColourMain);
+	z-index: 9;
+}
+
+.second{
+	--HandWidth: calc(var(--ClockRadius) * 0.015);
+	--HandLength: calc(var(--ClockRadius) * 0.9);
+	background-color:var(--ColourAccent);
+	z-index: 10;
+}
