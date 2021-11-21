@@ -10,13 +10,14 @@ class Clock
 		this.Id = ClockCount;
 
 		ClockHolder.innerHTML +=
-		`<div class='clock'>
+		`<div id='${this.Id}_Clock' class='card glass'>
+			<h3 id='${this.Id}_TimeTitle'>title</h3>
 			<div class='clockFace glass'>
 				<div id='${this.Id}_SecondsHand' class="hand second"></div>
 				<div id='${this.Id}_MinutesHand' class="hand minute"></div>
 				<div id='${this.Id}_HoursHand' class="hand hour"></div>
+				<div class="hand dot"></div>
 			</div>
-			<h3 id='${this.Id}_TimeTitle'>title</h3>
 			<h3 id='${this.Id}_DigitalTime'>xx:xx:xx</h3>
 		</div>`
 
