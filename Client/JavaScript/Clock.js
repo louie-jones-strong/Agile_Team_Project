@@ -1,50 +1,55 @@
 var Clocks = [];
 var ClockCount = 0;
-const ClockHolder = document.getElementById("clockHolder");
 
 class Clock
 {
 	constructor(name, timezone) {
-		this.Timezone = timezone;
 
-		this.Id = ClockCount;
+		this.Key = `${ClockCount}`;
 
-		ClockHolder.innerHTML +=
-		`<div id='${this.Id}_Clock' class='card glass'>
-			<h3 id='${this.Id}_TimeTitle'>title</h3>
-			<div class='clockFace glass'>
-				<div id='${this.Id}_SecondsHand' class="hand second"></div>
-				<div id='${this.Id}_MinutesHand' class="hand minute"></div>
-				<div id='${this.Id}_HoursHand' class="hand hour"></div>
+		var clockHolder = document.getElementById("clockHolder");
+
+		var clockCard = document.createElement("div");
+		clockCard.id = `${this.Key}_Clock`
+		clockCard.classList = "card glass"
+		clockCard.innerHTML =
+			`<input id='${this.Key}_TimeTitle' type="text" value="Test">
+			<input id='${this.Key}_Timezone' type="number" value="0">
+			<button class="removeButton" onclick='RemoveClock("${this.Key}")'>X</button>
+			<div class='clock glass'>
+				<div id='${this.Key}_SecondsHand' class="hand second"></div>
+				<div id='${this.Key}_MinutesHand' class="hand minute"></div>
+				<div id='${this.Key}_HoursHand' class="hand hour"></div>
 				<div class="hand dot"></div>
 			</div>
-			<h3 id='${this.Id}_DigitalTime'>xx:xx:xx</h3>
-		</div>`
+			<h3 id='${this.Key}_DigitalTime'>xx:xx:xx</h3>`
 
-		var title = document.getElementById(`${this.Id}_TimeTitle`);
-		title.innerHTML = `${name} `;
+		clockHolder.appendChild(clockCard);
 
-		if (this.Timezone >= 0){
-			title.innerHTML += "+";
-		}
-		title.innerHTML += this.Timezone;
+		var titleInput = document.getElementById(`${this.Key}_TimeTitle`);
+		var timezoneInput = document.getElementById(`${this.Key}_Timezone`);
 
-		Clocks.push(this);
-		ClockCount += 1;
+		titleInput.value = name;
+
+
+		timezoneInput.value = timezone;
 		this.Draw();
 	}
 
 	Draw() {
-		var handSeconds =	document.getElementById(`${this.Id}_SecondsHand`);
-		var handMinutes =	document.getElementById(`${this.Id}_MinutesHand`);
-		var handHours	 =	document.getElementById(`${this.Id}_HoursHand`);
-		var digitalTime =	document.getElementById(`${this.Id}_DigitalTime`);
+		var handSeconds =	document.getElementById(`${this.Key}_SecondsHand`);
+		var handMinutes =	document.getElementById(`${this.Key}_MinutesHand`);
+		var handHours	 =	document.getElementById(`${this.Key}_HoursHand`);
+		var digitalTime =	document.getElementById(`${this.Key}_DigitalTime`);
+
+		var timezoneInput = document.getElementById(`${this.Key}_Timezone`);
+		var timezone = parseInt(timezoneInput.value);
 
 		var now = new Date();
 
 		var seconds = now.getUTCSeconds();
 		var minutes = now.getUTCMinutes();
-		var hours = now.getUTCHours() + this.Timezone;
+		var hours = now.getUTCHours() + timezone;
 
 		var drawSeconds = ((seconds / 60) * 360);
 		var drawMinutes = ((minutes / 60) * 360);
@@ -63,11 +68,16 @@ class Clock
 			handSeconds.style.transition = "all 0.05s cubic-bezier(0, 0, 0.52, 2.51) 0s";
 		}
 	}
+
+	Remove(){
+		var temp = document.getElementById(`${this.Key}_Clock`);
+		temp.parentNode.removeChild(temp);
+	}
 }
 
-new Clock("UTC", 0);
-new Clock("London", 0);
-new Clock("Eastern Time", -5);
+AddClock("UTC", 0);
+AddClock("London", 0);
+AddClock("Eastern Time", -5);
 
 UpdateClocks();
 
@@ -78,4 +88,25 @@ function UpdateClocks()
 	}
 
 	setTimeout(UpdateClocks, 250);
+}
+
+function AddClock(name, timeOffset)
+{
+	var newClock = new Clock(name, timeOffset);
+	Clocks.push(newClock);
+	ClockCount += 1;
+}
+
+function RemoveClock(clockKey)
+{
+	for (let loop = 0; loop < Clocks.length; loop++)
+	{
+		const item = Clocks[loop];
+		if ( item.Key === clockKey)
+		{
+			item.Remove();
+			Clocks.splice(loop, 1);
+			break;
+		}
+	}
 }

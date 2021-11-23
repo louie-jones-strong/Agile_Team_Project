@@ -19,6 +19,9 @@ body{
 	--ShadowColor: rgba(0,0,0,0.3);
 	--DarkenBackground: rgba(0,0,0,0.75);
 
+	--PositiveColour: #61ff83;
+	--PositiveColour-Contrast: black;
+
 	--InvalidColour: #FF6961;
 	--InvalidColour-Contrast: black;
 
@@ -239,4 +242,28 @@ nav a{
 	padding-inline: 0.5em;
 	background-color: var(--BackgroundColour);
 	text-decoration: none;
+}
+
+
+/* inputs */
+
+input{
+	background-color: transparent;
+	color: var(--Colour-Text1);
+	border-radius: 0.25em;
+	border: none;
+	transition: all 0.25s;
+	width: min-content;
+}
+
+input:focus,
+input:hover{
+	background-color: var(--Colour-Text4);
+	color: var(--BackgroundColour);
+	border: inherit;
+}
+
+
+input[type="number"]{
+	width: 2em;
 }

@@ -9,7 +9,26 @@
 	justify-content: space-around;
 }
 
-.clockFace{
+.addButton{
+	width: 2em;
+	height: 2em;
+	background-color: var(--PositiveColour);
+	color: var(--PositiveColour-Contrast);
+	border-radius: 25%;
+	margin: 0.25em;
+}
+
+.removeButton{
+	width: 2em;
+	height: 2em;
+	background-color: var(--InvalidColour);
+	color: var(--InvalidColour-Contrast);
+	border-bottom-left-radius: 25%;
+	padding: 0.25em;
+}
+
+/* clock face */
+.clock{
 	--ClockRadius: 10em;
 	width: calc(var(--ClockRadius) * 2);
 	height: calc(var(--ClockRadius) * 2);
