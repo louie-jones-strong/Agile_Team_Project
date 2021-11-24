@@ -46,10 +46,11 @@ class Clock
 		var timezone = parseInt(timezoneInput.value);
 
 		var now = new Date();
+		var offsetTime = AddOffset(now, timezone);
 
-		var seconds = now.getUTCSeconds();
-		var minutes = now.getUTCMinutes();
-		var hours = now.getUTCHours() + timezone;
+		var seconds = offsetTime.getUTCSeconds();
+		var minutes = offsetTime.getUTCMinutes();
+		var hours = offsetTime.getUTCHours();
 
 		var drawSeconds = ((seconds / 60) * 360);
 		var drawMinutes = ((minutes / 60) * 360);
@@ -59,7 +60,7 @@ class Clock
 		handMinutes.style.transform = `rotate(${drawMinutes}deg)`;
 		handHours.style.transform = `rotate(${drawHours}deg)`;
 
-		digitalTime.innerHTML = `${hours}:${minutes}:${seconds}`;
+		digitalTime.innerHTML = TimeToString(offsetTime, true);
 
 		// fix for animation bump on when clock hands hit zero
 		if (drawSeconds === 354 || drawSeconds === 0) {
