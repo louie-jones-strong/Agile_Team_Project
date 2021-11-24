@@ -47,7 +47,7 @@ function TimeToString(time, is12Hour)
 
 function HourTo12Hour(hour)
 {
-	var isPm = hour > 12;
+	var isPm = hour >= 12;
 	hour = hour % 12;
 
 	return [hour, isPm];
