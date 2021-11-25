@@ -14,7 +14,7 @@ class Clock
 		clockCard.classList = "card glass"
 		clockCard.innerHTML =
 			`<input id='${this.Key}_TimeTitle' type="text" value="Test">
-			<input id='${this.Key}_Timezone' type="number" value="0">
+			<input id='${this.Key}_Timezone' type="number" step="0.25" value="0">
 			<button class="removeButton" onclick='RemoveClock("${this.Key}")'>X</button>
 			<div class='clock glass'>
 				<div id='${this.Key}_SecondsHand' class="hand second"></div>
@@ -45,7 +45,7 @@ class Clock
 		var date =	document.getElementById(`${this.Key}_Date`);
 
 		var timezoneInput = document.getElementById(`${this.Key}_Timezone`);
-		var timezone = parseInt(timezoneInput.value);
+		var timezone = parseFloat(timezoneInput.value);
 
 		var now = new Date();
 		var offsetTime = AddOffset(now, timezone);
