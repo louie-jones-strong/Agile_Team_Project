@@ -53,7 +53,6 @@ function HourTo12Hour(hour)
 	return [hour, isPm];
 }
 
-
 function FixedCharCountNumber(number, charCount)
 {
 	var numberString = `${number}`;
@@ -63,4 +62,18 @@ function FixedCharCountNumber(number, charCount)
 	numberString = "0".repeat(zerosToAdd) + numberString;
 
 	return numberString;
+}
+
+function DateToString(time, isNumbers)
+{
+	var years = time.getUTCFullYear();
+	var months = time.getUTCMonth();
+	var days = time.getDate();
+
+	var yearsString = `${years}`;
+	var monthsString = `${months}`;
+	var daysString = `${days}`;
+
+	var dateString = `${daysString}:${monthsString}:${yearsString}`;
+	return dateString;
 }

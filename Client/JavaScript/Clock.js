@@ -22,7 +22,8 @@ class Clock
 				<div id='${this.Key}_HoursHand' class="hand hour"></div>
 				<div class="hand dot"></div>
 			</div>
-			<h3 id='${this.Key}_DigitalTime'>xx:xx:xx</h3>`
+			<h3 id='${this.Key}_DigitalTime'>xx:xx:xx</h3>
+			<h3 id='${this.Key}_Date'>xx:xx:xx</h3>`
 
 		clockHolder.appendChild(clockCard);
 
@@ -41,6 +42,7 @@ class Clock
 		var handMinutes =	document.getElementById(`${this.Key}_MinutesHand`);
 		var handHours	 =	document.getElementById(`${this.Key}_HoursHand`);
 		var digitalTime =	document.getElementById(`${this.Key}_DigitalTime`);
+		var date =	document.getElementById(`${this.Key}_Date`);
 
 		var timezoneInput = document.getElementById(`${this.Key}_Timezone`);
 		var timezone = parseInt(timezoneInput.value);
@@ -57,6 +59,8 @@ class Clock
 		this.UpdateHandAngle(handHours, (hours / 12) * 360);
 
 		digitalTime.innerHTML = TimeToString(offsetTime, true);
+
+		date.innerHTML = DateToString(offsetTime, true);
 	}
 
 	UpdateHandAngle(hand, angle)
