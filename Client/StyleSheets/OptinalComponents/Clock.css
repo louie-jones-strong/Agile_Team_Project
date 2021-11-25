@@ -9,6 +9,11 @@
 	justify-content: space-around;
 }
 
+.clockTop{
+	display: flex;
+	justify-content: space-between;
+}
+
 .addButton{
 	width: 2em;
 	height: 2em;
@@ -24,7 +29,9 @@
 	background-color: var(--InvalidColour);
 	color: var(--InvalidColour-Contrast);
 	border-bottom-left-radius: 25%;
-	padding: 0.25em;
+	padding: 0.10em;
+	padding-right: 0.25em;
+	padding-top: 0.25em;
 }
 
 /* clock face */

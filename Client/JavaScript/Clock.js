@@ -12,10 +12,18 @@ class Clock
 		var clockCard = document.createElement("div");
 		clockCard.id = `${this.Key}_Clock`
 		clockCard.classList = "card glass"
-		clockCard.innerHTML =
-			`<input id='${this.Key}_TimeTitle' type="text" value="Test">
-			<input id='${this.Key}_Timezone' type="number" step="0.25" value="0">
-			<button class="removeButton" onclick='RemoveClock("${this.Key}")'>X</button>
+		clockCard.innerHTML =`
+			<div class="clockTop">
+				<div class="center">
+					<input id='${this.Key}_TimeTitle' type="text" value="Test">
+					<input id='${this.Key}_Timezone' type="number" step="0.25" value="0">
+				</div>
+				<div class="right">
+					<button class="removeButton" onclick='RemoveClock("${this.Key}")'>X</button>
+				</div>
+			</div>
+
+
 			<div class='clock glass'>
 				<div id='${this.Key}_SecondsHand' class="hand second"></div>
 				<div id='${this.Key}_MinutesHand' class="hand minute"></div>
