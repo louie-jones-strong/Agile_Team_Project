@@ -70,10 +70,65 @@ function DateToString(time, isNumbers)
 	var months = time.getUTCMonth();
 	var days = time.getDate();
 
-	var yearsString = `${years}`;
-	var monthsString = `${months}`;
-	var daysString = `${days}`;
+	if (isNumbers)
+	{
+		var dateString = `${days}/${months}/${years}`;
+	}
+	else
+	{
+		var yearsString = `${years}`;
+		var monthsString = GetMonthString(months);
+		var daysString = GetOrdinalString(days);
 
-	var dateString = `${daysString}:${monthsString}:${yearsString}`;
+		var dateString = `${daysString} of ${monthsString} ${years}`;
+	}
 	return dateString;
+}
+
+/// 1 -> 1st, 2 -> 2nd, 3 -> 3rd, 4 -> 4th
+function GetOrdinalString(number)
+{
+	var lastDigit = number % 10;
+
+	if (lastDigit == 1)
+	{
+		return `${number}st`;
+	}
+	else if (lastDigit == 2)
+	{
+		return `${number}nd`;
+	}
+	else if (lastDigit == 3)
+	{
+		return `${number}rd`;
+	}
+	return `${number}th`;
+}
+
+function GetMonthString(month)
+{
+	if (month == 0)
+		return "January";
+	if (month == 1)
+		return "February";
+	if (month == 2)
+		return "March";
+	if (month == 3)
+		return "April";
+	if (month == 4)
+		return "May";
+	if (month == 5)
+		return "June";
+	if (month == 6)
+		return "July";
+	if (month == 7)
+		return "August";
+	if (month == 8)
+		return "September";
+	if (month == 9)
+		return "October";
+	if (month == 10)
+		return "November";
+	if (month == 11)
+		return "December";
 }
