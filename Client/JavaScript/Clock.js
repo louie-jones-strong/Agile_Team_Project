@@ -52,21 +52,22 @@ class Clock
 		var minutes = offsetTime.getUTCMinutes();
 		var hours = offsetTime.getUTCHours();
 
-		var drawSeconds = ((seconds / 60) * 360);
-		var drawMinutes = ((minutes / 60) * 360);
-		var drawHours = ((hours / 12) * 360);
-
-		handSeconds.style.transform = `rotate(${drawSeconds}deg)`;
-		handMinutes.style.transform = `rotate(${drawMinutes}deg)`;
-		handHours.style.transform = `rotate(${drawHours}deg)`;
+		this.UpdateHandAngle(handSeconds, (seconds / 60) * 360);
+		this.UpdateHandAngle(handMinutes, (minutes / 60) * 360);
+		this.UpdateHandAngle(handHours, (hours / 12) * 360);
 
 		digitalTime.innerHTML = TimeToString(offsetTime, true);
+	}
+
+	UpdateHandAngle(hand, angle)
+	{
+		hand.style.transform = `rotate(${angle}deg)`;
 
 		// fix for animation bump on when clock hands hit zero
-		if (drawSeconds === 354 || drawSeconds === 0) {
-			handSeconds.style.transition = "all 0s ease 0s";
+		if (angle === 354 || angle === 0) {
+			hand.style.transition = "all 0s ease 0s";
 		} else {
-			handSeconds.style.transition = "all 0.05s cubic-bezier(0, 0, 0.52, 2.51) 0s";
+			hand.style.transition = "all 0.05s cubic-bezier(0, 0, 0.52, 2.51) 0s";
 		}
 	}
 
