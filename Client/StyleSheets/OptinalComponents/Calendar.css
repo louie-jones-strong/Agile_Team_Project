@@ -1,0 +1,38 @@
+.calendar {
+	margin: 2em;
+	padding: 1.5em;
+	border-radius: 2em;
+}
+
+.calendar table{
+	width: 100%;
+	border-radius: 1em;
+}
+
+.calendar table td, th{
+	border: var(--Colour-Text1) solid 4px;
+	padding: 0.33em;
+
+}
+
+
+/* Days (1-31) */
+.day {
+	text-align: right;
+	vertical-align: top;
+	height: 5em;
+	transition: all 0.2s;
+}
+
+.currentDay {
+	background: #1abc9c;
+}
+
+.selectedDay {
+	background: #1abc1a;
+}
+
+.day:hover,
+.day:focus {
+	background: #1abc1a;
+}
