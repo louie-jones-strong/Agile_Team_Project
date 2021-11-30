@@ -89,8 +89,8 @@ class Clock
 	}
 }
 
+AddClock(`You (${Intl.DateTimeFormat().resolvedOptions().timeZone})`, GetUserTimeZone());
 AddClock("UTC", 0);
-AddClock("London", 0);
 AddClock("Eastern Time", -5);
 
 UpdateClocks();

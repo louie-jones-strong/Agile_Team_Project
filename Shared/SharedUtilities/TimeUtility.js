@@ -132,3 +132,8 @@ function GetMonthString(month)
 	if (month == 11)
 		return "December";
 }
+
+function GetUserTimeZone()
+{
+	return new Date().getTimezoneOffset() / -60;
+}
