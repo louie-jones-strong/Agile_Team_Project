@@ -1,11 +1,15 @@
+const MsPerSecond = 1000;
+const MsPerMinute = MsPerSecond * 60;
+const MsPerHour = MsPerMinute * 60;
+const MsPerDay = MsPerHour * 24;
+
 function AddOffset(time, hourOffset)
 {
-	const msPreHour = 60*60*1000;
 
 	var timeMs = time.getTime();
 
 
-	timeMs += msPreHour * hourOffset;
+	timeMs += MsPerHour * hourOffset;
 
 	return new Date(timeMs);
 }
@@ -136,4 +140,28 @@ function GetMonthString(month)
 function GetUserTimeZone()
 {
 	return new Date().getTimezoneOffset() / -60;
+}
+
+
+function GetFirstDayOfTheMonth(time, monthOffset=0)
+{
+	var newTime = new Date(time.valueOf());
+
+	//offset back to the start of the month
+	newTime.setDate(1);
+	return newTime.getDay();
+}
+
+function GetDaysInMonth(time, monthOffset)
+{
+	var newTime = new Date(time.valueOf());
+
+	var month = newTime.getMonth();
+	newTime.setMonth(month + monthOffset + 1, 1);
+
+
+	var ms = newTime.valueOf();
+	newTime = new Date(ms - MsPerDay);
+
+	return newTime.getDate();
 }
