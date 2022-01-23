@@ -20,6 +20,7 @@
 	font-size: 6rem;
 	text-shadow: 2px 4px var(--ColourAccent);
 	text-underline-offset: 8px;
+	line-height: 125%;
 }
 
 #homePhrase{
@@ -33,8 +34,59 @@
 	line-height: 125%;
 }
 
+/*desktop -------------------------------------*/
+@media only screen and (max-width: 1200px){
+	#homeTitle{
+		font-size: 5rem;
+	}
+
+	#homePhrase{
+		font-size: 3rem;
+	}
+}
+
+/*mobile -------------------------------------*/
+@media only screen and (max-width: 900px){
+	#homeTitle,
+	#homePhrase{
+		text-align: center;
+	}
+	#homeRightSide{
+		display: none;
+	}
+	#homeCover{
+		display: grid;
+		grid-template-columns: 1fr;
+		height: 100vh;
+	}
+}
+
+
 
 /* cover right side */
 #homeRightSide{
 	background-color: rgba(206, 38, 141, 0.6);
+	position: relative;
+}
+
+#homeRightSide > .clock{
+
+	--ClockRadius: min(15vw, 25vh);
+	left: calc(var(--x) - var(--ClockRadius));
+	top: calc(var(--y) - var(--ClockRadius));
+}
+
+#homeClock1{
+	position: absolute;
+	--x: 5vw;
+	--y: 40vh;
+	transform: rotateZ(0.05turn) rotateY(0.1turn);
+
+}
+
+#homeClock2{
+	position: absolute;
+	transform: rotateZ(-0.05turn) rotateY(-0.1turn);
+	--x: 15vw;
+	--y: 60vh;
 }

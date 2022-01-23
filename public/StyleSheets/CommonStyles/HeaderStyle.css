@@ -3,7 +3,7 @@ Header{
 	width: 100%;
 	z-index:1000;
 	width:100%;
-	position: sticky;
+	position: fixed;
 	top: 0;
 
 	display: flex;
