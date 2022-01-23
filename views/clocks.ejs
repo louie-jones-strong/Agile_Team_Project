@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Metadata about the page itself for search engines -->
+<head>
+	<%- include('Components/Head', {
+		PageData: PageData,
+		HeadData: {
+			Title: "WT: Clocks",
+			Description: "",
+			Url: "",
+			Thumbnail: "",
+		}
+	}); %>
+	<link rel="stylesheet" type="text/css" href="StyleSheets/OptinalComponents/Clock.css">
+	<link rel="stylesheet" type="text/css" href="StyleSheets/OptinalComponents/CardHolder.css">
+	<script src="JavaScript/TimeUtility.js"></script>
+</head>
+
+<body class="dark">
+
+	<div class="content">
+		<!-- shared common header -->
+		<%- include('Components/AccessibilityHelper'); %>
+
+		<!-- shared common header -->
+		<%- include('Components/Header'); %>
+
+		<div class="centeredFrame">
+			<h1 class="center">World Clocks</h1>
+		</div>
+
+		<div id="clockHolder">
+		</div>
+		<script src="JavaScript/Clock.js"></script>
+
+		<div class="center">
+			<button class="addButton " onclick= "AddClock('New Clock', 0)">+</button>
+		</div>
+
+		<!-- Shared common footer -->
+		<%- include('Components/Footer'); %>
+
+		<script src="JavaScript/AnimateOnAppear.js"></script>
+	</div>
+
+	<!-- Shared common loader -->
+	<%- include('Components/Loader'); %>
+</body>
+</html>

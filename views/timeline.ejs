@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Metadata about the page itself for search engines -->
+<head>
+	<%- include('Components/Head', {
+		PageData: PageData,
+		HeadData: {
+			Title: "WT: About",
+			Description: "",
+			Url: "",
+			Thumbnail: "",
+		}
+	}); %>
+</head>
+
+<body class="dark">
+
+	<div class="content">
+		<!-- shared common header -->
+		<%- include('Components/AccessibilityHelper'); %>
+
+		<!-- shared common header -->
+		<%- include('Components/Header'); %>
+
+		<div class="centeredFrame">
+		</div>
+
+		<!-- Shared common footer -->
+		<%- include('Components/Footer'); %>
+
+		<script src="JavaScript/AnimateOnAppear.js"></script>
+	</div>
+
+	<!-- Shared common loader -->
+	<%- include('Components/Loader'); %>
+</body>
+</html>

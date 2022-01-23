@@ -1,0 +1,30 @@
+<!-- shared for all pages -->
+<meta charset="UTF-8">
+<link rel="icon" href="Assets/Logo/favicon.ico" type="image/x-icon">
+<meta name="keywords" content="">
+
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="WellTimed"/>
+<meta name="author" content="Group 44">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="refresh" content="600">
+<link rel="stylesheet" type="text/css" href="StyleSheets/CommonStyles/CommonStyle.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<% if (PageData.IsDevMode) { %>
+	<!-- Dev Mode so no Analytics -->
+<% }else{ %>
+	<!-- todo add Analytics here -->
+<% } %>
+
+<!-- just this page -->
+<title><%= HeadData.Title %></title>
+<meta property="og:title" content="<%= HeadData.Title %>" />
+
+<meta name="description" content="<%= HeadData.Description %>">
+<meta name="og:description " content="<%= HeadData.Description %>">
+
+<meta property="og:url" content="<%= HeadData.Url %>"/>
+<meta property="og:image" content="<%= HeadData.Thumbnail %>" />
