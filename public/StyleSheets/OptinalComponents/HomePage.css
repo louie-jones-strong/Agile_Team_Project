@@ -1,0 +1,40 @@
+#homeCover{
+	display: grid;
+	grid-template-columns: 6fr 4fr;
+	height: 100vh;
+}
+
+/* cover left side */
+#homeLeftSide{
+	background-color: rgba(0, 0, 255, 0.6);
+	padding-left: 2em;
+	padding-top: 35vh;
+}
+
+
+#homeTitle{
+	text-decoration: underline;
+	text-transform: uppercase;
+	margin-bottom: 0px;
+
+	font-size: 6rem;
+	text-shadow: 2px 4px var(--ColourAccent);
+	text-underline-offset: 8px;
+}
+
+#homePhrase{
+	color: var(--Colour-Text4);
+	margin-left: 0.5em;
+	margin-top: 0.5em;
+
+	font-size: 4rem;
+	/* text-shadow: 2px 2px #ff0000; */
+	text-transform: capitalize;
+	line-height: 125%;
+}
+
+
+/* cover right side */
+#homeRightSide{
+	background-color: rgba(206, 38, 141, 0.6);
+}

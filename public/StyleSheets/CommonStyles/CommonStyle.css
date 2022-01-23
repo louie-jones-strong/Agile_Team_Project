@@ -1,6 +1,7 @@
 @import "TextStyle.css";
 @import "Reveal.css";
 @import "AccessibilityHelper.css";
+@import "Login.css";
 
 /* const colours to allow easy editing of colour schemes over the website */
 html, body{
@@ -53,17 +54,6 @@ body.light{
 	--Colour-Text3: rgb(25, 25, 25);
 	--Colour-Text4: rgb(40, 40, 40);
 	--Colour-Contrast-Filter: saturate(0%) brightness(0%);
-}
-
-.material-icons{
-	color: var(--Colour-Text1);
-}
-
-
-section{
-	margin-top: 10rem;
-	margin-bottom: 5rem;
-	padding: 1em;
 }
 
 .left{
@@ -215,24 +205,6 @@ ul li::before{
 	width: 0.75em;
 	margin-left: -0em;
 }
-
-
-/* nav */
-
-nav{
-	z-index:1000;
-	padding-block: 0.5em;
-	display: flex;
-	position: sticky;
-	top: calc(var(--HeaderHeight) + 2px);
-	justify-content: space-around;
-	flex-flow: row wrap;
-	border-bottom-left-radius: 1em;
-	border-bottom-right-radius: 2em;
-}
-
-
-
 
 /* inputs */
 

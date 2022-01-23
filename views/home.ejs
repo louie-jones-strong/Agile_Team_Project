@@ -12,6 +12,8 @@
 			Thumbnail: "",
 		}
 	}); %>
+
+	<link rel="stylesheet" href="StyleSheets/OptinalComponents/HomePage.css">
 </head>
 
 <body class="dark">
@@ -23,23 +25,19 @@
 		<!-- shared common header -->
 		<%- include('Components/Header'); %>
 
-		<div class="centeredFrame">
-			<h1 class="center reveal fromBottom">Should we put some stuff here at some point?</h1>
-			<p class="center reveal fromBottom"> Yes I feel we should</p>
+		<section id="homeCover">
+			<section id="homeLeftSide">
+				<h1 id="homeTitle"> Well Timed </h1>
+				<h2 id="homePhrase">
+					To Save, <br>
+					Your Time
+				</h2>
+			</section>
 
-			<h2 class="center reveal fromBottom">When should we?</h2>
-			<p class="center reveal fromBottom">After we have finished more of the planning</p>
+			<section id="homeRightSide">
 
-			<h2 class="center reveal fromBottom">What should we add?</h2>
-			<p class="center reveal fromBottom">the plan will tell us</p>
-
-			<h3 class="center reveal fromBottom">What if we want another page?</h3>
-			<div class="center">
-				<a href="/clocks">Clocks</a>
-				<a href="/calendar">Calendar</a>
-			</div>
-
-		</div>
+			</section>
+		</section>
 
 		<!-- Shared common footer -->
 		<%- include('Components/Footer'); %>

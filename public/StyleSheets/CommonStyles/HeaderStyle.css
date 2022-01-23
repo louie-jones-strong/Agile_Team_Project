@@ -1,7 +1,3 @@
-body{
-	--HeaderHeight: 100px;
-}
-
 
 Header{
 	width: 100%;
@@ -10,14 +6,13 @@ Header{
 	position: sticky;
 	top: 0;
 
-	height: var(--HeaderHeight);
-
 	display: flex;
 	justify-content: space-between;
 }
 
-Header .material-icons{
-	font-size: 50px;
+#headerLogo{
+	height: 100%;
+	width: max-content;
 }
 
 .headerCenter{
@@ -25,36 +20,31 @@ Header .material-icons{
 	display: flex;
 }
 
-#headerLogo{
-	height: var(--HeaderHeight);
+nav{
+	margin: 1em;
+	display: flex;
+	flex-wrap: wrap;
 }
 
-.mainTitle{
-	margin-top: 0.1em;
-	margin-bottom: 0.1em;
-	justify-self: center;
-	text-shadow: 0px 0px 3px var(--BackgroundColour);
+nav > a{
+	text-decoration: none;
+	margin-inline: 1.25em;
+	text-transform:uppercase;
+
+	font-size: 2rem;
+	color: var(--Colour-Text1);
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
 }
 
-
-/*Tablet -------------------------------------*/
-@media only screen and (min-width: 701px) and (max-width: 900px){
-	body{
-		--HeaderHeight: 75px;
-	}
-
-	.mainTitle{
-		display: none;
-	}
+nav > a.selected{
+	text-decoration: underline;
+	text-decoration-thickness: 0.2em;
 }
 
-/*Phone -------------------------------------*/
-@media only screen and (max-width: 700px){
-
-	body{
-		--HeaderHeight: 50px;
-	}
-	.headerCenter{
-		display: none;
-	}
+nav > a:hover,
+nav > a:focus{
+	text-decoration: underline;
+	text-decoration-thickness: 0.2em;
+	text-decoration-color: var(--ColourAccent);
 }
