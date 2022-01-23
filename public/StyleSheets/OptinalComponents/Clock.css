@@ -88,3 +88,42 @@
 	border-radius: 50%;
 	z-index: 11;
 }
+
+/* markers */
+.markers{
+	width: 100%;
+	height: 100%;
+}
+
+.markers > *{
+	position: absolute;
+
+	background-color: var(--ColourAccent);
+	transform: rotate(var(--angle));
+	border-bottom-left-radius: calc(var(--ClockRadius) * 0.025);
+	border-bottom-right-radius: calc(var(--ClockRadius) * 0.025);
+
+	--HandWidth: calc(var(--ClockRadius) * 0.05);
+
+	top: 0px;
+	left: calc(var(--ClockRadius) - var(--HandWidth)/2);
+
+	width: var(--HandWidth);
+	height: calc(var(--ClockRadius) * 0.1);
+
+	transform-origin: center var(--ClockRadius);
+}
+
+
+.markers > *:nth-child(1) {--angle: 360deg; background-color: var(--ColourMain);}
+.markers > *:nth-child(2) {--angle: 30deg;}
+.markers > *:nth-child(3) {--angle: 60deg;}
+.markers > *:nth-child(4) {--angle: 90deg;}
+.markers > *:nth-child(5) {--angle: 120deg;}
+.markers > *:nth-child(6) {--angle: 150deg;}
+.markers > *:nth-child(7) {--angle: 180deg;}
+.markers > *:nth-child(8) {--angle: 210deg;}
+.markers > *:nth-child(9) {--angle: 240deg;}
+.markers > *:nth-child(10) {--angle: 270deg;}
+.markers > *:nth-child(11) {--angle: 300deg;}
+.markers > *:nth-child(12) {--angle: 330deg;}

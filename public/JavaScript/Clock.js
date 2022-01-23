@@ -29,6 +29,20 @@ class Clock
 				<div id='${this.Key}_MinutesHand' class="hand minute"></div>
 				<div id='${this.Key}_HoursHand' class="hand hour"></div>
 				<div class="hand dot"></div>
+				<div class="markers">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
 			</div>
 			<h3 id='${this.Key}_DigitalTime'>xx:xx:xx</h3>
 			<h3 id='${this.Key}_Date'>xx:xx:xx</h3>`
