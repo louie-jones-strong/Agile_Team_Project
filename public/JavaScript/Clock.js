@@ -60,41 +60,10 @@ class Clock
 	}
 
 	Draw() {
-		var handSeconds =	document.getElementById(`${this.Key}_SecondsHand`);
-		var handMinutes =	document.getElementById(`${this.Key}_MinutesHand`);
-		var handHours	 =	document.getElementById(`${this.Key}_HoursHand`);
-		var digitalTime =	document.getElementById(`${this.Key}_DigitalTime`);
-		var date =	document.getElementById(`${this.Key}_Date`);
-
 		var timezoneInput = document.getElementById(`${this.Key}_Timezone`);
 		var timezone = parseFloat(timezoneInput.value);
 
-		var now = new Date();
-		var offsetTime = AddOffset(now, timezone);
-
-		var seconds = offsetTime.getUTCSeconds();
-		var minutes = offsetTime.getUTCMinutes();
-		var hours = offsetTime.getUTCHours();
-
-		this.UpdateHandAngle(handSeconds, (seconds / 60) * 360);
-		this.UpdateHandAngle(handMinutes, (minutes / 60) * 360);
-		this.UpdateHandAngle(handHours, (hours / 12) * 360);
-
-		digitalTime.innerHTML = TimeToString(offsetTime, true);
-
-		date.innerHTML = DateToString(offsetTime, true);
-	}
-
-	UpdateHandAngle(hand, angle)
-	{
-		hand.style.transform = `rotate(${angle}deg)`;
-
-		// fix for animation bump on when clock hands hit zero
-		if (angle === 354 || angle === 0) {
-			hand.style.transition = "all 0s ease 0s";
-		} else {
-			hand.style.transition = "all 0.05s cubic-bezier(0, 0, 0.52, 2.51) 0s";
-		}
+		UpdateClockFace(this.Key, timezone);
 	}
 
 	Remove(){
