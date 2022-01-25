@@ -7,7 +7,7 @@
 /* cover left side */
 #homeLeftSide{
 	background-color: rgba(0, 0, 255, 0.6);
-	padding-left: 2em;
+	padding-left: 7.5vw;
 	padding-top: 35vh;
 }
 
@@ -15,6 +15,7 @@
 #homeTitle{
 	text-decoration: underline;
 	text-transform: uppercase;
+	margin-top: 0px;
 	margin-bottom: 0px;
 
 	font-size: 6rem;

@@ -12,6 +12,7 @@
 			Thumbnail: "",
 		}
 	}); %>
+	<link rel="stylesheet" type="text/css" href="StyleSheets/OptinalComponents/CardHolder.css">
 </head>
 
 <body class="dark">
@@ -24,11 +25,121 @@
 		<%- include('Components/Header'); %>
 
 		<div class="centeredFrame">
+			<h1 class="center reveal fromLeft">About WellTimed</h1>
+			<p class="center reveal fromBottom">
+				It is our mission to give people the tools and business systems they need so they can stop make the most of their time.
+			</p>
+
+			<!-- Our Tools -->
+			<h2 class="center reveal fromLeft">Our Tools</h2>
+			<div class="cardHolder">
+
+				<a class="card glass neonOutline reveal" href="/clocks">
+					<div class="cardImage">
+						<img src="https://via.placeholder.com/300">
+					</div>
+					<h3>Clocks</h3>
+					<p>
+						See what the time is now in each timezone of your choice.
+					</p>
+					<h4 class="bottom"><u>Try Now</u></h4>
+				</a>
+
+				<a class="card glass neonOutline reveal" href="/timeline">
+					<div class="cardImage">
+						<img src="https://via.placeholder.com/300">
+					</div>
+					<h3>Timeline</h3>
+					<p>
+						See what the time will be in each timezone of your choice.
+					</p>
+					<h4 class="bottom"><u>Try Now</u></h4>
+				</a>
+
+				<a class="card glass neonOutline reveal" href="/calendar">
+					<div class="cardImage">
+						<img src="https://via.placeholder.com/300">
+					</div>
+					<h3>Calendar</h3>
+					<p>
+						Plan and book meeting events with members of your team.
+					</p>
+					<h4 class="bottom"><u>Try Now</u></h4>
+				</a>
+
+			</div>
+
+			<!-- about the team -->
+			<h2 class="center reveal fromLeft">About The Team</h2>
+			<div class="cardHolder">
+
+				<div class="card glass reveal">
+					<div class="cardImage">
+						<img src="Assets/TeamIcons/TeamMember1.png">
+					</div>
+					<h3>Head Designer</h3>
+					<h4>Randy Allan</h4>
+				</div>
+
+				<div class="card glass reveal">
+					<div class="cardImage">
+						<img src="Assets/TeamIcons/TeamMember2.png">
+					</div>
+					<h3>Head Producer</h3>
+					<h4>Nadya</h4>
+				</div>
+
+				<div class="card glass reveal">
+					<div class="cardImage">
+						<img src="Assets/TeamIcons/TeamMember3.png">
+					</div>
+					<h3>Tech Director</h3>
+					<h4>Louie Jones-Strong</h4>
+				</div>
+
+				<div class="card glass reveal">
+					<div class="cardImage">
+						<img src="Assets/TeamIcons/TeamMember4.png">
+					</div>
+					<h3>Head Of Back-End</h3>
+					<h4>Leonard Bode</h4>
+				</div>
+
+				<div class="card glass reveal">
+					<div class="cardImage">
+						<img src="Assets/TeamIcons/TeamMember5.png">
+					</div>
+					<h3>Front-End support</h3>
+					<h4>Fanyue Wang</h4>
+				</div>
+
+				<div class="card glass reveal">
+					<div class="cardImage">
+						<img src="Assets/TeamIcons/TeamMember6.png">
+					</div>
+					<h3>Back-End support</h3>
+					<h4>Craig Webber</h4>
+				</div>
+
+			</div>
+
+
 		</div>
 
 		<!-- Shared common footer -->
 		<%- include('Components/Footer'); %>
 
+		<script src="JavaScript/vanilla-tilt.js"></script>
+		<script>
+			VanillaTilt.init(document.querySelectorAll(".card"), {
+				max: 10,
+				speed: 1000,
+				glare: true,
+				"max-glare": 0.3,
+				reverse: true,
+				scale: 1.1,
+			});
+		</script>
 		<script src="JavaScript/AnimateOnAppear.js"></script>
 	</div>
 
