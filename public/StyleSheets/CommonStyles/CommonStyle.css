@@ -2,6 +2,7 @@
 @import "Reveal.css";
 @import "AccessibilityHelper.css";
 @import "Login.css";
+@import "Background.css";
 
 /* const colours to allow easy editing of colour schemes over the website */
 html, body{
