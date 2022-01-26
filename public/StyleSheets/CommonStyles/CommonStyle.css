@@ -11,9 +11,7 @@ html, body{
 }
 
 body{
-	 /* background by SVGBackgrounds.com */
-	background-attachment: fixed;
-	background-size: cover;
+	background-color: var(--BackgroundColour);
 
 	margin: 0px;
 	overflow-x: hidden;
@@ -21,8 +19,8 @@ body{
 	--ShadowColor: rgba(0,0,0,0.3);
 	--DarkenBackground: rgba(0,0,0,0.75);
 
-	--PositiveColour: #61ff83;
-	--PositiveColour-Contrast: black;
+	--PositiveColour: #42b72a;
+	--PositiveColour-Contrast: white;
 
 	--InvalidColour: #FF6961;
 	--InvalidColour-Contrast: black;
@@ -34,7 +32,6 @@ body{
 	--ColourAccent-Contrast: black;
 
 /* dark mode */
-	background-image: url("BackgroundDark.svg");
 
 	--BackgroundColour: black;
 	--Colour-Text1: rgb(255, 255, 255);
@@ -46,7 +43,6 @@ body{
 
 /* light mode */
 body.light{
-	background-image: url("BackgroundLight.svg");
 
 	--BackgroundColour: white;
 	--Colour-Text1: rgb(0, 0, 0);
@@ -170,10 +166,18 @@ button{
 	border: none;
 	padding: 0px 0px;
 	background-color: transparent;
+	transform: scale(1);
+	transition: all 0.2s;
+}
+
+button:focus,
+button:hover{
+	transform: scale(1.1);
 }
 
 button:disabled{
 	cursor:not-allowed;
+	transform: scale(1);
 }
 
 /* Tables */
