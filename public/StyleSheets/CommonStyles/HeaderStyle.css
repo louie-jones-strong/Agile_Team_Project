@@ -1,4 +1,6 @@
 
+
+
 Header{
 	width: 100%;
 	z-index:1000;
@@ -9,6 +11,10 @@ Header{
 	display: flex;
 	justify-content: space-between;
 	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+}
+
+body.light Header{
+	background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.4), rgba(255, 2550, 255, 0));
 }
 
 #headerLogo{
