@@ -4,9 +4,13 @@
 	height: 100vh;
 }
 
+.backgroundHolder{
+	filter: blur(50px);
+}
+
 /* cover left side */
 #homeLeftSide{
-	background-color: rgba(0, 0, 255, 0.6);
+	background-color: rgba(0, 0, 255, 0.2);
 	padding-left: 7.5vw;
 	padding-top: 35vh;
 	padding-bottom: 5vh;
@@ -104,7 +108,7 @@
 
 /* cover right side */
 #homeRightSide{
-	background-color: rgba(206, 38, 141, 0.6);
+	background: linear-gradient(235deg, #ff0aa1, #eca815);
 	position: relative;
 }
 
