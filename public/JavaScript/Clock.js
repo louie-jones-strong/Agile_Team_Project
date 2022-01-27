@@ -24,7 +24,7 @@ class Clock
 			</div>
 
 
-			<div class='clock glass'>
+			<div class='clock glass frosted'>
 				<div id='${this.Key}_SecondsHand' class="hand second"></div>
 				<div id='${this.Key}_MinutesHand' class="hand minute"></div>
 				<div id='${this.Key}_HoursHand' class="hand hour"></div>
