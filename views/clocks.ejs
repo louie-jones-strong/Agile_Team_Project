@@ -12,10 +12,10 @@
 			Thumbnail: "",
 		}
 	}); %>
-	<link rel="stylesheet" type="text/css" href="StyleSheets/OptinalComponents/Clock.css">
-	<link rel="stylesheet" type="text/css" href="StyleSheets/OptinalComponents/CardHolder.css">
-	<script src="JavaScript/TimeUtility.js"></script>
-	<script src="JavaScript/ClockFace.js"></script>
+	<link rel="stylesheet" type="text/css" href="Shared/Optinal/Clock.css">
+	<link rel="stylesheet" type="text/css" href="Shared/Optinal/CardHolder.css">
+	<script src="Shared/Optinal/TimeUtility.js"></script>
+	<script src="Shared/Optinal/ClockFace.js"></script>
 </head>
 
 <body class="dark">
@@ -34,7 +34,7 @@
 
 		<div id="clockHolder">
 		</div>
-		<script src="JavaScript/Clock.js"></script>
+		<script src="Pages/Clocks/Clock.js"></script>
 
 		<div class="center">
 			<button class="addButton " onclick= "AddClock('New Clock', 0)">+</button>
@@ -42,8 +42,6 @@
 
 		<!-- Shared common footer -->
 		<%- include('Components/Footer'); %>
-
-		<script src="JavaScript/AnimateOnAppear.js"></script>
 	</div>
 
 	<!-- Shared common loader -->

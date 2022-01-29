@@ -1,8 +1,4 @@
 @import "TextStyle.css";
-@import "Reveal.css";
-@import "AccessibilityHelper.css";
-@import "Login.css";
-@import "Background.css";
 
 /* const colours to allow easy editing of colour schemes over the website */
 html, body{
@@ -121,11 +117,6 @@ body.light{
 .centeredFrame{
 	margin-left: 15%;
 	margin-right: 15%;
-}
-
-picture > img{
-	width: 100%;
-	height: 100%;
 }
 
 img{

@@ -1,18 +1,5 @@
-<script>
-	function ToggleAccessibilityMenu()
-	{
-		let accessibilityHelper = document.getElementById("accessibilityHelper");
+<link rel="stylesheet" type="text/css" href="Components/AccessibilityHelper/AccessibilityHelper.css">
 
-		if (accessibilityHelper.classList.contains("open"))
-		{
-			accessibilityHelper.classList.remove("open");
-		}
-		else
-		{
-			accessibilityHelper.classList.add("open");
-		}
-	}
-</script>
 <div id="accessibilityHelper" class="">
 	<button class="accessibilityToggle" onclick="ToggleAccessibilityMenu()">
 		<img src="Assets/Icons/accessibilityIcon.svg" alt="">
@@ -54,6 +41,22 @@
 	</div>
 </div>
 
-<script src="JavaScript/ToggleTheme.js"></script>
-<script src="JavaScript/ToggleGrayScale.js"></script>
-<script src="JavaScript/ChangeFontSize.js"></script>
+<script src="Components/AccessibilityHelper/ToggleTheme.js"></script>
+<script src="Components/AccessibilityHelper/ToggleGrayScale.js"></script>
+<script src="Components/AccessibilityHelper/ChangeFontSize.js"></script>
+
+<script>
+	function ToggleAccessibilityMenu()
+	{
+		let accessibilityHelper = document.getElementById("accessibilityHelper");
+
+		if (accessibilityHelper.classList.contains("open"))
+		{
+			accessibilityHelper.classList.remove("open");
+		}
+		else
+		{
+			accessibilityHelper.classList.add("open");
+		}
+	}
+</script>
