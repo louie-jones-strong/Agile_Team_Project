@@ -30,8 +30,11 @@ body{
 	--ColourAccentRGB: rgb(var(--ColourAccent));
 	--ColourAccentRGB-Contrast: black;
 
-	--GradientColour1RGB: rgb(255, 10, 161);
-	--GradientColour2RGB: rgb(236, 168, 21);
+	--GradientColour1: 255, 10, 161;
+	--GradientColour1RGB: rgb(var(--GradientColour1));
+
+	--GradientColour2: 236, 168, 21;
+	--GradientColour2RGB: rgb(var(--GradientColour2));
 
 /* dark mode */
 

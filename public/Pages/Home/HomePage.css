@@ -108,7 +108,7 @@
 
 /* cover right side */
 #homeRightSide{
-	background: linear-gradient(235deg, var(--GradientColour1RGB), var(--GradientColour2RGB));
+	background: linear-gradient(-0.2turn, rgba(var(--GradientColour2), 0.8), rgba(var(--GradientColour1), 0.5));
 	position: relative;
 }
 
