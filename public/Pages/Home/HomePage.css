@@ -10,7 +10,7 @@
 
 /* cover left side */
 #homeLeftSide{
-	background-color: rgba(0, 0, 255, 0.2);
+	background-color: rgba(var(--ColourMain), 0.3);
 	padding-left: 7.5vw;
 	padding-top: 35vh;
 	padding-bottom: 5vh;
@@ -24,7 +24,7 @@
 	margin-bottom: 0px;
 
 	font-size: 6rem;
-	text-shadow: 2px 4px var(--ColourAccent);
+	text-shadow: 2px 4px var(--ColourAccentRGB);
 	text-underline-offset: 8px;
 	line-height: 125%;
 }
@@ -35,7 +35,7 @@
 	margin-top: 0.5em;
 
 	font-size: 4rem;
-	text-shadow: 2px 4px var(--ColourMain);
+	text-shadow: 2px 4px var(--ColourMainRGB);
 	text-transform: uppercase;
 	line-height: 125%;
 }
@@ -108,7 +108,7 @@
 
 /* cover right side */
 #homeRightSide{
-	background: linear-gradient(235deg, #ff0aa1, #eca815);
+	background: linear-gradient(235deg, var(--GradientColour1RGB), var(--GradientColour2RGB));
 	position: relative;
 }
 

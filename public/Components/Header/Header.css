@@ -50,5 +50,5 @@ nav > a:hover,
 nav > a:focus{
 	text-decoration: underline;
 	text-decoration-thickness: 0.2em;
-	text-decoration-color: var(--ColourAccent);
+	text-decoration-color: var(--ColourAccentRGB);
 }

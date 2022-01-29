@@ -22,11 +22,16 @@ body{
 	--InvalidColour: #FF6961;
 	--InvalidColour-Contrast: black;
 
-	--ColourMain: #0085FF;
-	--ColourMain-Contrast: black;
+	--ColourMain: 0, 4, 255;
+	--ColourMainRGB: rgb(var(--ColourMain));
+	--ColourMainRGB-Contrast: black;
 
-	--ColourAccent: #FF9E00;
-	--ColourAccent-Contrast: black;
+	--ColourAccent: 255, 136, 0;
+	--ColourAccentRGB: rgb(var(--ColourAccent));
+	--ColourAccentRGB-Contrast: black;
+
+	--GradientColour1RGB: rgb(255, 10, 161);
+	--GradientColour2RGB: rgb(236, 168, 21);
 
 /* dark mode */
 
@@ -91,23 +96,27 @@ body.light{
 }
 
 .glass.frosted{
-	background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(150, 150, 150, 0.2));
-	backdrop-filter: blur(40px);
-	-webkit-backdrop-filter: blur(40px);
+	background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(50, 50, 50, 0.1));
+	backdrop-filter: blur(50px);
+	-webkit-backdrop-filter: blur(50px);
+}
+
+.light .glass.frosted{
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(150, 150, 150, 0.1));
 }
 
 .neonOutline{
-	border: 1px solid var(--ColourAccent);
+	border: 1px solid var(--ColourAccentRGB);
 	box-shadow:	0.125em 0.125em 0.25em 0 rgba(0,0,0,50%),
-				-0.125em -0.125em 0.125em 0 var(--ColourAccent),
-				0 0 3px 0 var(--ColourAccent);
+				-0.125em -0.125em 0.125em 0 var(--ColourAccentRGB),
+				0 0 3px 0 var(--ColourAccentRGB);
 }
 
 .neonOutline:hover, .neonOutline:focus{
 	box-shadow: 0.125em 0.125em 0.25em 0 rgba(0,0,0,50%),
-				0 0 2em 0 var(--ColourAccent),
-				-0.125em -0.125em 0.125em 0 var(--ColourAccent),
-				0 0 3px 0 var(--ColourAccent);
+				0 0 2em 0 var(--ColourAccentRGB),
+				-0.125em -0.125em 0.125em 0 var(--ColourAccentRGB),
+				0 0 3px 0 var(--ColourAccentRGB);
 }
 
 .rounded{
@@ -189,8 +198,8 @@ td.Invalid{
 }
 
 th{
-	background-color: var(--ColourAccent);
-	color: var(--ColourAccent-Contrast);
+	background-color: var(--ColourAccentRGB);
+	color: var(--ColourAccentRGB-Contrast);
 }
 
 /* lists */
@@ -202,7 +211,7 @@ ul{
 
 ul li::before{
 	content: "\25A0";  /* Add content: \25A0 is the CSS Code/unicode for a SQUARE bullet */
-	color: var(--ColourAccent);
+	color: var(--ColourAccentRGB);
 	display: inline-block;
 	width: 0.75em;
 	margin-left: -0em;

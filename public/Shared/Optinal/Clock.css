@@ -61,7 +61,7 @@
 
 	--HandWidth: calc(var(--ClockRadius) * 0.05);
 	--HandLength: calc(var(--ClockRadius) * 0.55);
-	background-color: var(--ColourAccent);
+	background-color: var(--ColourAccentRGB);
 	z-index: 10;
 }
 
@@ -82,7 +82,7 @@
 .dot {
 	--HandWidth: calc(var(--ClockRadius) * 0.1);
 	--HandLength: calc(var(--ClockRadius) * 0.1);
-	background-color: var(--ColourAccent);
+	background-color: var(--ColourAccentRGB);
 
 	top: calc(var(--ClockRadius) - var(--HandLength)/2);
 	border-radius: 50%;
@@ -98,7 +98,7 @@
 .markers > *{
 	position: absolute;
 
-	background-color: var(--ColourAccent);
+	background-color: var(--ColourAccentRGB);
 	transform: rotate(var(--angle));
 	border-bottom-left-radius: calc(var(--ClockRadius) * 0.025);
 	border-bottom-right-radius: calc(var(--ClockRadius) * 0.025);
@@ -115,7 +115,7 @@
 }
 
 
-.markers > *:nth-child(1) {--angle: 360deg; background-color: var(--ColourMain);}
+.markers > *:nth-child(1) {--angle: 360deg; background-color: var(--ColourMainRGB);}
 .markers > *:nth-child(2) {--angle: 30deg;}
 .markers > *:nth-child(3) {--angle: 60deg;}
 .markers > *:nth-child(4) {--angle: 90deg;}

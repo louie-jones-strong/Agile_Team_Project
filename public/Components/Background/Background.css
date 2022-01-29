@@ -12,33 +12,36 @@
 .backgroundHolder > *{
 	position: absolute;
 
-	--objectSize: 10vh;
-	--x: 0;
-	--y: 0;
-	width: var(--objectSize);
-	height: var(--objectSize);
+	--ObjectSize: 10vh;
+	--Rotation: 0.125turn;
+	--X: 0;
+	--Y: 0;
+	width: var(--ObjectSize);
+	height: var(--ObjectSize);
 
-	left: calc(var(--x) - var(--objectSize) / 2);
-	top: calc(var(--y) - var(--objectSize) / 2);
+	left: calc(var(--X) - var(--ObjectSize) / 2);
+	top: calc(var(--Y) - var(--ObjectSize) / 2);
 
 	clip-path: circle();
-	background: linear-gradient(0.125turn, #ff0aa1, #eca815);
+	background: linear-gradient(var(--Rotation), var(--GradientColour1RGB), var(--GradientColour2RGB));
 }
 
 .backgroundHolder > *:nth-child(1) {
-	--x: 25vw;
-	--y: 60vh;
-	--objectSize: 40vw;
+	--X: 25vw;
+	--Y: 60vh;
+	--ObjectSize: 40vw;
 }
 
 .backgroundHolder > *:nth-child(2) {
-	--x: 85vw;
-	--y: 35vh;
-	--objectSize: 20vw;
+	--X: 85vw;
+	--Y: 35vh;
+	--ObjectSize: 20vw;
+	--Rotation: -0.3turn;
 }
 
 .backgroundHolder > *:nth-child(3) {
-	--x: 65vw;
-	--y: 95vh;
-	--objectSize: 15vw;
+	--X: 65vw;
+	--Y: 95vh;
+	--ObjectSize: 15vw;
+	--Rotation: -0.05turn;
 }
