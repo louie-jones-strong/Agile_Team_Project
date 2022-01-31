@@ -1,41 +1,92 @@
 .calendar {
-	margin: 2em;
-	padding: 1.5em;
+	padding-top: 5em;
 	border-radius: 2em;
 }
 
 .calendar table{
 	width: 100%;
-	border-radius: 1em;
 }
 
-.calendar table td, th{
+/* days mon, tue, wen ect */
+.calendar table th{
 	border: var(--Colour-Text1) solid 4px;
 	padding: 0.33em;
-
 }
 
 
 /* Days (1-31) */
 .day {
-	text-align: right;
+	text-align: center;
 	vertical-align: top;
-	height: 5em;
+	height: 7em;
 	transition: all 0.2s;
+	color: var(--Colour-Text1);
+	border: var(--Colour-Text1) solid 4px;
+	background-color: rgba(var(--BackgroundColour), 0.65);
 }
 
 .currentDay {
-	background: #1abc9c;
+	background: rgba(var(--ColourMain), 0.45);
 }
 
-.otherMonth{
+.day.otherMonth{
+	color: var(--Colour-Text3);
+	border-color: var(--Colour-Text3);
+	border-style: dashed;
+	border-width: 2px;
 }
 
-.selectedDay {
-	background: #1abc1a;
+.day.previousDay{
+	color: var(--Colour-Text4);
 }
 
-.day:hover,
-.day:focus {
-	background: #1abc1a;
+/* events */
+.event{
+	margin: 1px;
+	text-align: left;
+	position: relative;
+	border-radius: 0.3em;
+
+	color: var(--Colour-Text1);
+	cursor: pointer;
+
+	--EventColour: #1abc9c;
+}
+
+.event::after{
+	background-color: transparent;
+	content: " ";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	transition: background-color 0.2s;
+	border-radius: 0.3em;
+}
+
+.event:focus::after,
+.event:hover::after{
+	background-color: rgba(var(--BackgroundColour), 0.5);
+	border: var(--Colour-Text1) solid 1px;
+}
+
+.fullDayEvent{
+	background-color: var(--EventColour);
+	padding-left: 0.1em;
+}
+
+/* part day */
+.partDayEvent{
+
+}
+
+/* part day dot */
+.partDayEvent::before{
+	content: "";
+	width: 0.5em;
+	height: 0.5em;
+	clip-path: circle();
+	background-color: var(--EventColour);
+	padding-left: 0.5em;
 }

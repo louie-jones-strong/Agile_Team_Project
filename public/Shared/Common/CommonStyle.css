@@ -8,7 +8,7 @@ html, body{
 }
 
 body{
-	background-color: var(--BackgroundColour);
+	background-color: var(--BackgroundColourRGB);
 
 	margin: 0px;
 	overflow-x: hidden;
@@ -36,24 +36,27 @@ body{
 	--GradientColour2: 236, 168, 21;
 	--GradientColour2RGB: rgb(var(--GradientColour2));
 
+	--BackgroundColourRGB: rgb(var(--BackgroundColour));
+
 /* dark mode */
 
-	--BackgroundColour: black;
+	--BackgroundColour: 0,0,0;
+
 	--Colour-Text1: rgb(255, 255, 255);
-	--Colour-Text2: rgb(255, 255, 255);
-	--Colour-Text3: rgb(225, 225, 225);
-	--Colour-Text4: rgb(215, 215, 215);
+	--Colour-Text2: rgb(225, 225, 225);
+	--Colour-Text3: rgb(200, 200, 200);
+	--Colour-Text4: rgb(175, 175, 175);
 	--Colour-Contrast-Filter: saturate(0%) brightness(0%) invert(100%);
 }
 
 /* light mode */
 body.light{
 
-	--BackgroundColour: white;
+	--BackgroundColour: 255, 255, 255;
 	--Colour-Text1: rgb(0, 0, 0);
-	--Colour-Text2: rgb(0, 0, 0);
-	--Colour-Text3: rgb(25, 25, 25);
-	--Colour-Text4: rgb(40, 40, 40);
+	--Colour-Text2: rgb(30, 30, 30);
+	--Colour-Text3: rgb(50, 50, 50);
+	--Colour-Text4: rgb(75, 75, 75);
 	--Colour-Contrast-Filter: saturate(0%) brightness(0%);
 }
 
@@ -184,6 +187,20 @@ button:disabled{
 	transform: scale(1);
 }
 
+button.positive{
+	background-color: var(--PositiveColour);
+	color: var(--PositiveColour-Contrast);
+	padding-block: 0.25em;
+	padding-inline: 0.5em;
+	border-radius: 0.5em;
+	margin: 0.25em;
+}
+
+button.negative{
+	background-color: var(--InvalidColour);
+	color: var(--InvalidColour-Contrast);
+}
+
 /* Tables */
 table{
 	border-collapse: collapse;
@@ -192,12 +209,7 @@ table{
 
 th, td{
 	border: 2px solid black;
-	padding: 0.35em;
-}
-
-td.Invalid{
-	background-color: var(--InvalidColour);
-	color: var(--InvalidColour-Contrast);
+	padding: 0.2em;
 }
 
 th{
@@ -234,7 +246,7 @@ input{
 input:focus,
 input:hover{
 	background-color: var(--Colour-Text4);
-	color: var(--BackgroundColour);
+	color: var(--BackgroundColourRGB);
 	border: inherit;
 }
 

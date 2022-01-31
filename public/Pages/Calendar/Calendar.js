@@ -1,13 +1,4 @@
-
-CreateEvent()
-function CreateEvent()
-{
-	let popupBodyHtml = `
-		<h3 class="center">Create Event</h3>
-
-		`
-	OpenPopup(popupBodyHtml)
-}
+DrawCalendar();
 
 function DrawCalendar()
 {
@@ -38,35 +29,46 @@ function DrawCalendar()
 
 
 	index = 1;
-	for (let rows = 0; rows < 5; rows++)
+	let showingAllDaysOfMonth = false;
+	while (!showingAllDaysOfMonth)
 	{
 		html += "<tr>";
 		for (let days = 0; days < 7; days++)
 		{
-			html += `<td class="day`;
-			var dayOfMonth = index;
+			var dayOfMonth = 0;
 
-			if (index < firstDayOfMonth)
+			var dayDate = AddDaysOffset(now, (index - (firstDayOfMonth - 1)) - currentDay);
+			html += `<td  onClick="CreateEvent('${dayDate}')" class="day`;
+
+			if (index < firstDayOfMonth) // previous month
 			{
 				html += " otherMonth";
 				dayOfMonth = daysInPreviousMonth - (firstDayOfMonth - (index+1) );
 			}
-			else if ((index+1 - firstDayOfMonth) > daysInMonth)
+			else if ((index+1 - firstDayOfMonth) > daysInMonth) // next month
 			{
 				html += " otherMonth";
 				dayOfMonth = index+1 - (daysInMonth + firstDayOfMonth);
+				showingAllDaysOfMonth = true;
 			}
 			else
 			{
-				dayOfMonth -= firstDayOfMonth - 1
+				dayOfMonth = index - (firstDayOfMonth - 1)
 			}
 
-			if (index - (firstDayOfMonth - 1) == currentDay)
+			if (index - (firstDayOfMonth - 1) < currentDay)
+			{
+				html += " previousDay";
+			}
+			else if (index - (firstDayOfMonth - 1) == currentDay)
 			{
 				html += " currentDay";
 			}
 
-			html += `">${dayOfMonth}</td>`;
+			html += `">`
+			html += `${dayOfMonth}`;
+			html += GetDayEvents();
+			html += "</td>";
 			index += 1;
 
 		}
@@ -75,4 +77,40 @@ function DrawCalendar()
 	calendarHolder.innerHTML = html
 }
 
-DrawCalendar();
+function GetDayEvents(day)
+{
+	html = "";
+
+	eventName = "Test event Name";
+	eventTime = "12pm";
+
+	// full day event
+	html += `<div class="event fullDayEvent">${eventName}</div>`;
+
+	// part of day event
+	html += `<div class="event partDayEvent">${eventTime} ${eventName}</div>`;
+
+	return html
+}
+
+function CreateEvent(date)
+{
+	if (date == null)
+	{
+		var date = new Date();
+	}
+	else
+	{
+		var date = new Date(date);
+	}
+
+	let popupBodyHtml = `
+		<h3 class="center">Create New Event</h3>
+		<h4 class="center">Date: ${DateToString(date)}</h4>
+		<form>
+			<button class="positive">Create</button>
+		</form>
+
+		`
+	OpenPopup(popupBodyHtml)
+}

@@ -9,7 +9,7 @@ function UpdateClockFace(faceKey, timezone)
 
 
 	var now = new Date();
-	var offsetTime = AddOffset(now, timezone);
+	var offsetTime = AddHoursOffset(now, timezone);
 
 	var seconds = offsetTime.getUTCSeconds();
 	var minutes = offsetTime.getUTCMinutes();

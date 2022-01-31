@@ -3,13 +3,24 @@ const MsPerMinute = MsPerSecond * 60;
 const MsPerHour = MsPerMinute * 60;
 const MsPerDay = MsPerHour * 24;
 
-function AddOffset(time, hourOffset)
+function AddHoursOffset(time, hourOffset)
 {
 
 	var timeMs = time.getTime();
 
 
 	timeMs += MsPerHour * hourOffset;
+
+	return new Date(timeMs);
+}
+
+function AddDaysOffset(time, dayOffset)
+{
+
+	var timeMs = time.getTime();
+
+
+	timeMs += MsPerDay * dayOffset;
 
 	return new Date(timeMs);
 }
