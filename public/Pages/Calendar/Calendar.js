@@ -1,3 +1,14 @@
+
+CreateEvent()
+function CreateEvent()
+{
+	let popupBodyHtml = `
+		<h3 class="center">Create Event</h3>
+
+		`
+	OpenPopup(popupBodyHtml)
+}
+
 function DrawCalendar()
 {
 

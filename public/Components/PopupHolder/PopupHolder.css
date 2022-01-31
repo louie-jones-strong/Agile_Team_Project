@@ -1,0 +1,57 @@
+#popupHolder{
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	display: none;
+	background-color: var(--DarkenBackground);
+}
+
+#popupHolder.popupShowing{
+	display: flex;
+}
+
+.popup{
+	border-radius: 3em;
+	overflow: hidden;
+}
+
+.topButtonsHolder{
+	display: flex;
+	justify-content: space-between;
+}
+
+.closePopup{
+	width: 2.5em;
+	height: 2.5em;
+	background-color: var(--InvalidColour);
+	color: var(--InvalidColour-Contrast);
+	border-bottom-left-radius: 1em;
+	padding: 0.10em;
+	padding-right: 0.5em;
+	padding-top: 0.5em;
+	justify-self: right;
+}
+
+.closePopup::after{
+	content: "X";
+}
+
+.closePopup:hover,
+.closePopup:focus{
+	width: 5.5em;
+}
+.closePopup:hover::after,
+.closePopup:focus::after{
+	content: "Close";
+}
+
+.popupBody{
+	padding-inline: 2em;
+	padding-bottom: 2em;
+}
