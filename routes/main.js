@@ -6,6 +6,11 @@ const IsDevMode = true;
 module.exports = function(app, port)
 {
 
+	app.get("/health",function(req, res)
+	{
+		res.send("healthy")
+	});
+
 	app.get("/",function(req, res)
 	{
 		res.render("home.ejs", {
