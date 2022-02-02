@@ -41,6 +41,7 @@ body{
 /* dark mode */
 
 	--BackgroundColour: 0,0,0;
+	--BackgroundColour-Contrast: 255, 255, 255;
 
 	--Colour-Text1: rgb(255, 255, 255);
 	--Colour-Text2: rgb(225, 225, 225);
@@ -53,6 +54,8 @@ body{
 body.light{
 
 	--BackgroundColour: 255, 255, 255;
+	--BackgroundColour-Contrast: 0,0,0;
+
 	--Colour-Text1: rgb(0, 0, 0);
 	--Colour-Text2: rgb(30, 30, 30);
 	--Colour-Text3: rgb(50, 50, 50);
@@ -102,13 +105,9 @@ body.light{
 }
 
 .glass.frosted{
-	background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(50, 50, 50, 0.1));
+	background: linear-gradient(135deg, rgba(var(--BackgroundColour), 0.1), rgba(var(--BackgroundColour), 0.2));
 	backdrop-filter: blur(50px);
 	-webkit-backdrop-filter: blur(50px);
-}
-
-.light .glass.frosted{
-	background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(150, 150, 150, 0.1));
 }
 
 .neonOutline{
@@ -193,7 +192,7 @@ button.positive{
 	padding-block: 0.25em;
 	padding-inline: 0.5em;
 	border-radius: 0.5em;
-	margin: 0.25em;
+	margin: 1em;
 }
 
 button.negative{
@@ -237,19 +236,24 @@ ul li::before{
 input{
 	background-color: transparent;
 	color: var(--Colour-Text1);
-	border-radius: 0.25em;
-	border: none;
+	border-radius: 0.35em;
+	border: 2px solid var(--Colour-Text1);
 	transition: all 0.25s;
 	width: min-content;
+	margin: 0.5em;
+	margin-top: 0em;
 }
 
 input:focus,
 input:hover{
 	background-color: var(--Colour-Text4);
 	color: var(--BackgroundColourRGB);
-	border: inherit;
 }
 
+label{
+	margin-top: 2em;
+	display: block;
+}
 
 input[type="number"]{
 	width: 3em;

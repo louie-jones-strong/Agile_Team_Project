@@ -7,7 +7,7 @@ function OpenPopup(bodyHtml)
 
 	popupHolder.innerHTML = `
 		<div class="centeredFrame">
-			<div class="popup glass">
+			<div class="glass popup">
 
 				<div class="topButtonsHolder">
 					<div></div>

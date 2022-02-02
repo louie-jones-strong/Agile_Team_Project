@@ -11,3 +11,11 @@
 	border-radius: 0.5em;
 	filter: var(--Colour-Contrast-Filter);
 }
+
+#passwordConfirmLabel{
+	margin-top: 0.5em;
+}
+
+#passwordConfirm{
+	margin-bottom: 1em;
+}
