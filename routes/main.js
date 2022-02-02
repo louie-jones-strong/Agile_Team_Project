@@ -6,6 +6,7 @@ const IsDevMode = true;
 module.exports = function(app, port)
 {
 
+//#region Pages
 	app.get("/",function(req, res)
 	{
 		res.render("home.ejs", {
@@ -55,4 +56,8 @@ module.exports = function(app, port)
 			}
 		});
 	});
+//#endregion pages
+
+
+
 }
