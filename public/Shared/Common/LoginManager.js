@@ -1,10 +1,8 @@
-setTimeout(LoginPopup, 500);
-
 function LoginPopup()
 {
 	let popupBodyHtml = `
 		<h3 class="center popupTitle">Login</h3>
-		<form class="center">
+		<form class="center" action="/login" method="get">
 			<label for"username">Username:</label>
 			<input class="center" type="text" id="username" name="username" required><br>
 
@@ -23,7 +21,7 @@ function CreateAccountPopup()
 {
 	let popupBodyHtml = `
 		<h3 class="center popupTitle">Create Account</h3>
-		<form class="center">
+		<form class="center" action="/createAccount" method="get">
 			<label for"username">Username:</label>
 			<input class="center" type="text" id="username" name="username" required><br>
 
