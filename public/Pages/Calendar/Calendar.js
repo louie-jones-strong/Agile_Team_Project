@@ -1,4 +1,5 @@
 let CurrentMonthOffset = 0;
+let EventDataCache = {};
 
 CurrentMonth();
 
@@ -26,6 +27,9 @@ function DrawCalendar()
 	var currentDay = now.getDate();
 
 	now = AddMonthsOffset(now, CurrentMonthOffset);
+	GetEventList(CurrentMonthOffset-1);
+	GetEventList(CurrentMonthOffset);
+	GetEventList(CurrentMonthOffset+1);
 
 	var currentCalendar = document.getElementById("currentCalendar");
 	currentCalendar.innerHTML = DateToString(now);
@@ -55,18 +59,21 @@ function DrawCalendar()
 		html += "<tr>";
 		for (let days = 0; days < 7; days++)
 		{
-			var dayOfMonth = 0;
+			let dayOfMonth = 0;
+			let monthOffset = 0;
 
-			var dayDate = AddDaysOffset(now, (index - (firstDayOfMonth - 1)) - currentDay);
+			let dayDate = AddDaysOffset(now, (index - (firstDayOfMonth - 1)) - currentDay);
 			html += `<td  onClick="CreateEventPopup('${dayDate}')" class="day`;
 
 			if (index < firstDayOfMonth) // previous month
 			{
+				monthOffset = -1;
 				html += " otherMonth";
 				dayOfMonth = daysInPreviousMonth - (firstDayOfMonth - (index+1) );
 			}
 			else if ((index+1 - firstDayOfMonth) > daysInMonth) // next month
 			{
+				monthOffset = 1;
 				html += " otherMonth";
 				dayOfMonth = index+1 - (daysInMonth + firstDayOfMonth);
 				showingAllDaysOfMonth = true;
@@ -87,7 +94,7 @@ function DrawCalendar()
 
 			html += `">`
 			html += `${dayOfMonth}`;
-			html += GetDayEvents();
+			html += GetDayEvents(monthOffset, dayDate);
 			html += "</td>";
 			index += 1;
 
@@ -97,19 +104,61 @@ function DrawCalendar()
 	calendarHolder.innerHTML = html
 }
 
-function GetDayEvents()
+function GetEventList(monthOffset)
+{
+	EventDataCache[monthOffset]
+	if (EventDataCache[monthOffset])
+	{
+		return;
+	}
+
+	EventDataCache[monthOffset] = [];
+
+	Get(`/eventList?UserID=${1}`, "", [], function(jsonText)
+		{
+			var events = JSON.parse(jsonText);
+			EventDataCache[monthOffset] = events;
+
+			if (CurrentMonthOffset-1 <= monthOffset &&
+				CurrentMonthOffset+1 >= monthOffset)
+			{
+				DrawCalendar();
+			}
+		});
+}
+
+function GetDayEvents(monthOffset, date)
 {
 	let html = "";
 
-	let eventName = "Test event Name";
-	let eventTime = "12pm";
+	let monthData = EventDataCache[monthOffset];
+	if (monthData)
+	{
+		// we have this data so lets show it
+		monthData.forEach(event => {
+			event.EventDateTime = new Date(event.EventDateTime);
 
-	// full day event
-	html += `<div class="event fullDayEvent">${eventName}</div>`;
-
-	// part of day event
-	html += `<div class="event partDayEvent">${eventTime} ${eventName}</div>`;
-
+			if (IsSameDay(event.EventDateTime, date))
+			{
+				let eventName = event.EventName;
+				let eventTime = "12pm";
+				if (event.EventDuration == null)
+				{
+					// full day event
+					html += `<div class="event fullDayEvent">${eventName}</div>`;
+				}
+				else
+				{
+					// part of day event
+					html += `<div class="event partDayEvent">${eventTime} ${eventName}</div>`;
+				}
+			}
+		});
+	}
+	else
+	{
+		// we don't have this data yet should we show loader?
+	}
 	return html
 }
 

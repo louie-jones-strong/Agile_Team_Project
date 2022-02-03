@@ -23,6 +23,7 @@ CREATE TABLE Events(
 	EventName VARCHAR(50) NOT NULL,
 	EventDateTime DATETIME NOT NULL,
 	EventCreator INT NOT NULL,
+	EventColor ENUM('red', 'green', 'blue', 'pink') NOT NULL,
 
 	EventDescription VARCHAR(240),
 	EventDuration FLOAT, -- NULL for all day event
@@ -53,7 +54,7 @@ INSERT INTO Users (Username)VALUES('Louie');
 INSERT INTO Users (Username)VALUES('Randy');
 
 -- meeting hosted by louie with randy attending
-INSERT INTO Events (EventName, EventDateTime, EventCreator)VALUES('Test Meeting', '20120618', 1);
+INSERT INTO Events (EventName, EventDateTime, EventCreator)VALUES('Test Meeting', '20220301', 1);
 
 INSERT INTO EventAttendees (EventID, UserID)VALUES(1, 1);
 INSERT INTO EventAttendees (EventID, UserID)VALUES(1, 2);

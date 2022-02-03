@@ -118,9 +118,17 @@ module.exports = function(app, port)
 
 	app.get("/eventList",function(req, res)
 	{
+		console.log("/eventList", req.query);
+
 		var sanitizedUserID = req.sanitize(req.query.UserID);
 		var sanitizedDateRangeStart = req.sanitize(req.query.dateRangeStart);
 		var sanitizedDateRangeEnd = req.sanitize(req.query.dateRangeEnd);
+
+		if (sanitizedUserID == null)
+		{
+			res.sendStatus(404);
+			return;
+		}
 
 		let sqlQuery = `
 			SELECT EventName, EventDateTime, EventCreator, EventDuration FROM Events WHERE (EventID IN (

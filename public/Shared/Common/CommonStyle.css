@@ -37,6 +37,7 @@ body{
 	--GradientColour2RGB: rgb(var(--GradientColour2));
 
 	--BackgroundColourRGB: rgb(var(--BackgroundColour));
+	--BackgroundColour-ContrastRGB: rgb(var(--BackgroundColour-Contrast));
 
 /* dark mode */
 

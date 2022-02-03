@@ -21,7 +21,7 @@ function Delete(url, bodyData, headerData, onResponse=null)
 function SendRequest(method, url, bodyData, headerData, onResponse)
 {
 	var xhr = new XMLHttpRequest();
-	xhr.open(method, url);
+	xhr.open(method, url, true);
 
 	headerData.forEach(kvp => {
 		xhr.setRequestHeader(kvp[0], kvp[1]);
@@ -44,5 +44,5 @@ function SendRequest(method, url, bodyData, headerData, onResponse)
 
 function LogResponse(xhr)
 {
-	console.log("Response", xhr.responseURL, xhr.status, xhr.responseText);
+	// console.log("Response", xhr.responseURL, xhr.status, xhr.responseText);
 }

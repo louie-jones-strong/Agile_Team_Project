@@ -185,3 +185,11 @@ function GetDaysInMonth(time, monthOffset)
 
 	return newTime.getDate();
 }
+
+function IsSameDay(now1, now2)
+{
+
+	return now1.getUTCFullYear() == now2.getUTCFullYear() &&
+		now1.getUTCMonth() == now2.getUTCMonth() &&
+		now1.getDate() == now2.getDate();
+}
