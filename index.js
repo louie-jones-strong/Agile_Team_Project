@@ -1,9 +1,28 @@
 const port = 8080;
 
 const express = require ("express");
+const mysql = require ("mysql");
 const bodyParser = require ("body-parser");
 const expressSanitizer = require('express-sanitizer');
 const app = express();
+
+
+const db = mysql.createConnection ({
+	host: "localhost",
+	user: "root",
+	password: "",
+	database: "welltimed"
+
+});
+
+// connect to database
+db.connect((err) => {
+	if (err) {
+		throw err;
+	}
+	console.log("Connected to database");
+});
+global.db = db;
 
 app.use(expressSanitizer());
 app.use(bodyParser.urlencoded({ extended: true }))

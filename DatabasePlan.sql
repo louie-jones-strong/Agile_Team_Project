@@ -1,14 +1,13 @@
---@block
+
 DROP DATABASE WellTimed;
 
---@block
+
 CREATE DATABASE WellTimed;
 USE WellTimed;
 
---@block
 CREATE TABLE Users(
 	UserID INT AUTO_INCREMENT NOT NULL,
-	UserName VARCHAR(50) NOT NULL UNIQUE,
+	Username VARCHAR(50) NOT NULL UNIQUE,
 	JoinedDateTime DATETIME DEFAULT CURRENT_TIMESTAMP  NOT NULL,
 	LastModifiedDateTime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
 
@@ -42,24 +41,34 @@ CREATE TABLE EventAttendees(
 	FOREIGN KEY (EventID) REFERENCES Events(EventID)
 	);
 
---@block
+
 SHOW TABLES;
 DESCRIBE Users;
 DESCRIBE Events;
 DESCRIBE EventAttendees;
 
 
---@block
-INSERT INTO Users (UserName)VALUES('Louie');
-INSERT INTO Users (UserName)VALUES('Randy');
 
-SELECT * FROM Users;
+INSERT INTO Users (Username)VALUES('Louie');
+INSERT INTO Users (Username)VALUES('Randy');
 
+-- meeting hosted by louie with randy attending
 INSERT INTO Events (EventName, EventDateTime, EventCreator)VALUES('Test Meeting', '20120618', 1);
-
-SELECT * FROM Events;
 
 INSERT INTO EventAttendees (EventID, UserID)VALUES(1, 1);
 INSERT INTO EventAttendees (EventID, UserID)VALUES(1, 2);
 
+-- meeting hosted by randy with louie attending
+INSERT INTO Events (EventName, EventDateTime, EventCreator)VALUES('Test Meeting', '20120618', 2);
+
+-- INSERT INTO EventAttendees (EventID, UserID)VALUES(2, 2);
+INSERT INTO EventAttendees (EventID, UserID)VALUES(2, 1);
+
+SELECT * FROM Users;
+SELECT * FROM Events;
 SELECT * FROM EventAttendees;
+
+
+SELECT EventName, EventDateTime, EventCreator, EventDuration FROM Events WHERE EventID IN (
+	SELECT EventID FROM EventAttendees WHERE UserID=1
+) OR EventCreator=1;

@@ -112,4 +112,37 @@ module.exports = function(app, port)
 
 //#endregion Login flow
 
+
+//#region events
+
+
+	app.get("/eventList",function(req, res)
+	{
+		var sanitizedUserID = req.sanitize(req.query.UserID);
+		var sanitizedDateRangeStart = req.sanitize(req.query.dateRangeStart);
+		var sanitizedDateRangeEnd = req.sanitize(req.query.dateRangeEnd);
+
+		let sqlQuery = `
+			SELECT EventName, EventDateTime, EventCreator, EventDuration FROM Events WHERE (EventID IN (
+				SELECT EventID FROM EventAttendees WHERE UserID=${sanitizedUserID}
+			) OR EventCreator=${sanitizedUserID})`
+
+			if (sanitizedDateRangeStart)
+				sqlQuery += ` AND EventDateTime >= ${sanitizedDateRangeStart}`
+
+			if (sanitizedDateRangeEnd)
+				sqlQuery += ` AND EventDateTime <= ${sanitizedDateRangeEnd}`
+
+		db.query(sqlQuery, (err, result) => {
+			if (err) {
+				console.log(err);
+				res.sendStatus(400);
+				return;
+			}
+
+			res.send(result);
+		});
+	});
+
+//#endregion events
 }
