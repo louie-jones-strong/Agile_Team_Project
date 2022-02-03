@@ -25,6 +25,15 @@ function AddDaysOffset(time, dayOffset)
 	return new Date(timeMs);
 }
 
+function AddMonthsOffset(time, monthOffset)
+{
+	var newTime = new Date(time.valueOf());
+
+	var month = newTime.getMonth();
+	newTime.setMonth(month + monthOffset, 1);
+	return newTime;
+}
+
 function TimeToString(time, is12Hour)
 {
 	var hours = time.getUTCHours();

@@ -1,17 +1,38 @@
-DrawCalendar();
+let CurrentMonthOffset = 0;
+
+CurrentMonth();
+
+function PreviousMonth()
+{
+	CurrentMonthOffset -= 1;
+	DrawCalendar();
+}
+
+function NextMonth()
+{
+	CurrentMonthOffset += 1;
+	DrawCalendar();
+}
+
+function CurrentMonth()
+{
+	CurrentMonthOffset = 0;
+	DrawCalendar();
+}
 
 function DrawCalendar()
 {
-
 	var now = new Date();
+	var currentDay = now.getDate();
 
+	now = AddMonthsOffset(now, CurrentMonthOffset);
 
 	var currentCalendar = document.getElementById("currentCalendar");
 	currentCalendar.innerHTML = DateToString(now);
 
 	var calendarHolder = document.getElementById("calendarHolder");
 
-	html =
+	let html =
 		`<tr>
 			<th>Monday</th>
 			<th>Tuesday</th>
@@ -25,7 +46,6 @@ function DrawCalendar()
 	var daysInPreviousMonth = GetDaysInMonth(now, -1);
 	var firstDayOfMonth = GetFirstDayOfTheMonth(now);
 	var daysInMonth = GetDaysInMonth(now, 0);
-	var currentDay = now.getDate();
 
 
 	index = 1;
@@ -38,7 +58,7 @@ function DrawCalendar()
 			var dayOfMonth = 0;
 
 			var dayDate = AddDaysOffset(now, (index - (firstDayOfMonth - 1)) - currentDay);
-			html += `<td  onClick="CreateEvent('${dayDate}')" class="day`;
+			html += `<td  onClick="CreateEventPopup('${dayDate}')" class="day`;
 
 			if (index < firstDayOfMonth) // previous month
 			{
@@ -77,12 +97,12 @@ function DrawCalendar()
 	calendarHolder.innerHTML = html
 }
 
-function GetDayEvents(day)
+function GetDayEvents()
 {
-	html = "";
+	let html = "";
 
-	eventName = "Test event Name";
-	eventTime = "12pm";
+	let eventName = "Test event Name";
+	let eventTime = "12pm";
 
 	// full day event
 	html += `<div class="event fullDayEvent">${eventName}</div>`;
@@ -93,7 +113,7 @@ function GetDayEvents(day)
 	return html
 }
 
-function CreateEvent(date)
+function CreateEventPopup(date)
 {
 	if (date == null)
 	{
