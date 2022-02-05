@@ -15,14 +15,14 @@ class Clock
 		clockCard.innerHTML =`
 			<div class="clockTop">
 				<div class="center">
-					<input id='${this.Key}_TimeTitle' type="text" value="Test">
-					<input id='${this.Key}_Timezone' type="number" step="0.25" value="0">
 				</div>
 				<div class="right">
 					<button class="removeButton" onclick='RemoveClock("${this.Key}")'>X</button>
 				</div>
 			</div>
 
+			<input id='${this.Key}_TimeTitle' type="text" value="Test">
+			<input id='${this.Key}_Timezone' type="number" step="0.25" value="0">
 
 			<div class='clock glass frosted'>
 				<div id='${this.Key}_SecondsHand' class="hand second"></div>
