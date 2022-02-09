@@ -166,11 +166,11 @@ function CreateEventPopup(date)
 {
 	if (date == null)
 	{
-		let date = new Date();
+		date = new Date();
 	}
 	else
 	{
-		let date = new Date(date);
+		date = new Date(date);
 	}
 
 	let popupBodyHtml = `

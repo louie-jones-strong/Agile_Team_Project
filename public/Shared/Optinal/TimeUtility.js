@@ -94,9 +94,11 @@ function DateToString(time, isNumbers)
 	let months = time.getUTCMonth();
 	let days = time.getDate();
 
+	let dateString = "";
+
 	if (isNumbers)
 	{
-		let dateString = `${days}/${months}/${years}`;
+		dateString = `${days}/${months}/${years}`;
 	}
 	else
 	{
@@ -104,7 +106,7 @@ function DateToString(time, isNumbers)
 		let monthsString = GetMonthString(months);
 		let daysString = GetOrdinalString(days);
 
-		let dateString = `${daysString} of ${monthsString} ${years}`;
+		dateString = `${daysString} of ${monthsString} ${years}`;
 	}
 	return dateString;
 }
