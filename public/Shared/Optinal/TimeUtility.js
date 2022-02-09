@@ -29,8 +29,8 @@ function AddMonthsOffset(time, monthOffset)
 {
 	var newTime = new Date(time.valueOf());
 
-	var month = newTime.getMonth();
-	newTime.setMonth(month + monthOffset, 1);
+	var month = time.getMonth();
+	newTime.setUTCMonth(month + monthOffset, 1);
 	return newTime;
 }
 
@@ -163,7 +163,7 @@ function GetUserTimeZone()
 }
 
 
-function GetFirstDayOfTheMonth(time, monthOffset=0)
+function GetFirstDayOfTheMonth(time)
 {
 	var newTime = new Date(time.valueOf());
 
