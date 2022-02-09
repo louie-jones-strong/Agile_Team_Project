@@ -9,30 +9,92 @@
 	justify-content: space-around;
 }
 
+/* top buttons */
 .clockTop{
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 0.5em;
 }
 
+.topButton{
+	width: 2em;
+	height: 2em;
+	transition: all 0.2s;
+	padding: 0.10em;
+	padding-top: 0.25em;
+	border-style: solid;
+	border-width: 2px;
+	border-color: black;
+	border-top: none;
+}
+
+.topButton:focus,
+.topButton:hover{
+	width: 6em;
+}
+
+/* edit button */
+.editButton{
+	background-color: var(--PositiveColour);
+	color: var(--PositiveColour-Contrast);
+	border-bottom-right-radius: 0.5em;
+	padding-left: 0.25em;
+	border-left: none;
+}
+
+.editButton::after{
+	content: "\00270E";
+}
+
+.editButton:focus::after,
+.editButton:hover::after{
+	content: "Edit \00270E";
+}
+
+/* remove button */
+.removeButton{
+	background-color: var(--InvalidColour);
+	color: var(--InvalidColour-Contrast);
+	border-bottom-left-radius: 0.5em;
+	padding-right: 0.25em;
+	border-right: none;
+}
+
+.removeButton::after{
+	content: "X";
+}
+
+.removeButton:focus::after,
+.removeButton:hover::after{
+	content: "Remove";
+}
+
+/* add new button */
 .addButton{
 	width: 2em;
 	height: 2em;
 	background-color: var(--PositiveColour);
 	color: var(--PositiveColour-Contrast);
-	border-radius: 25%;
+	border-radius: 0.5em;
 	margin: 0.25em;
+	transition: all 0.1s;
 }
 
-.removeButton{
-	width: 2em;
-	height: 2em;
-	background-color: var(--InvalidColour);
-	color: var(--InvalidColour-Contrast);
-	border-bottom-left-radius: 25%;
-	padding: 0.10em;
-	padding-right: 0.25em;
-	padding-top: 0.25em;
+.addButton::after{
+	content: "+";
 }
+
+.addButton:focus,
+.addButton:hover{
+	width: 6em;
+}
+
+.addButton:focus::after,
+.addButton:hover::after{
+	content: "Add Clock";
+}
+
+
 
 /* clock face */
 .clock{

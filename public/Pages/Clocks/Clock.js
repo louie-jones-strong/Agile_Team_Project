@@ -14,10 +14,13 @@ class Clock
 		clockCard.classList = "card glass"
 		clockCard.innerHTML =`
 			<div class="clockTop">
+				<div class="left">
+					<button class="editButton topButton" onclick='EditClock("${this.Key}")'></button>
+				</div>
 				<div class="center">
 				</div>
 				<div class="right">
-					<button class="removeButton" onclick='RemoveClock("${this.Key}")'>X</button>
+					<button class="removeButton topButton" onclick='RemoveClock("${this.Key}")'></button>
 				</div>
 			</div>
 

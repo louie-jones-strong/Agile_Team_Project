@@ -173,18 +173,10 @@ button{
 	border: none;
 	padding: 0px 0px;
 	background-color: transparent;
-	transform: scale(1);
-	transition: all 0.2s;
-}
-
-button:focus,
-button:hover{
-	transform: scale(1.1);
 }
 
 button:disabled{
 	cursor:not-allowed;
-	transform: scale(1);
 }
 
 button.positive{
