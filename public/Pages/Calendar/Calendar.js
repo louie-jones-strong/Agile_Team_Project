@@ -23,9 +23,9 @@ function CurrentMonth()
 
 function DrawCalendar()
 {
-	var now = new Date();
-	var currentDay = now.getDate();
+	var currentDate = new Date();
 
+	var now = new Date();
 	now = AddMonthsOffset(now, CurrentMonthOffset);
 	GetEventList(CurrentMonthOffset-1);
 	GetEventList(CurrentMonthOffset);
@@ -62,7 +62,7 @@ function DrawCalendar()
 			let dayOfMonth = 0;
 			let monthOffset = 0;
 
-			let dayDate = AddDaysOffset(now, (index - (firstDayOfMonth - 1)) - currentDay);
+			let dayDate = AddDaysOffset(now, index - firstDayOfMonth);
 			html += `<td  onClick="CreateEventPopup('${dayDate}')" class="day`;
 
 			if (index < firstDayOfMonth) // previous month
@@ -83,11 +83,11 @@ function DrawCalendar()
 				dayOfMonth = index - (firstDayOfMonth - 1)
 			}
 
-			if (index - (firstDayOfMonth - 1) < currentDay)
+			if (dayDate < currentDate)
 			{
 				html += " previousDay";
 			}
-			else if (index - (firstDayOfMonth - 1) == currentDay)
+			else if (IsSameDay(dayDate, currentDate))
 			{
 				html += " currentDay";
 			}
