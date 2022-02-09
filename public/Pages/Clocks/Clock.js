@@ -1,5 +1,5 @@
-var Clocks = [];
-var ClockCount = 0;
+let Clocks = [];
+let ClockCount = 0;
 
 class Clock
 {
@@ -7,9 +7,9 @@ class Clock
 
 		this.Key = `${ClockCount}`;
 
-		var clockHolder = document.getElementById("clockHolder");
+		let clockHolder = document.getElementById("clockHolder");
 
-		var clockCard = document.createElement("div");
+		let clockCard = document.createElement("div");
 		clockCard.id = `${this.Key}_Clock`
 		clockCard.classList = "card glass"
 		clockCard.innerHTML =`
@@ -49,8 +49,8 @@ class Clock
 
 		clockHolder.appendChild(clockCard);
 
-		var titleInput = document.getElementById(`${this.Key}_TimeTitle`);
-		var timezoneInput = document.getElementById(`${this.Key}_Timezone`);
+		let titleInput = document.getElementById(`${this.Key}_TimeTitle`);
+		let timezoneInput = document.getElementById(`${this.Key}_Timezone`);
 
 		titleInput.value = name;
 
@@ -60,14 +60,14 @@ class Clock
 	}
 
 	Draw() {
-		var timezoneInput = document.getElementById(`${this.Key}_Timezone`);
-		var timezone = parseFloat(timezoneInput.value);
+		let timezoneInput = document.getElementById(`${this.Key}_Timezone`);
+		let timezone = parseFloat(timezoneInput.value);
 
 		UpdateClockFace(this.Key, timezone);
 	}
 
 	Remove(){
-		var temp = document.getElementById(`${this.Key}_Clock`);
+		let temp = document.getElementById(`${this.Key}_Clock`);
 		temp.parentNode.removeChild(temp);
 	}
 }
@@ -89,7 +89,7 @@ function UpdateClocks()
 
 function AddClock(name, timeOffset)
 {
-	var newClock = new Clock(name, timeOffset);
+	let newClock = new Clock(name, timeOffset);
 	Clocks.push(newClock);
 	ClockCount += 1;
 }

@@ -1,4 +1,4 @@
-var currentTheme = localStorage.getItem("theme");
+let currentTheme = localStorage.getItem("theme");
 if (currentTheme === null)
 {
 	currentTheme = "dark";
@@ -8,7 +8,7 @@ SetTheme(currentTheme == "dark")
 
 function ToggleTheme()
 {
-	var currentTheme = localStorage.getItem("theme");
+	let currentTheme = localStorage.getItem("theme");
 
 	SetTheme(currentTheme == "light");
 }
@@ -16,8 +16,8 @@ function ToggleTheme()
 
 function SetTheme(isDarkTheme)
 {
-	var darkModeIcon = document.getElementById("darkModeIcon");
-	var lightModeIcon = document.getElementById("lightModeIcon");
+	let darkModeIcon = document.getElementById("darkModeIcon");
+	let lightModeIcon = document.getElementById("lightModeIcon");
 
 	if (isDarkTheme)
 	{

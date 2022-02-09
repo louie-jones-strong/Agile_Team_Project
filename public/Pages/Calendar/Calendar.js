@@ -23,18 +23,18 @@ function CurrentMonth()
 
 function DrawCalendar()
 {
-	var currentDate = new Date();
+	let currentDate = new Date();
 
-	var now = new Date();
+	let now = new Date();
 	now = AddMonthsOffset(now, CurrentMonthOffset);
 	GetEventList(CurrentMonthOffset-1);
 	GetEventList(CurrentMonthOffset);
 	GetEventList(CurrentMonthOffset+1);
 
-	var currentCalendar = document.getElementById("currentCalendar");
+	let currentCalendar = document.getElementById("currentCalendar");
 	currentCalendar.innerHTML = GetMonthString(now.getUTCMonth());
 
-	var calendarHolder = document.getElementById("calendarHolder");
+	let calendarHolder = document.getElementById("calendarHolder");
 
 	let html =
 		`<tr>
@@ -47,12 +47,12 @@ function DrawCalendar()
 			<th>Sunday</th>
 		</tr>`;
 
-	var daysInPreviousMonth = GetDaysInMonth(now, -1);
-	var firstDayOfMonth = GetFirstDayOfTheMonth(now);
-	var daysInMonth = GetDaysInMonth(now, 0);
+	let daysInPreviousMonth = GetDaysInMonth(now, -1);
+	let firstDayOfMonth = GetFirstDayOfTheMonth(now);
+	let daysInMonth = GetDaysInMonth(now, 0);
 
 
-	index = 1;
+	let index = 0;
 	let showingAllDaysOfMonth = false;
 	while (!showingAllDaysOfMonth)
 	{
@@ -116,7 +116,7 @@ function GetEventList(monthOffset)
 
 	Get(`/eventList?UserID=${1}`, "", [], function(jsonText)
 		{
-			var events = JSON.parse(jsonText);
+			let events = JSON.parse(jsonText);
 			EventDataCache[monthOffset] = events;
 
 			if (CurrentMonthOffset-1 <= monthOffset &&
@@ -166,11 +166,11 @@ function CreateEventPopup(date)
 {
 	if (date == null)
 	{
-		var date = new Date();
+		let date = new Date();
 	}
 	else
 	{
-		var date = new Date(date);
+		let date = new Date(date);
 	}
 
 	let popupBodyHtml = `

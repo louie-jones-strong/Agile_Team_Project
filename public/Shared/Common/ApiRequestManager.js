@@ -20,7 +20,7 @@ function Delete(url, bodyData, headerData, onResponse=null)
 
 function SendRequest(method, url, bodyData, headerData, onResponse)
 {
-	var xhr = new XMLHttpRequest();
+	let xhr = new XMLHttpRequest();
 	xhr.open(method, url, true);
 
 	headerData.forEach(kvp => {

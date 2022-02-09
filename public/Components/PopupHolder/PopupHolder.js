@@ -2,7 +2,7 @@
 
 function OpenPopup(bodyHtml)
 {
-	var popupHolder = document.getElementById("popupHolder");
+	let popupHolder = document.getElementById("popupHolder");
 	popupHolder.classList.add("popupShowing");
 
 	popupHolder.innerHTML = `
@@ -22,7 +22,7 @@ function OpenPopup(bodyHtml)
 
 function ClosePopup()
 {
-	var popupHolder = document.getElementById("popupHolder");
+	let popupHolder = document.getElementById("popupHolder");
 	popupHolder.classList.remove("popupShowing");
 	popupHolder.innerHTML = "";
 }

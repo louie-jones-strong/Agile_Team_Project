@@ -1,19 +1,19 @@
 function UpdateClockFace(faceKey, timezone)
 {
-	var handSeconds =	document.getElementById(`${faceKey}_SecondsHand`);
-	var handMinutes =	document.getElementById(`${faceKey}_MinutesHand`);
-	var handHours	 =	document.getElementById(`${faceKey}_HoursHand`);
-	var digitalTime =	document.getElementById(`${faceKey}_DigitalTime`);
-	var date =	document.getElementById(`${faceKey}_Date`);
+	let handSeconds =	document.getElementById(`${faceKey}_SecondsHand`);
+	let handMinutes =	document.getElementById(`${faceKey}_MinutesHand`);
+	let handHours	 =	document.getElementById(`${faceKey}_HoursHand`);
+	let digitalTime =	document.getElementById(`${faceKey}_DigitalTime`);
+	let date =	document.getElementById(`${faceKey}_Date`);
 
 
 
-	var now = new Date();
-	var offsetTime = AddHoursOffset(now, timezone);
+	let now = new Date();
+	let offsetTime = AddHoursOffset(now, timezone);
 
-	var seconds = offsetTime.getUTCSeconds();
-	var minutes = offsetTime.getUTCMinutes();
-	var hours = offsetTime.getUTCHours();
+	let seconds = offsetTime.getUTCSeconds();
+	let minutes = offsetTime.getUTCMinutes();
+	let hours = offsetTime.getUTCHours();
 
 	UpdateHandAngle(handSeconds, (seconds / 60) * 360);
 	UpdateHandAngle(handMinutes, (minutes / 60) * 360);

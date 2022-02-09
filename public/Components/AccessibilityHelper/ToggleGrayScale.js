@@ -1,4 +1,4 @@
-var currentlyIsOn = localStorage.getItem("grayScale");
+let currentlyIsOn = localStorage.getItem("grayScale");
 if (currentlyIsOn === null)
 {
 	currentlyIsOn = "off";
@@ -8,7 +8,7 @@ SetGreyScale(currentlyIsOn == "on")
 
 function ToggleGreyScale()
 {
-	var currentTheme = localStorage.getItem("grayScale");
+	let currentTheme = localStorage.getItem("grayScale");
 
 	SetGreyScale(currentTheme == "off");
 }
@@ -16,8 +16,8 @@ function ToggleGreyScale()
 
 function SetGreyScale(isOn)
 {
-	var greyScaleOffIcon = document.getElementById("greyScaleOffIcon");
-	var greyScaleOnIcon = document.getElementById("greyScaleOnIcon");
+	let greyScaleOffIcon = document.getElementById("greyScaleOffIcon");
+	let greyScaleOnIcon = document.getElementById("greyScaleOnIcon");
 
 	if (isOn)
 	{
