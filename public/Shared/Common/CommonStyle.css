@@ -226,7 +226,9 @@ ul li::before{
 
 /* inputs */
 
-input{
+input,
+textarea,
+select{
 	background-color: transparent;
 	color: var(--Colour-Text1);
 	border-radius: 0.35em;
@@ -237,8 +239,9 @@ input{
 	margin-top: 0em;
 }
 
-input:focus,
-input:hover{
+input:focus, input:hover,
+textarea:focus, textarea:hover,
+select:focus, select:hover{
 	background-color: var(--Colour-Text4);
 	color: var(--BackgroundColourRGB);
 }
@@ -250,4 +253,15 @@ label{
 
 input[type="number"]{
 	width: 3em;
+}
+
+textarea{
+	width: 100%;
+	height: 4em;
+	resize: none;
+}
+
+option{
+	background-color: var(--Colour-Text4);
+	color: var(--BackgroundColourRGB);
 }

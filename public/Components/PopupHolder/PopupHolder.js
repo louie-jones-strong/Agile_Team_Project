@@ -13,7 +13,7 @@ function OpenPopup(bodyHtml)
 					<div></div>
 					<button class="closePopup" onclick='ClosePopup()'></button>
 				</div>
-				<div class="popupBody">
+				<div id="popupBody">
 					${bodyHtml}
 				</div>
 			</div>

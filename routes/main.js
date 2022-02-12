@@ -81,7 +81,7 @@ module.exports = function(app, port)
 	{
 		console.log("/createAccount", req.query);
 
-		let sanitizeUsername = req.sanitize(req.query.username);
+		var sanitizeUsername = req.sanitize(req.query.username);
 		let sqlQuery = `INSERT INTO Users (Username)VALUES('${sanitizeUsername}')`;
 
 		db.query(sqlQuery, (err, result) => {
@@ -96,7 +96,7 @@ module.exports = function(app, port)
 	{
 		console.log("/login", req.query);
 
-		let sanitizeUsername = req.sanitize(req.query.username);
+		var sanitizeUsername = req.sanitize(req.query.username);
 		let sqlQuery = `SELECT UserID FROM Users WHERE Username = '${sanitizeUsername}'`;
 
 		db.query(sqlQuery, (err, result) => {
@@ -120,9 +120,9 @@ module.exports = function(app, port)
 	{
 		console.log("/eventList", req.query);
 
-		let sanitizedUserID = req.sanitize(req.query.UserID);
-		let sanitizedDateRangeStart = req.sanitize(req.query.dateRangeStart);
-		let sanitizedDateRangeEnd = req.sanitize(req.query.dateRangeEnd);
+		var sanitizedUserID = req.sanitize(req.query.UserID);
+		var sanitizedDateRangeStart = req.sanitize(req.query.dateRangeStart);
+		var sanitizedDateRangeEnd = req.sanitize(req.query.dateRangeEnd);
 
 		if (sanitizedUserID == null)
 		{
@@ -131,7 +131,7 @@ module.exports = function(app, port)
 		}
 
 		let sqlQuery = `
-			SELECT EventName, EventDateTime, EventCreator, EventDuration FROM Events WHERE (EventID IN (
+			SELECT * FROM Events WHERE (EventID IN (
 				SELECT EventID FROM EventAttendees WHERE UserID=${sanitizedUserID}
 			) OR EventCreator=${sanitizedUserID})`
 
@@ -147,6 +147,79 @@ module.exports = function(app, port)
 				res.sendStatus(400);
 				return;
 			}
+
+			console.log(result);
+			res.send(result);
+		});
+	});
+
+	app.post("/CreateEvent",function(req, res)
+	{
+		console.log("/CreateEvent", req.query);
+
+		var sanitizedUserID = req.sanitize(req.query.UserID);
+
+		var sanitizedEventName= req.sanitize(req.query.EventName);
+		var sanitizedEventDescription = req.sanitize(req.query.EventDescription);
+		var sanitizedEventDateTime = req.sanitize(req.query.EventDateTime);
+		var sanitizedEventDuration = req.sanitize(req.query.EventDuration);
+		var sanitizedEventColor = req.sanitize(req.query.EventColor);
+
+		if (sanitizedUserID == null)
+		{
+			res.sendStatus(404);
+			return;
+		}
+
+		let sqlQuery = `INSERT INTO Events
+			(EventCreator, EventName, EventDescription, EventDateTime,
+			EventDuration, EventColor)
+			VALUES
+			(${sanitizedUserID}, '${sanitizedEventName}', '${sanitizedEventDescription}', '${sanitizedEventDateTime}',
+			${sanitizedEventDuration}', '${sanitizedEventColor}')`
+
+		db.query(sqlQuery, (err, result) => {
+			if (err) {
+				console.log(err);
+				res.sendStatus(400);
+				return;
+			}
+
+			res.send(result);
+		});
+	});
+
+	app.post("/RemoveEvent",function(req, res)
+	{
+		console.log("/RemoveEvent", req.query);
+
+		var sanitizedEventID = req.sanitize(req.query.EventID);
+
+		if (sanitizedEventID == null)
+		{
+			res.sendStatus(404);
+			return;
+		}
+
+		// remove event
+		let sqlQuery = `DELETE FROM Events WHERE EventID = ${sanitizedEventID}`;
+		db.query(sqlQuery, (err, result) => {
+			if (err) {
+				console.log(err);
+				res.sendStatus(400);
+				return;
+			}
+
+			// remove EventAttendees
+			let sqlQuery = `DELETE FROM EventAttendees WHERE EventID = ${sanitizedEventID}`;
+			db.query(sqlQuery, (err, result) => {
+				if (err) {
+					console.log(err);
+					return;
+				}
+
+				res.send(result);
+			});
 
 			res.send(result);
 		});

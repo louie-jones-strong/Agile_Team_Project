@@ -63,7 +63,7 @@ function DrawCalendar()
 			let monthOffset = 0;
 
 			let dayDate = AddDaysOffset(now, index - firstDayOfMonth);
-			html += `<td  onClick="CreateEventPopup('${dayDate}')" class="day`;
+			html += `<td class="day`;
 
 			if (index < firstDayOfMonth) // previous month
 			{
@@ -145,12 +145,12 @@ function GetDayEvents(monthOffset, date)
 				if (event.EventDuration == null)
 				{
 					// full day event
-					html += `<div class="event fullDayEvent">${eventName}</div>`;
+					html += `<div onclick="EditEventPopup(${event.EventId})" class="event fullDayEvent">${eventName}</div>`;
 				}
 				else
 				{
 					// part of day event
-					html += `<div class="event partDayEvent">${eventTime} ${eventName}</div>`;
+					html += `<div onclick="EditEventPopup(${event.EventId})" class="event partDayEvent">${eventTime} ${eventName}</div>`;
 				}
 			}
 		});
@@ -175,11 +175,66 @@ function CreateEventPopup(date)
 
 	let popupBodyHtml = `
 		<h3 class="center">Create New Event</h3>
-		<h4 class="center">Date: ${DateToString(date)}</h4>
-		<form>
-			<button class="positive">Create</button>
-		</form>
+		<h4 class="center">Date: ${DateToString(date)}</h4>`
+		popupBodyHtml += EventPopupBody();
 
-		`
+		popupBodyHtml += `<button class="positive" onClick="CreateEvent()">Create</button>`
+
 	OpenPopup(popupBodyHtml)
+}
+
+function EditEventPopup(eventId)
+{
+	let event = {};
+
+	EventDataCache[0].forEach(item => {
+		if (item.EventId == eventId)
+		{
+			event = item;
+		}
+	});
+
+	let popupBodyHtml = `<h3 class="center">Edit Event</h3>`
+	popupBodyHtml += EventPopupBody(event.EventName, event.EventDescription, event.EventColor);
+
+	popupBodyHtml += `<button class="positive" onClick="CreateEvent()">Create</button>`
+
+	OpenPopup(popupBodyHtml)
+}
+
+function EventPopupBody(eventName, eventDescription, colour)
+{
+	if (!eventName)
+		eventName = "";
+
+	if (!eventDescription)
+		eventDescription = "";
+
+	if (!colour)
+		colour = 'red';
+
+	let popupBodyHtml = `
+		<div style="display:flex;">
+			<div>
+				<label for"eventName">Event Name:</label>
+				<input type="text" id="eventName" name="EventName" value="${eventName}" required>
+			</div>
+
+			<div>
+				<label for"eventColor">Colour:</label>
+				<select id="eventColor" name="EventColor" required>
+					<option value="red" ${ colour == 'red' ? "selected" : ""}>Red</option>
+					<option value="green" ${ colour == 'green' ? "selected" : ""}>Green</option>
+					<option value="blue" ${ colour == 'blue' ? "selected" : ""}>Blue</option>
+					<option value="pink" ${ colour == 'pink' ? "selected" : ""}>Pink</option>
+
+				</select>
+			</div>
+		</div>
+		<div>
+			<label for"eventDescription">Description:</label>
+			<textarea type="text" id="eventDescription" name="EventDescription" value="${eventDescription}" required></textarea>
+		</div>`
+
+	return popupBodyHtml;
 }
