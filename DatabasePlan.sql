@@ -10,10 +10,19 @@ CREATE TABLE Users(
 	Username VARCHAR(50) NOT NULL UNIQUE,
 	JoinedDateTime DATETIME DEFAULT CURRENT_TIMESTAMP  NOT NULL,
 	LastModifiedDateTime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+	LastTimezone FLOAT,
+	UseLightTheme BOOLEAN NOT NULL DEFAULT 1,
 
 	PRIMARY KEY (UserID)
 	);
 
+CREATE TABLE UserTimezone(
+	UserID INT NOT NULL,
+	Username VARCHAR(50) NOT NULL UNIQUE,
+	TimeZoneOffset FLOAT NOT NULL,
+
+	FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
 
 CREATE TABLE Events(
 	EventID INT AUTO_INCREMENT NOT NULL,
@@ -45,6 +54,7 @@ CREATE TABLE EventAttendees(
 
 SHOW TABLES;
 DESCRIBE Users;
+DESCRIBE UserTimezone;
 DESCRIBE Events;
 DESCRIBE EventAttendees;
 
@@ -52,6 +62,9 @@ DESCRIBE EventAttendees;
 
 INSERT INTO Users (Username)VALUES('Louie');
 INSERT INTO Users (Username)VALUES('Randy');
+
+INSERT INTO UserTimezone (Username,TimeZoneOffset,UserID)VALUES('Louie',0.0,1);
+INSERT INTO UserTimezone (Username,TimeZoneOffset,UserID)VALUES('Randy',1,2);
 
 -- meeting hosted by louie with randy attending
 INSERT INTO Events (EventName, EventDateTime, EventCreator)VALUES('Test Meeting', '20220301', 1);
@@ -66,6 +79,7 @@ INSERT INTO Events (EventName, EventDateTime, EventCreator)VALUES('Test Meeting'
 INSERT INTO EventAttendees (EventID, UserID)VALUES(2, 1);
 
 SELECT * FROM Users;
+SELECT * FROM UserTimezone;
 SELECT * FROM Events;
 SELECT * FROM EventAttendees;
 
