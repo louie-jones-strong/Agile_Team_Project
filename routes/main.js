@@ -153,4 +153,164 @@ module.exports = function(app, port)
 	});
 
 //#endregion events
+
+//user timezones
+app.post("/EditUserLastTimezone",function(req, res)
+{
+	console.log("/EditUserLastTimezone", req.query);
+
+	var sanitizedUserID = req.sanitize(req.query.UserID);
+	var sanitizedTimeZoneOffset= req.sanitize(req.query.LastTimezone,
+		);
+
+
+	if (sanitizedUserID == null)
+	{
+		res.sendStatus(404);
+		return;
+	}
+	if (isNaN(sanitizedTimeZoneOffset))
+	{
+		res.sendStatus(500);
+		return;
+	}
+
+	let sqlQuery = `UPDATE Users SET LastTimezone
+	= ${sanitizedTimeZoneOffset} WHERE UserID = ${sanitizedUserID}`
+
+	db.query(sqlQuery, (err, result) => {
+		if (err) {
+			console.log(err);
+			res.sendStatus(400);
+			return;
+		}
+
+		res.send(result);
+	});
+});
+
+app.get("/AllUserTimezone",function(req, res)
+{
+	console.log("/AllUserTimezone", req.query);
+
+	let sqlQuery = `SELECT * FROM UserTimezone`
+
+
+	db.query(sqlQuery, (err, result) => {
+		if (err) {
+			console.log(err);
+			res.sendStatus(400);
+			return;
+		}
+
+		res.send(result);
+	});
+});
+app.get("/UserTimezoneByUserId",function(req, res)
+{
+	console.log("/UserTimezoneByUserId", req.query);
+
+	var sanitizedUserID = req.sanitize(req.query.UserID);
+
+		if (sanitizedUserID == null)
+		{
+			res.sendStatus(404);
+			return;
+		}
+
+	let sqlQuery = `SELECT * FROM UserTimezone WHERE UserId = ${sanitizedUserID}`
+
+
+	db.query(sqlQuery, (err, result) => {
+		if (err) {
+			console.log(err);
+			res.sendStatus(400);
+			return;
+		}
+
+		res.send(result);
+	});
+});
+app.post("/AddUserTimezone",function(req, res)
+{
+	console.log("/AddUserTimezone", req.query);
+
+	var sanitizedUserID = req.sanitize(req.query.UserID);
+	var sanitizedUserName = req.sanitize(req.query.UserName);
+	var sanitizedTimeZoneOffset= req.sanitize(req.query.TimeZoneOffset);
+
+
+	if (sanitizedUserID == null)
+	{
+		res.sendStatus(404);
+		return;
+	}
+
+	let sqlQuery = `INSERT INTO UserTimezone
+		(UserId, Username, TimeZoneOffset)
+		VALUES
+		(${sanitizedUserID}, '${sanitizedUserName}', '${sanitizedTimeZoneOffset}')`
+
+	db.query(sqlQuery, (err, result) => {
+		if (err) {
+			console.log(err);
+			res.sendStatus(400);
+			return;
+		}
+
+		res.send(result);
+	});
+});
+app.post("/EditUserTimezone",function(req, res)
+{
+	console.log("/EditUserTimezone", req.query);
+
+	var sanitizedUserID = req.sanitize(req.query.UserID);
+	var sanitizedTimeZoneOffset= req.sanitize(req.query.TimeZoneOffset);
+
+
+	if (sanitizedUserID == null)
+	{
+		res.sendStatus(404);
+		return;
+	}
+
+	let sqlQuery = `UPDATE UserTimezone SET TimeZoneOffset = ${sanitizedTimeZoneOffset} WHERE UserId = ${sanitizedUserID}`
+
+	db.query(sqlQuery, (err, result) => {
+		if (err) {
+			console.log(err);
+			res.sendStatus(400);
+			return;
+		}
+
+		res.send(result);
+	});
+});
+app.post("/DeleteUserTimezone",function(req, res)
+{
+	console.log("/DeleteUserTimezone", req.query);
+
+	var sanitizedUserID = req.sanitize(req.query.UserID);
+
+	if (sanitizedUserID == null)
+	{
+		res.sendStatus(404);
+		return;
+	}
+
+	let sqlQuery = `DELETE FROM UserTimezone WHERE UserId = ${sanitizedUserID}`
+
+	db.query(sqlQuery, (err, result) => {
+		if (err) {
+			console.log(err);
+			res.sendStatus(400);
+			return;
+		}
+
+		res.send(result);
+	});
+});
+//end user timezones
+
 }
