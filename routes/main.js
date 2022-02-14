@@ -148,14 +148,13 @@ module.exports = function(app, port)
 				return;
 			}
 
-			console.log(result);
 			res.send(result);
 		});
 	});
 
 	app.post("/CreateEvent",function(req, res)
 	{
-		console.log("/CreateEvent", req.query);
+		console.log("/CreateEvent", req.query, req.body);
 
 		var sanitizedUserID = req.sanitize(req.query.UserID);
 
@@ -176,7 +175,9 @@ module.exports = function(app, port)
 			EventDuration, EventColor)
 			VALUES
 			(${sanitizedUserID}, '${sanitizedEventName}', '${sanitizedEventDescription}', '${sanitizedEventDateTime}',
-			${sanitizedEventDuration}', '${sanitizedEventColor}')`
+			${sanitizedEventDuration}, '${sanitizedEventColor}')`
+
+		console.log(sqlQuery);
 
 		db.query(sqlQuery, (err, result) => {
 			if (err) {
@@ -189,7 +190,7 @@ module.exports = function(app, port)
 		});
 	});
 
-	app.post("/RemoveEvent",function(req, res)
+	app.delete("/RemoveEvent",function(req, res)
 	{
 		console.log("/RemoveEvent", req.query);
 
@@ -201,27 +202,26 @@ module.exports = function(app, port)
 			return;
 		}
 
-		// remove event
-		let sqlQuery = `DELETE FROM Events WHERE EventID = ${sanitizedEventID}`;
+
+		// remove EventAttendees
+		let sqlQuery = `DELETE FROM EventAttendees WHERE EventID = ${sanitizedEventID}`;
 		db.query(sqlQuery, (err, result) => {
 			if (err) {
 				console.log(err);
-				res.sendStatus(400);
 				return;
 			}
 
-			// remove EventAttendees
-			let sqlQuery = `DELETE FROM EventAttendees WHERE EventID = ${sanitizedEventID}`;
+			// remove event
+			let sqlQuery = `DELETE FROM Events WHERE EventID = ${sanitizedEventID}`;
 			db.query(sqlQuery, (err, result) => {
 				if (err) {
 					console.log(err);
+					res.sendStatus(400);
 					return;
 				}
 
 				res.send(result);
 			});
-
-			res.send(result);
 		});
 	});
 

@@ -26,6 +26,7 @@ global.db = db;
 
 app.use(expressSanitizer());
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
 app.set("view engine", "ejs");
 app.engine("html", require("ejs").renderFile);
 

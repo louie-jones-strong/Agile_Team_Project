@@ -21,6 +21,13 @@ function CurrentMonth()
 	DrawCalendar();
 }
 
+function ForceUpdatePage()
+{
+	EventDataCache = {};
+	DrawCalendar();
+	ClosePopup();
+}
+
 function DrawCalendar()
 {
 	let currentDate = new Date();
@@ -142,15 +149,17 @@ function GetDayEvents(monthOffset, date)
 			{
 				let eventName = event.EventName;
 				let eventTime = "12pm";
-				if (event.EventDuration == null)
+
+				if (event.EventDuration == null ||
+					event.EventDuration < 0)
 				{
 					// full day event
-					html += `<div onclick="EditEventPopup(${event.EventId})" class="event fullDayEvent">${eventName}</div>`;
+					html += `<div onclick="EditEventPopup(${event.EventID})" class="event fullDayEvent">${eventName}</div>`;
 				}
 				else
 				{
 					// part of day event
-					html += `<div onclick="EditEventPopup(${event.EventId})" class="event partDayEvent">${eventTime} ${eventName}</div>`;
+					html += `<div onclick="EditEventPopup(${event.EventID})" class="event partDayEvent">${eventTime} ${eventName}</div>`;
 				}
 			}
 		});
@@ -175,10 +184,10 @@ function CreateEventPopup(date)
 
 	let popupBodyHtml = `
 		<h3 class="center">Create New Event</h3>
-		<h4 class="center">Date: ${DateToString(date)}</h4>`
+		<h4 class="center">Date: ${DateToString(date)}</h4>`;
 		popupBodyHtml += EventPopupBody();
 
-		popupBodyHtml += `<button class="positive" onClick="CreateEvent()">Create</button>`
+		popupBodyHtml += `<button class="positive rounded" onClick="CreateEvent()">Create</button>`;
 
 	OpenPopup(popupBodyHtml)
 }
@@ -188,53 +197,109 @@ function EditEventPopup(eventId)
 	let event = {};
 
 	EventDataCache[0].forEach(item => {
-		if (item.EventId == eventId)
+		if (item.EventID == eventId)
 		{
 			event = item;
 		}
 	});
 
-	let popupBodyHtml = `<h3 class="center">Edit Event</h3>`
-	popupBodyHtml += EventPopupBody(event.EventName, event.EventDescription, event.EventColor);
+	let popupBodyHtml = `<h3 class="center">Edit Event</h3>`;
+	popupBodyHtml += EventPopupBody(event);
 
-	popupBodyHtml += `<button class="positive" onClick="CreateEvent()">Create</button>`
+	popupBodyHtml += `
+		<div style="display:flex; justify-content:center;">
+			<button class="negative rounded" onClick="RemoveEvent('${eventId}')">Remove</button>
+			<button class="positive rounded" onClick="CreateEvent()">Save</button>
+		</div>`;
 
-	OpenPopup(popupBodyHtml)
+	OpenPopup(popupBodyHtml);
 }
 
-function EventPopupBody(eventName, eventDescription, colour)
+function EventPopupBody(event)
 {
-	if (!eventName)
-		eventName = "";
+	if (!event)
+		event = {}
 
-	if (!eventDescription)
-		eventDescription = "";
+	if (!event.EventName)
+		event.EventName = "";
 
-	if (!colour)
-		colour = 'red';
+	if (!event.EventDescription)
+		event.EventDescription = "";
+
+	if (!event.Colour)
+		event.Colour = 'red';
 
 	let popupBodyHtml = `
 		<div style="display:flex;">
 			<div>
 				<label for"eventName">Event Name:</label>
-				<input type="text" id="eventName" name="EventName" value="${eventName}" required>
+				<input type="text" id="eventName" name="EventName" value="${event.EventName}" required>
 			</div>
 
 			<div>
 				<label for"eventColor">Colour:</label>
 				<select id="eventColor" name="EventColor" required>
-					<option value="red" ${ colour == 'red' ? "selected" : ""}>Red</option>
-					<option value="green" ${ colour == 'green' ? "selected" : ""}>Green</option>
-					<option value="blue" ${ colour == 'blue' ? "selected" : ""}>Blue</option>
-					<option value="pink" ${ colour == 'pink' ? "selected" : ""}>Pink</option>
+					<option value="red" ${ event.Colour == 'red' ? "selected" : ""}>Red</option>
+					<option value="green" ${ event.Colour == 'green' ? "selected" : ""}>Green</option>
+					<option value="blue" ${ event.Colour == 'blue' ? "selected" : ""}>Blue</option>
+					<option value="pink" ${ event.Colour == 'pink' ? "selected" : ""}>Pink</option>
 
 				</select>
 			</div>
 		</div>
+
+		<div style="display:flex;">
+			<div>
+				<label for"eventDate">Event Date:</label>
+				<input type="datetime-local" id="eventDate" name="EventDateTime" value="${event.EventDateTime}" required>
+			</div>
+
+			<div>
+				<label for"duration">Duration:</label>
+				<input type="number" id="duration" name="EventDuration" required>
+			</div>
+		</div>
+
 		<div>
 			<label for"eventDescription">Description:</label>
-			<textarea type="text" id="eventDescription" name="EventDescription" value="${eventDescription}" required></textarea>
+			<textarea type="text" id="eventDescription" name="EventDescription" value="${event.EventDescription}" required></textarea>
 		</div>`
 
 	return popupBodyHtml;
+}
+
+function CreateEvent()
+{
+	let bodyData = {
+		UserID: 1, //todo from login
+		EventName: document.getElementById("eventName").value,
+		EventColor: document.getElementById("eventColor").value,
+		EventDescription: document.getElementById("eventDescription").value,
+		EventDateTime: document.getElementById("eventDate").value,
+		EventDuration: document.getElementById("duration").value,
+	};
+
+
+	Post(`/CreateEvent?
+		UserID=${1}&
+		EventName=${bodyData["EventName"]}&
+		EventDescription=${bodyData["EventDescription"]}&
+		EventDateTime=${bodyData["EventDateTime"]}&
+		EventDuration=${bodyData["EventDuration"]}&
+		EventColor=${bodyData["EventColor"]}
+		`,
+		"", [], function(jsonText)
+		{
+			ForceUpdatePage();
+		});
+}
+
+function RemoveEvent(eventId)
+{
+	Delete(`/RemoveEvent?
+		EventID=${eventId}`,
+		"", [], function(jsonText)
+		{
+			ForceUpdatePage();
+		});
 }

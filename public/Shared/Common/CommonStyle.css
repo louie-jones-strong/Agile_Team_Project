@@ -193,6 +193,14 @@ button.negative{
 	color: var(--InvalidColour-Contrast);
 }
 
+button.rounded{
+	padding-block: 0.25em;
+	padding-inline: 0.5em;
+	border-radius: 0.5em;
+	margin: 1em;
+}
+
+
 /* Tables */
 table{
 	border-collapse: collapse;
