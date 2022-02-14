@@ -121,9 +121,9 @@ function GetEventList(monthOffset)
 
 	EventDataCache[monthOffset] = [];
 
-	Get(`/eventList?UserID=${1}`, "", [], function(jsonText)
+	Get(`/eventList?UserID=${1}`, "", [], function(response)
 		{
-			let events = JSON.parse(jsonText);
+			let events = JSON.parse(response.responseText);
 			EventDataCache[monthOffset] = events;
 
 			if (CurrentMonthOffset-1 <= monthOffset &&
@@ -183,8 +183,7 @@ function CreateEventPopup(date)
 	}
 
 	let popupBodyHtml = `
-		<h3 class="center">Create New Event</h3>
-		<h4 class="center">Date: ${DateToString(date)}</h4>`;
+		<h3 class="center">Create New Event</h3>`;
 		popupBodyHtml += EventPopupBody();
 
 		popupBodyHtml += `<button class="positive rounded" onClick="CreateEvent()">Create</button>`;
@@ -230,6 +229,8 @@ function EventPopupBody(event)
 		event.Colour = 'red';
 
 	let popupBodyHtml = `
+		<div id="errorHolder" class="hide center negative rounded" style="padding: 1em;">
+		</div>
 		<div style="display:flex;">
 			<div>
 				<label for"eventName">Event Name:</label>
@@ -288,9 +289,18 @@ function CreateEvent()
 		EventDuration=${bodyData["EventDuration"]}&
 		EventColor=${bodyData["EventColor"]}
 		`,
-		"", [], function(jsonText)
+		"", [], function(response)
 		{
-			ForceUpdatePage();
+			if (response.status == 200)
+			{
+				ForceUpdatePage();
+			}
+			else
+			{
+				let errorHolder = document.getElementById("errorHolder");
+				errorHolder.classList.remove("hide");
+				errorHolder.innerHTML = response.responseText
+			}
 		});
 }
 
@@ -298,8 +308,17 @@ function RemoveEvent(eventId)
 {
 	Delete(`/RemoveEvent?
 		EventID=${eventId}`,
-		"", [], function(jsonText)
+		"", [], function(response)
 		{
-			ForceUpdatePage();
+			if (response.status == 200)
+			{
+				ForceUpdatePage();
+			}
+			else
+			{
+				let errorHolder = document.getElementById("errorHolder");
+				errorHolder.classList.remove("hide");
+				errorHolder.innerHTML = response.responseText
+			}
 		});
 }

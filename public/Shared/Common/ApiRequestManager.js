@@ -31,7 +31,7 @@ function SendRequest(method, url, bodyData, headerData, onResponse)
 		if (xhr.readyState === 4) {
 			LogResponse(xhr);
 			if (onResponse) {
-				onResponse(xhr.responseText)
+				onResponse(xhr)
 			}
 		}
 	};

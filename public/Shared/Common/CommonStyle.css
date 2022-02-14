@@ -179,16 +179,12 @@ button:disabled{
 	cursor:not-allowed;
 }
 
-button.positive{
+.positive{
 	background-color: var(--PositiveColour);
 	color: var(--PositiveColour-Contrast);
-	padding-block: 0.25em;
-	padding-inline: 0.5em;
-	border-radius: 0.5em;
-	margin: 1em;
 }
 
-button.negative{
+.negative{
 	background-color: var(--InvalidColour);
 	color: var(--InvalidColour-Contrast);
 }
