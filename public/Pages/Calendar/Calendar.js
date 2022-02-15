@@ -154,12 +154,20 @@ function GetDayEvents(monthOffset, date)
 					event.EventDuration < 0)
 				{
 					// full day event
-					html += `<div onclick="EditEventPopup(${event.EventID})" class="event fullDayEvent">${eventName}</div>`;
+					html += `<div
+								onclick="EditEventPopup(${event.EventID})"
+								class="event fullDayEvent ${event.EventColor}Event">
+							${eventName}
+						</div>`;
 				}
 				else
 				{
 					// part of day event
-					html += `<div onclick="EditEventPopup(${event.EventID})" class="event partDayEvent">${eventTime} ${eventName}</div>`;
+					html += `<div
+								onclick="EditEventPopup(${event.EventID})"
+								class="event partDayEvent ${event.EventColor}Event">
+						${eventTime} ${eventName}
+					</div>`;
 				}
 			}
 		});
@@ -225,8 +233,8 @@ function EventPopupBody(event)
 	if (!event.EventDescription)
 		event.EventDescription = "";
 
-	if (!event.Colour)
-		event.Colour = 'red';
+	if (!event.EventColor)
+		event.EventColor = 'red';
 
 	let popupBodyHtml = `
 		<div id="errorHolder" class="hide center negative rounded" style="padding: 1em;">
@@ -240,10 +248,10 @@ function EventPopupBody(event)
 			<div>
 				<label for"eventColor">Colour:</label>
 				<select id="eventColor" name="EventColor" required>
-					<option value="red" ${ event.Colour == 'red' ? "selected" : ""}>Red</option>
-					<option value="green" ${ event.Colour == 'green' ? "selected" : ""}>Green</option>
-					<option value="blue" ${ event.Colour == 'blue' ? "selected" : ""}>Blue</option>
-					<option value="pink" ${ event.Colour == 'pink' ? "selected" : ""}>Pink</option>
+					<option value="red" ${ event.EventColor == 'red' ? "selected" : ""}>Red</option>
+					<option value="green" ${ event.EventColor == 'green' ? "selected" : ""}>Green</option>
+					<option value="blue" ${ event.EventColor == 'blue' ? "selected" : ""}>Blue</option>
+					<option value="pink" ${ event.EventColor == 'pink' ? "selected" : ""}>Pink</option>
 
 				</select>
 			</div>
@@ -257,7 +265,7 @@ function EventPopupBody(event)
 
 			<div>
 				<label for"duration">Duration:</label>
-				<input type="number" id="duration" name="EventDuration" required>
+				<input type="number" id="duration" name="EventDuration" value="${event.EventDuration}" required>
 			</div>
 		</div>
 

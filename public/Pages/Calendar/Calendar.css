@@ -62,8 +62,6 @@
 
 	color: var(--Colour-Text1);
 	cursor: pointer;
-
-	--EventColour: #1abc9c;
 }
 
 .event::after{
@@ -102,4 +100,23 @@
 	clip-path: circle();
 	background-color: var(--EventColour);
 	padding-left: 0.5em;
+}
+
+
+/* event colours */
+
+.redEvent{
+	--EventColour: hsl(357, 50%, 55%);
+}
+
+.greenEvent{
+	--EventColour: hsl(140, 50%, 55%);
+}
+
+.blueEvent{
+	--EventColour: hsl(204, 50%, 55%);
+}
+
+.pinkEvent{
+	--EventColour: hsl(288, 50%, 55%);
 }
