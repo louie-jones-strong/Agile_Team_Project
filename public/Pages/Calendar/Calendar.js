@@ -54,9 +54,7 @@ function DrawCalendar()
 			<th>Sunday</th>
 		</tr>`;
 
-	let daysInPreviousMonth = GetDaysInMonth(now, -1);
 	let firstDayOfMonth = GetFirstDayOfTheMonth(now);
-	let daysInMonth = GetDaysInMonth(now, 0);
 
 
 	let index = 0;
@@ -66,28 +64,19 @@ function DrawCalendar()
 		html += "<tr>";
 		for (let days = 0; days < 7; days++)
 		{
-			let dayOfMonth = 0;
-			let monthOffset = 0;
+			let dayDate = AddDaysOffset(now, index - (firstDayOfMonth - 1));
+			let monthOffset = GetMonthOffset(dayDate, now);
 
-			let dayDate = AddDaysOffset(now, index - firstDayOfMonth);
 			html += `<td class="day`;
 
-			if (index < firstDayOfMonth) // previous month
+			if (monthOffset != 0) // not this month
 			{
-				monthOffset = -1;
 				html += " otherMonth";
-				dayOfMonth = daysInPreviousMonth - (firstDayOfMonth - (index+1) );
-			}
-			else if ((index+1 - firstDayOfMonth) > daysInMonth) // next month
-			{
-				monthOffset = 1;
-				html += " otherMonth";
-				dayOfMonth = index+1 - (daysInMonth + firstDayOfMonth);
-				showingAllDaysOfMonth = true;
-			}
-			else
-			{
-				dayOfMonth = index - (firstDayOfMonth - 1)
+
+				if (monthOffset > 0) // next month
+				{
+					showingAllDaysOfMonth = true;
+				}
 			}
 
 			if (dayDate < currentDate)
@@ -100,11 +89,10 @@ function DrawCalendar()
 			}
 
 			html += `">`
-			html += `${dayOfMonth}`;
+			html += `${dayDate.getDate()}`;
 			html += GetDayEvents(monthOffset, dayDate);
 			html += "</td>";
 			index += 1;
-
 		}
 		html += "</tr>";
 	}

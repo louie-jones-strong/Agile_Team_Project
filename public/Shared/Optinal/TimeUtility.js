@@ -191,3 +191,12 @@ function IsSameDay(now1, now2)
 		now1.getUTCMonth() == now2.getUTCMonth() &&
 		now1.getDate() == now2.getDate();
 }
+
+function GetMonthOffset(now1, now2)
+{
+	let monthOffset = (now1.getUTCFullYear() - now2.getUTCFullYear()) * 12;
+
+	monthOffset += now1.getUTCMonth() - now2.getUTCMonth()
+
+	return monthOffset;
+}
