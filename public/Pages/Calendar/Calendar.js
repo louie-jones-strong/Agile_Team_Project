@@ -194,7 +194,7 @@ function EditEventPopup(eventId)
 
 	popupBodyHtml += `
 		<div style="display:flex; justify-content:center;">
-			<button class="negative rounded" onClick="RemoveEvent('${eventId}')">Remove</button>
+			<button class="negative rounded" onClick="RemoveEventPopup('${eventId}')">Remove</button>
 			<button class="positive rounded" onClick="CreateEvent()">Save</button>
 		</div>`;
 
@@ -299,6 +299,20 @@ function CreateEvent()
 				errorHolder.innerHTML = response.responseText
 			}
 		});
+}
+
+function RemoveEventPopup(eventId)
+{
+	let popupBodyHtml = `<h3 class="center">Remove Event</h3>`;
+	popupBodyHtml += `
+		<p class="center">Are you sure you want to remove this event?</p>
+		<div style="display:flex; justify-content:center;">
+			<button class="positive rounded" onClick="RemoveEvent('${eventId}')">Remove</button>
+			<button class="negative rounded" onClick="ClosePopup()">Cancel</button>
+		</div>`;
+
+
+	OpenPopup(popupBodyHtml);
 }
 
 function RemoveEvent(eventId)
