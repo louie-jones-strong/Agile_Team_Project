@@ -167,17 +167,8 @@ function GetDayEvents(monthOffset, date)
 	return html
 }
 
-function CreateEventPopup(date)
+function CreateEventPopup()
 {
-	if (date == null)
-	{
-		date = new Date();
-	}
-	else
-	{
-		date = new Date(date);
-	}
-
 	let popupBodyHtml = `
 		<h3 class="center">Create New Event</h3>`;
 		popupBodyHtml += EventPopupBody();
@@ -223,6 +214,16 @@ function EventPopupBody(event)
 
 	if (!event.EventColor)
 		event.EventColor = 'red';
+
+	if (!event.EventDateTime)
+		event.EventDateTime = new Date();
+	else
+		event.EventDateTime = new Date(event.EventDateTime);
+
+	let isoStr = event.EventDateTime.toISOString();
+	event.EventDateTime = isoStr.substring(0,isoStr.length-1)
+
+	console.log(event.EventDateTime);
 
 	let popupBodyHtml = `
 		<div id="errorHolder" class="hide center negative rounded" style="padding: 1em;">
