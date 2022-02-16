@@ -225,5 +225,65 @@ module.exports = function(app, port)
 		});
 	});
 
+	app.post("/EditEvent",function(req, res)
+	{
+		console.log("/EditEvent", req.query, req.body);
+
+		var sanitizedEventID = req.sanitize(req.query.EventID);
+		var sanitizedEventName = req.sanitize(req.query.EventName);
+		if (sanitizedEventID == null)
+		{
+			res.sendStatus(404);
+			return;
+		}
+
+		let sqlQuery = `UPDATE Events SET EventName = '${sanitizedEventName}'`
+		sqlQuery = TryAddValueToEditSql(sqlQuery, req, req.query.EventDescription, "EventDescription", true);
+		sqlQuery = TryAddValueToEditSql(sqlQuery, req, req.query.EventDateTime, "EventDateTime", true);
+		sqlQuery = TryAddValueToEditSql(sqlQuery, req, req.query.EventDuration, "EventDuration", true);
+		sqlQuery = TryAddValueToEditSql(sqlQuery, req, req.query.EventColor, "EventColor", true);
+		sqlQuery += ` WHERE EventID = ${sanitizedEventID}`;
+
+		console.log(sqlQuery);
+
+		db.query(sqlQuery, (err, result) => {
+			if (err) {
+				console.log(err);
+				res.sendStatus(400);
+				return;
+			}
+
+			res.send(result);
+		});
+	});
+
+
+
 //#endregion events
+}
+
+
+function TryAddValueToEditSql(sqlQuery, req, value, valueNameStr, addQuotes=false)
+{
+	if (value == null)
+	{
+		return sqlQuery;
+	}
+
+	var sanitizedValue = req.sanitize(value);
+	if (sanitizedValue == null)
+	{
+		return sqlQuery;
+	}
+
+	if (addQuotes)
+	{
+		sqlQuery += `, ${valueNameStr} = '${sanitizedValue}'`;
+	}
+	else
+	{
+		sqlQuery += `, ${valueNameStr} = ${sanitizedValue}`;
+	}
+
+	return sqlQuery;
 }

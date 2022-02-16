@@ -195,7 +195,7 @@ function EditEventPopup(eventId)
 	popupBodyHtml += `
 		<div style="display:flex; justify-content:center;">
 			<button class="negative rounded" onClick="RemoveEventPopup('${eventId}')">Remove</button>
-			<button class="positive rounded" onClick="CreateEvent()">Save</button>
+			<button class="positive rounded" onClick="EditEvent(${eventId})">Save</button>
 		</div>`;
 
 	OpenPopup(popupBodyHtml);
@@ -280,6 +280,40 @@ function CreateEvent()
 
 	Post(`/CreateEvent?
 		UserID=${1}&
+		EventName=${bodyData["EventName"]}&
+		EventDescription=${bodyData["EventDescription"]}&
+		EventDateTime=${bodyData["EventDateTime"]}&
+		EventDuration=${bodyData["EventDuration"]}&
+		EventColor=${bodyData["EventColor"]}
+		`,
+		"", [], function(response)
+		{
+			if (response.status == 200)
+			{
+				ForceUpdatePage();
+			}
+			else
+			{
+				let errorHolder = document.getElementById("errorHolder");
+				errorHolder.classList.remove("hide");
+				errorHolder.innerHTML = response.responseText
+			}
+		});
+}
+
+function EditEvent(eventID)
+{
+	let bodyData = {
+		EventName: document.getElementById("eventName").value,
+		EventColor: document.getElementById("eventColor").value,
+		EventDescription: document.getElementById("eventDescription").value,
+		EventDateTime: document.getElementById("eventDate").value,
+		EventDuration: document.getElementById("duration").value,
+	};
+
+
+	Post(`/EditEvent?
+	EventID=${eventID}&
 		EventName=${bodyData["EventName"]}&
 		EventDescription=${bodyData["EventDescription"]}&
 		EventDateTime=${bodyData["EventDateTime"]}&
