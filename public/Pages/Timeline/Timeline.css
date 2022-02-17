@@ -21,18 +21,23 @@
 	--backgroundColor: var(--ColourAccentRGB);
 	--color: var(--ColourAccentRGB-Contrast);
 
+
 	cursor: move;
 	z-index: 11;
 	left: calc(75% - 5.5em);
 
 }
 
-#currentTimeMarker > *{
-	color: var(--color);
-}
+#predictedTimeMarker > .material-icons{
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	background-color: transparent;
+	font-size: 1.5rem;
 
-#predictedTimeMarker > *{
-	color: var(--color);
+	display: flex;
+	align-items: center;
 }
 
 .timeMarker{
@@ -44,7 +49,8 @@
 	border-radius: 1em;
 }
 
-.timeMarker > *{
+.timeMarker *{
+	color: var(--color);
 	background-color: var(--backgroundColor);
 	margin: 0px;
 }
