@@ -1,0 +1,98 @@
+
+
+#timeLinesHolder{
+	position: relative;
+	padding-top: 5em;
+
+	--timeZone-height: 3.5em;
+	--number-TimeZones: 2;
+}
+
+/* markers */
+#currentTimeMarker{
+	--backgroundColor: var(--ColourMainRGB);
+	--color: var(--ColourMainRGB-Contrast);
+
+	z-index: 10;
+	left: calc(50% - 5.5em);
+}
+
+#predictedTimeMarker{
+	--backgroundColor: var(--ColourAccentRGB);
+	--color: var(--ColourAccentRGB-Contrast);
+
+	cursor: move;
+	z-index: 11;
+	left: calc(75% - 5.5em);
+
+}
+
+#currentTimeMarker > *{
+	color: var(--color);
+}
+
+#predictedTimeMarker > *{
+	color: var(--color);
+}
+
+.timeMarker{
+	background-color: var(--backgroundColor);
+	position: absolute;
+	top: 0;
+	width: 10em;
+	padding: 0.5em;
+	border-radius: 1em;
+}
+
+.timeMarker > *{
+	background-color: var(--backgroundColor);
+	margin: 0px;
+}
+
+.markerLine{
+	position: absolute;
+	top: 100%;
+	left: calc(50% - 1.5px);
+	width: 3px;
+	height: calc(var(--timeZone-height) * (var(--number-TimeZones) + 1) );
+	background-color: var(--backgroundColor);
+}
+
+
+/* each line */
+.timeZone{
+	position: relative;
+	height: var(--timeZone-height);
+}
+
+.dayList{
+	position: absolute;
+	display: flex;
+	width: 125vw;
+	left: -10vw;
+}
+
+.timeZone > h4{
+	padding-left: 0.5em;
+	margin-top: 0em;
+	margin-bottom: 0.1em;
+}
+
+.day{
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	padding-block: 0.1em;
+	border-radius: 1rem;
+	background: linear-gradient(to right,#4b4c4d 0%,#4b4c4d 24.99%,#575b5c 25%,#575b5c 32.99%,#6b7071 33%,#6b7071 74.99%,#575b5c 75%,#575b5c 90.99%,#4b4c4d 91%,#4b4c4d 100%);
+	color: white;
+	position: relative;
+	overflow: hidden;
+}
+
+.day.selected{
+	background: linear-gradient(to right,#5485b1 0%,#5485b1 24.99%,#3cafc5 25%,#3cafc5 32.99%,#55c8e4 33%,#55c8e4 74.99%,#3cafc5 75%,#3cafc5 90.99%,#5485b1 91%,#5485b1 100%);
+	color: black;
+}
+

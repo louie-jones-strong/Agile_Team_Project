@@ -12,6 +12,8 @@
 			Thumbnail: "",
 		}
 	}); %>
+	<link rel="stylesheet" href="Pages/Timeline/Timeline.css">
+	<script src="Shared/Optinal/TimeUtility.js"></script>
 </head>
 
 <body class="dark">
@@ -24,7 +26,44 @@
 		<!-- shared common header -->
 		<%- include('Components/Header'); %>
 
-		<div class="centeredFrame">
+		<h1 class="center">Timelines</h1>
+
+		<div id="timeLinesHolder">
+
+			<div id="currentTimeMarker" class="timeMarker shaded">
+				<h4 class="center">12:12</h4>
+				<p class="center">Current Local Time</p>
+				<div class="markerLine"></div>
+			</div>
+
+			<div id="predictedTimeMarker" class="timeMarker shaded">
+				<h4 class="center">12:12</h4>
+				<p class="center">Local Time</p>
+				<div class="markerLine"></div>
+			</div>
+
+			<div id="timeZoneHolder">
+				<div class="timeZone">
+					<h4>Your timezone UTC+1</h4>
+					<div class="dayList">
+						<div class="day shaded">date day1</div>
+						<div class="day shaded">date day2</div>
+						<div class="day shaded selected">date day3</div>
+						<div class="day shaded">date day4</div>
+						<div class="day shaded">date day5</div>
+					</div>
+				</div>
+				<div class="timeZone">
+					<h4>Your timezone UTC+1</h4>
+					<div class="dayList">
+						<div class="day shaded">date day1</div>
+						<div class="day shaded">date day2</div>
+						<div class="day shaded selected">date day3</div>
+						<div class="day shaded">date day4</div>
+						<div class="day shaded">date day5</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<%- include('Components/PopupHolder'); %>
