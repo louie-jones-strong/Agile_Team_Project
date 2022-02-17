@@ -179,9 +179,14 @@ module.exports = function(app, port)
 		let sanitizedEventDuration = req.sanitize(req.query.EventDuration);
 		let sanitizedEventColor = req.sanitize(req.query.EventColor);
 
-		let attendees = req.query.Attendees.split(",");
-		attendees.forEach(attendee => {
-			attendee = req.sanitize(attendee);
+		let attendeesStrings = req.query.Attendees.split(",");
+		let attendeeIds = [];
+		attendeesStrings.forEach(attendee => {
+			try {
+				attendeeIds.push(parseInt(attendee));
+			} catch (error) {
+
+			}
 		});
 
 		if (sanitizedUserID == null)
@@ -197,8 +202,6 @@ module.exports = function(app, port)
 			(${sanitizedUserID}, '${sanitizedEventName}', '${sanitizedEventDescription}', '${sanitizedEventDateTime}',
 			${sanitizedEventDuration}, '${sanitizedEventColor}')`;
 
-		console.log(sqlQuery);
-
 		// add event
 		db.query(sqlQuery, (err, result) => {
 			if (err) {
@@ -207,7 +210,7 @@ module.exports = function(app, port)
 				return;
 			}
 
-			if (attendees.length > 0)
+			if (attendeeIds.length > 0)
 			{
 				// get last id added
 				db.query(`SELECT LAST_INSERT_ID()`, (err, result) => {
@@ -224,11 +227,11 @@ module.exports = function(app, port)
 					let sqlQuery = `INSERT INTO EventAttendees
 					(EventID, UserID)
 					VALUES`;
-					for (let index = 0; index < attendees.length; index++)
+					for (let index = 0; index < attendeeIds.length; index++)
 					{
-						const attendee = attendees[index];
+						const attendee = attendeeIds[index];
 						sqlQuery += `(${eventID}, ${attendee})`;
-						if (index < attendees.length -1)
+						if (index < attendeeIds.length -1)
 						{
 							sqlQuery += `,`;
 						}
@@ -238,8 +241,6 @@ module.exports = function(app, port)
 					db.query(sqlQuery, (err, result) => {
 						if (err) {
 							console.log(err);
-							res.sendStatus(400);
-							return;
 						}
 
 						res.sendStatus(200);
