@@ -120,3 +120,78 @@
 .pinkEvent{
 	--EventColour: hsl(288, 50%, 55%);
 }
+
+
+
+/* eventAttendees */
+
+#eventAttendeesHolder{
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	position: relative;
+}
+
+.eventAttendee{
+	display: flex;
+	margin: 0.25em;
+	border-radius: 0.5em;
+	padding: 0.1em;
+	padding-inline: 0.5em;
+
+	background-color: var(--ColourAccentRGB);
+	color: var(--ColourAccentRGB-Contrast);
+}
+
+.eventAttendee button{
+	margin-left: 1em;
+	color: var(--ColourAccentRGB-Contrast);
+}
+
+#eventAttendeeInput{
+	margin: 0.25em;
+	border: none;
+}
+
+#eventAttendeesToolTip{
+	display: none;
+	position: absolute;
+	left: 1em;
+	top: calc(100% + 0.1em);
+	width: calc(100% - 2em);
+	height: max-content;
+	z-index: 100;
+	border-bottom-right-radius: 1em;
+	border-bottom-left-radius: 1em;
+	border: 1px solid var(--Colour-Text1);
+
+	background-color: rgba(var(--BackgroundColour), 0.8);
+}
+
+#eventAttendeesHolder:focus-within > #eventAttendeesToolTip{
+	display:block;
+}
+
+#eventAttendeesToolTip > h4{
+	margin: 0em;
+	padding: 0em;
+	margin-inline:0.2em;
+	text-align: center;
+	color: var(--Colour-Text1);
+}
+
+#eventAttendeesToolTip  > button{
+	width: 100%;
+	text-align: center;
+	padding-block: 0.25em;
+	padding-inline: 0.5em;
+
+	background-color: transparent;
+	color: var(--Colour-Text1);
+	transition: all 0.25s;
+}
+
+#eventAttendeesToolTip > button:focus, #eventAttendeesToolTip > button:hover{
+	background-color: var(--Colour-Text4);
+	color: var(--BackgroundColourRGB);
+}

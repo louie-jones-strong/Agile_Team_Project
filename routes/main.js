@@ -110,11 +110,26 @@ module.exports = function(app, port)
 		});
 	});
 
+	app.get("/users", function(req, res)
+	{
+		console.log("/users");
+
+		let sqlQuery = `SELECT UserID, Username FROM Users`;
+
+		db.query(sqlQuery, (err, result) => {
+			if (err) {
+				console.log(err);
+				res.sendStatus(500);
+				return;
+			}
+			res.send(result);
+		});
+	});
+
 //#endregion Login flow
 
 
 //#region events
-
 
 	app.get("/eventList",function(req, res)
 	{
@@ -257,11 +272,8 @@ module.exports = function(app, port)
 		});
 	});
 
-
-
 //#endregion events
 }
-
 
 function TryAddValueToEditSql(sqlQuery, req, value, valueNameStr, addQuotes=false)
 {

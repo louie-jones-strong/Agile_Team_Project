@@ -232,7 +232,8 @@ ul li::before{
 
 input,
 textarea,
-select{
+select,
+#eventAttendeesHolder{
 	background-color: transparent;
 	color: var(--Colour-Text1);
 	border-radius: 0.35em;
@@ -245,7 +246,8 @@ select{
 
 input:focus, input:hover,
 textarea:focus, textarea:hover,
-select:focus, select:hover{
+select:focus, select:hover,
+#eventAttendeesHolder:focus, #eventAttendeesHolder:hover{
 	background-color: var(--Colour-Text4);
 	color: var(--BackgroundColourRGB);
 }

@@ -1,6 +1,9 @@
 let CurrentMonthOffset = 0;
 let EventDataCache = {};
+let UserList = {};
+let Attendees = [];
 
+GetUserList();
 CurrentMonth();
 
 function PreviousMonth()
@@ -167,6 +170,15 @@ function GetDayEvents(monthOffset, date)
 	return html
 }
 
+function GetUserList()
+{
+	Get(`/users`, "", [], function(response)
+		{
+			UserList = JSON.parse(response.responseText);
+		});
+}
+
+//#region Popups
 function CreateEventPopup()
 {
 	let popupBodyHtml = `
@@ -175,7 +187,9 @@ function CreateEventPopup()
 
 		popupBodyHtml += `<button class="positive rounded" onClick="CreateEvent()">Create</button>`;
 
-	OpenPopup(popupBodyHtml)
+	OpenPopup(popupBodyHtml);
+
+	UpdateAttendeeSuggestions();
 }
 
 function EditEventPopup(eventId)
@@ -197,6 +211,22 @@ function EditEventPopup(eventId)
 			<button class="negative rounded" onClick="RemoveEventPopup('${eventId}')">Remove</button>
 			<button class="positive rounded" onClick="EditEvent(${eventId})">Save</button>
 		</div>`;
+
+	OpenPopup(popupBodyHtml);
+
+	UpdateAttendeeSuggestions();
+}
+
+function RemoveEventPopup(eventId)
+{
+	let popupBodyHtml = `<h3 class="center">Remove Event</h3>`;
+	popupBodyHtml += `
+		<p class="center">Are you sure you want to remove this event?</p>
+		<div style="display:flex; justify-content:center;">
+			<button class="positive rounded" onClick="RemoveEvent('${eventId}')">Remove</button>
+			<button class="negative rounded" onClick="ClosePopup()">Cancel</button>
+		</div>`;
+
 
 	OpenPopup(popupBodyHtml);
 }
@@ -223,19 +253,17 @@ function EventPopupBody(event)
 	let isoStr = event.EventDateTime.toISOString();
 	event.EventDateTime = isoStr.substring(0,isoStr.length-1)
 
-	console.log(event.EventDateTime);
-
 	let popupBodyHtml = `
 		<div id="errorHolder" class="hide center negative rounded" style="padding: 1em;">
 		</div>
 		<div style="display:flex;">
 			<div>
-				<label for"eventName">Event Name:</label>
+				<label for="eventName">Event Name:</label>
 				<input type="text" id="eventName" name="EventName" value="${event.EventName}" required>
 			</div>
 
 			<div>
-				<label for"eventColor">Colour:</label>
+				<label for="eventColor">Colour:</label>
 				<select id="eventColor" name="EventColor" required>
 					<option value="red" ${ event.EventColor == 'red' ? "selected" : ""}>Red</option>
 					<option value="green" ${ event.EventColor == 'green' ? "selected" : ""}>Green</option>
@@ -248,23 +276,122 @@ function EventPopupBody(event)
 
 		<div style="display:flex;">
 			<div>
-				<label for"eventDate">Event Date:</label>
+				<label for="eventDate">Event Date:</label>
 				<input type="datetime-local" id="eventDate" name="EventDateTime" value="${event.EventDateTime}" required>
 			</div>
 
 			<div>
-				<label for"duration">Duration:</label>
+				<label for="duration">Duration:</label>
 				<input type="number" id="duration" name="EventDuration" value="${event.EventDuration}" required>
 			</div>
 		</div>
 
+		<label>Attendees:</label>
+		<label for="eventAttendeeInput" id="eventAttendeesHolder">
+			<input type="text" id="eventAttendeeInput" oninput="UpdateAttendeeSuggestions()">
+
+			<div id="eventAttendeesToolTip">
+			</div>
+		</label>
+
 		<div>
-			<label for"eventDescription">Description:</label>
+			<label for="eventDescription">Description:</label>
 			<textarea type="text" id="eventDescription" name="EventDescription" value="${event.EventDescription}" required></textarea>
 		</div>`
 
 	return popupBodyHtml;
 }
+//#endregion Popups
+
+//#region Attendee
+function RemoveAttendeeFromPopup(userId)
+{
+	let attendee = document.getElementById(`eventAttendee_${userId}`);
+	attendee.remove();
+	Attendees.splice(Attendees.indexOf(userId), 1);
+	UpdateAttendeeSuggestions();
+}
+
+function AddAttendeeToPopup(userId)
+{
+	let holder = document.getElementById(`eventAttendeesHolder`);
+
+	let userName = "Unknown";
+
+	for (let index = 0; index < UserList.length; index++)
+	{
+		const user = UserList[index];
+		if (user.UserID == userId)
+		{
+			userName = user.Username;
+			break;
+		}
+	}
+
+	Attendees.push(userId);
+
+	let attendeeHtml = `
+		<div class="eventAttendee" id="eventAttendee_${userId}" value="${userId}">
+			${userName}
+			<button onclick="RemoveAttendeeFromPopup(${userId})">X</button>
+		</div>`;
+
+	holder.insertAdjacentHTML('afterbegin', attendeeHtml);
+
+	let input = document.getElementById(`eventAttendeeInput`);
+	input.value = "";
+	UpdateAttendeeSuggestions();
+}
+
+function UpdateAttendeeSuggestions()
+{
+	let input = document.getElementById(`eventAttendeeInput`);
+
+	let holder = document.getElementById(`eventAttendeesToolTip`);
+	let html = "";
+
+	if (UserList && UserList.length > 0)
+	{
+		html = `<h4>Suggested Attendees</h4>
+					<hr>`;
+
+		let suggestedCount = 0;
+		for (let index = 0; index < UserList.length; index++)
+		{
+			const user = UserList[index];
+
+			//todo check not current user
+			if (user.Username.includes(input.value))
+			{
+				let isInAttendees = false;
+				for (let index = 0; index < Attendees.length; index++)
+				{
+					if (Attendees[index] == user.UserID)
+					{
+						isInAttendees = true;
+						break;
+					}
+				}
+				if (isInAttendees)
+				{
+					continue;
+				}
+
+
+				html += `<button onclick="AddAttendeeToPopup(${user.UserID})">${user.Username}</button>`;
+				suggestedCount += 1;
+			}
+
+			if (suggestedCount >= 5)
+			{
+				break;
+			}
+		};
+	}
+
+	holder.innerHTML = html;
+}
+//#endregion
 
 function CreateEvent()
 {
@@ -333,20 +460,6 @@ function EditEvent(eventID)
 				errorHolder.innerHTML = response.responseText
 			}
 		});
-}
-
-function RemoveEventPopup(eventId)
-{
-	let popupBodyHtml = `<h3 class="center">Remove Event</h3>`;
-	popupBodyHtml += `
-		<p class="center">Are you sure you want to remove this event?</p>
-		<div style="display:flex; justify-content:center;">
-			<button class="positive rounded" onClick="RemoveEvent('${eventId}')">Remove</button>
-			<button class="negative rounded" onClick="ClosePopup()">Cancel</button>
-		</div>`;
-
-
-	OpenPopup(popupBodyHtml);
 }
 
 function RemoveEvent(eventId)
