@@ -209,6 +209,7 @@ function CreateEventPopup()
 
 	OpenPopup(popupBodyHtml);
 
+	Attendees = [];
 	UpdateAttendeeSuggestions();
 }
 
@@ -234,6 +235,8 @@ function EditEventPopup(eventId)
 
 	OpenPopup(popupBodyHtml);
 
+
+	Attendees = [];
 	UpdateAttendeeSuggestions();
 }
 
