@@ -135,9 +135,9 @@ module.exports = function(app, port)
 	{
 		console.log("/eventList", req.query);
 
-		var sanitizedUserID = req.sanitize(req.query.UserID);
-		var sanitizedDateRangeStart = req.sanitize(req.query.dateRangeStart);
-		var sanitizedDateRangeEnd = req.sanitize(req.query.dateRangeEnd);
+		let sanitizedUserID = req.sanitize(req.query.UserID);
+		let sanitizedDateRangeStart = req.sanitize(req.query.dateRangeStart);
+		let sanitizedDateRangeEnd = req.sanitize(req.query.dateRangeEnd);
 
 		if (sanitizedUserID == null)
 		{
@@ -151,10 +151,10 @@ module.exports = function(app, port)
 			) OR EventCreator=${sanitizedUserID})`
 
 			if (sanitizedDateRangeStart)
-				sqlQuery += ` AND EventDateTime >= ${sanitizedDateRangeStart}`
+				sqlQuery += ` AND EventDateTime >= '${sanitizedDateRangeStart}'`
 
 			if (sanitizedDateRangeEnd)
-				sqlQuery += ` AND EventDateTime <= ${sanitizedDateRangeEnd}`
+				sqlQuery += ` AND EventDateTime <= '${sanitizedDateRangeEnd}'`
 
 		db.query(sqlQuery, (err, result) => {
 			if (err) {

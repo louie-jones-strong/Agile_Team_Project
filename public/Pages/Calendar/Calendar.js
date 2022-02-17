@@ -93,7 +93,7 @@ function DrawCalendar()
 
 			html += `">`
 			html += `${dayDate.getDate()}`;
-			html += GetDayEvents(monthOffset, dayDate);
+			html += GetEventsHtml(monthOffset, dayDate);
 			html += "</td>";
 			index += 1;
 		}
@@ -102,30 +102,7 @@ function DrawCalendar()
 	calendarHolder.innerHTML = html
 }
 
-function GetEventList(monthOffset)
-{
-	EventDataCache[monthOffset]
-	if (EventDataCache[monthOffset])
-	{
-		return;
-	}
-
-	EventDataCache[monthOffset] = [];
-
-	Get(`/eventList?UserID=${1}`, "", [], function(response)
-		{
-			let events = JSON.parse(response.responseText);
-			EventDataCache[monthOffset] = events;
-
-			if (CurrentMonthOffset-1 <= monthOffset &&
-				CurrentMonthOffset+1 >= monthOffset)
-			{
-				DrawCalendar();
-			}
-		});
-}
-
-function GetDayEvents(monthOffset, date)
+function GetEventsHtml(monthOffset, date)
 {
 	let html = "";
 
@@ -170,6 +147,48 @@ function GetDayEvents(monthOffset, date)
 	return html
 }
 
+function GetEventList(monthOffset)
+{
+	EventDataCache[monthOffset]
+	if (EventDataCache[monthOffset])
+	{
+		return;
+	}
+
+	EventDataCache[monthOffset] = [];
+
+	// set start date range
+	let dateRangeStart = new Date();
+	dateRangeStart = AddMonthsOffset(dateRangeStart, monthOffset);
+	dateRangeStart.setDate(1);
+	// convert to iso standard
+	let startIsoStr = dateRangeStart.toISOString();
+	dateRangeStart = startIsoStr.substring(0,startIsoStr.length-1)
+
+	// set end date range
+	let dateRangeEnd = new Date();
+	dateRangeEnd = AddMonthsOffset(dateRangeEnd, monthOffset + 1);
+	dateRangeEnd = AddDaysOffset(dateRangeEnd, -1);
+	// convert to iso standard
+	let endIsoStr = dateRangeEnd.toISOString();
+	dateRangeEnd = endIsoStr.substring(0,endIsoStr.length-1)
+
+
+
+	// todo get user id
+	Get(`/eventList?UserID=${1}&dateRangeStart=${dateRangeStart}&dateRangeEnd=${dateRangeEnd}`,
+		"", [], function(response)
+		{
+			let events = JSON.parse(response.responseText);
+			EventDataCache[monthOffset] = events;
+
+			if (CurrentMonthOffset-1 <= monthOffset &&
+				CurrentMonthOffset+1 >= monthOffset)
+			{
+				DrawCalendar();
+			}
+		});
+}
 function GetUserList()
 {
 	Get(`/users`, "", [], function(response)
