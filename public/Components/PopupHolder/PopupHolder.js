@@ -11,7 +11,7 @@ function OpenPopup(bodyHtml)
 
 				<div class="topButtonsHolder">
 					<div></div>
-					<button class="closePopup" onclick='ClosePopup()'></button>
+					<button class="closePopup shaded" onclick='ClosePopup()'></button>
 				</div>
 				<div class="popupBody">
 					${bodyHtml}

@@ -12,7 +12,7 @@ function LoginPopup()
 
 			<button class="positive">Login</button>
 		</form>
-		<button class="center" onclick="CreateAccountPopup()">Create Account</button>`
+		<button class="center shaded" onclick="CreateAccountPopup()">Create Account</button>`
 
 	OpenPopup(popupBodyHtml)
 }
@@ -31,7 +31,7 @@ function CreateAccountPopup()
 			<label id="passwordConfirmLabel" for="passwordConfirm">Password Confirmation:</label>
 			<input class="center" type="password" id="passwordConfirm" name="passwordConfirm" required><br>
 
-			<button class="positive">Create</button>
+			<button class="positive shaded">Create</button>
 		</form>`
 
 	OpenPopup(popupBodyHtml)
