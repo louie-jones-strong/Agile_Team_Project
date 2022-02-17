@@ -29,6 +29,7 @@ function ForceUpdatePage()
 	EventDataCache = {};
 	DrawCalendar();
 	ClosePopup();
+	Attendees = [];
 }
 
 function DrawCalendar()
@@ -430,8 +431,8 @@ function CreateEvent()
 		EventDescription=${bodyData["EventDescription"]}&
 		EventDateTime=${bodyData["EventDateTime"]}&
 		EventDuration=${bodyData["EventDuration"]}&
-		EventColor=${bodyData["EventColor"]}
-		`,
+		EventColor=${bodyData["EventColor"]}&
+		Attendees=${Attendees}`,
 		"", [], function(response)
 		{
 			if (response.status == 200)
@@ -459,13 +460,13 @@ function EditEvent(eventID)
 
 
 	Post(`/EditEvent?
-	EventID=${eventID}&
+		EventID=${eventID}&
 		EventName=${bodyData["EventName"]}&
 		EventDescription=${bodyData["EventDescription"]}&
 		EventDateTime=${bodyData["EventDateTime"]}&
 		EventDuration=${bodyData["EventDuration"]}&
-		EventColor=${bodyData["EventColor"]}
-		`,
+		EventColor=${bodyData["EventColor"]}&
+		Attendees=${Attendees}`,
 		"", [], function(response)
 		{
 			if (response.status == 200)

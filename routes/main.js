@@ -81,7 +81,7 @@ module.exports = function(app, port)
 	{
 		console.log("/createAccount", req.query);
 
-		var sanitizeUsername = req.sanitize(req.query.username);
+		let sanitizeUsername = req.sanitize(req.query.username);
 		let sqlQuery = `INSERT INTO Users (Username)VALUES('${sanitizeUsername}')`;
 
 		db.query(sqlQuery, (err, result) => {
@@ -96,7 +96,7 @@ module.exports = function(app, port)
 	{
 		console.log("/login", req.query);
 
-		var sanitizeUsername = req.sanitize(req.query.username);
+		let sanitizeUsername = req.sanitize(req.query.username);
 		let sqlQuery = `SELECT UserID FROM Users WHERE Username = '${sanitizeUsername}'`;
 
 		db.query(sqlQuery, (err, result) => {
@@ -171,13 +171,18 @@ module.exports = function(app, port)
 	{
 		console.log("/CreateEvent", req.query, req.body);
 
-		var sanitizedUserID = req.sanitize(req.query.UserID);
+		let sanitizedUserID = req.sanitize(req.query.UserID);
 
-		var sanitizedEventName= req.sanitize(req.query.EventName);
-		var sanitizedEventDescription = req.sanitize(req.query.EventDescription);
-		var sanitizedEventDateTime = req.sanitize(req.query.EventDateTime);
-		var sanitizedEventDuration = req.sanitize(req.query.EventDuration);
-		var sanitizedEventColor = req.sanitize(req.query.EventColor);
+		let sanitizedEventName= req.sanitize(req.query.EventName);
+		let sanitizedEventDescription = req.sanitize(req.query.EventDescription);
+		let sanitizedEventDateTime = req.sanitize(req.query.EventDateTime);
+		let sanitizedEventDuration = req.sanitize(req.query.EventDuration);
+		let sanitizedEventColor = req.sanitize(req.query.EventColor);
+
+		let attendees = req.query.Attendees.split(",");
+		attendees.forEach(attendee => {
+			attendee = req.sanitize(attendee);
+		});
 
 		if (sanitizedUserID == null)
 		{
@@ -190,10 +195,11 @@ module.exports = function(app, port)
 			EventDuration, EventColor)
 			VALUES
 			(${sanitizedUserID}, '${sanitizedEventName}', '${sanitizedEventDescription}', '${sanitizedEventDateTime}',
-			${sanitizedEventDuration}, '${sanitizedEventColor}')`
+			${sanitizedEventDuration}, '${sanitizedEventColor}')`;
 
 		console.log(sqlQuery);
 
+		// add event
 		db.query(sqlQuery, (err, result) => {
 			if (err) {
 				console.log(err);
@@ -201,7 +207,45 @@ module.exports = function(app, port)
 				return;
 			}
 
-			res.send(result);
+			if (attendees.length > 0)
+			{
+				// get last id added
+				db.query(`SELECT LAST_INSERT_ID()`, (err, result) => {
+					if (err) {
+						console.log(err);
+						res.sendStatus(500);
+						return;
+					}
+
+					eventID = result[0]['LAST_INSERT_ID()'];
+
+
+					// add EventAttendees
+					let sqlQuery = `INSERT INTO EventAttendees
+					(EventID, UserID)
+					VALUES`;
+					for (let index = 0; index < attendees.length; index++)
+					{
+						const attendee = attendees[index];
+						sqlQuery += `(${eventID}, ${attendee})`;
+						if (index < attendees.length -1)
+						{
+							sqlQuery += `,`;
+						}
+					}
+
+					console.log(sqlQuery);
+					db.query(sqlQuery, (err, result) => {
+						if (err) {
+							console.log(err);
+							res.sendStatus(400);
+							return;
+						}
+
+						res.sendStatus(200);
+					});
+				});
+			}
 		});
 	});
 
@@ -209,7 +253,7 @@ module.exports = function(app, port)
 	{
 		console.log("/RemoveEvent", req.query);
 
-		var sanitizedEventID = req.sanitize(req.query.EventID);
+		let sanitizedEventID = req.sanitize(req.query.EventID);
 
 		if (sanitizedEventID == null)
 		{
@@ -244,8 +288,8 @@ module.exports = function(app, port)
 	{
 		console.log("/EditEvent", req.query, req.body);
 
-		var sanitizedEventID = req.sanitize(req.query.EventID);
-		var sanitizedEventName = req.sanitize(req.query.EventName);
+		let sanitizedEventID = req.sanitize(req.query.EventID);
+		let sanitizedEventName = req.sanitize(req.query.EventName);
 		if (sanitizedEventID == null)
 		{
 			res.sendStatus(404);
@@ -282,7 +326,7 @@ function TryAddValueToEditSql(sqlQuery, req, value, valueNameStr, addQuotes=fals
 		return sqlQuery;
 	}
 
-	var sanitizedValue = req.sanitize(value);
+	let sanitizedValue = req.sanitize(value);
 	if (sanitizedValue == null)
 	{
 		return sqlQuery;
