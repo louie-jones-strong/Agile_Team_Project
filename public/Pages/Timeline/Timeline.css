@@ -22,10 +22,19 @@
 	--color: var(--ColourAccentRGB-Contrast);
 
 
-	cursor: move;
+	cursor:move;
 	z-index: 11;
 	left: calc(75% - 5.5em);
+}
 
+.timeMarker{
+	background-color: var(--backgroundColor);
+	border: 1px solid var(--BackgroundColourRGB);
+	position: absolute;
+	top: 0;
+	width: 10em;
+	padding: 0.5em;
+	border-radius: 1em;
 }
 
 #predictedTimeMarker > .material-icons{
@@ -38,15 +47,6 @@
 
 	display: flex;
 	align-items: center;
-}
-
-.timeMarker{
-	background-color: var(--backgroundColor);
-	position: absolute;
-	top: 0;
-	width: 10em;
-	padding: 0.5em;
-	border-radius: 1em;
 }
 
 .timeMarker *{
@@ -62,6 +62,7 @@
 	width: 3px;
 	height: calc(var(--timeZone-height) * (var(--number-TimeZones) + 1) );
 	background-color: var(--backgroundColor);
+	border: 1px solid var(--BackgroundColourRGB);
 }
 
 
