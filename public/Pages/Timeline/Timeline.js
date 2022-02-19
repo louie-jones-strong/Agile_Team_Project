@@ -62,6 +62,7 @@ class TimeZone
 		timeZone.classList = "timeZone"
 
 		let html =`<h4 id='${this.Key}_TimeTitle'>${name} ${this.TimeOffset}</h4>
+				<h4 id='${this.Key}_Time' class="dayTimeLabel">12:12</h4>
 				<div id='${this.Key}_dayList' class="dayList">`;
 
 		for (let index = 0; index < this.NumberOfDaysPerRow; index++)
@@ -123,6 +124,10 @@ class TimeZone
 			}
 
 		}
+
+		let timeDayLabel = document.getElementById(`${this.Key}_Time`);
+		timeDayLabel.style.left = (predictedTimeRatio * 100) + "%";
+		timeDayLabel.innerHTML = TimeToString(offsetTime, false, false);
 	}
 
 	Remove(){

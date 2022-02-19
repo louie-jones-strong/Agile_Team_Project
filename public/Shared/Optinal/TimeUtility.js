@@ -34,7 +34,7 @@ function AddMonthsOffset(time, monthOffset)
 	return newTime;
 }
 
-function TimeToString(time, is12Hour)
+function TimeToString(time, is12Hour, showSeconds)
 {
 	let hours = time.getUTCHours();
 	let minutes = time.getUTCMinutes();
@@ -51,7 +51,11 @@ function TimeToString(time, is12Hour)
 
 	let secondsString = FixedCharCountNumber(seconds, 2);
 
-	let timeString = `${hoursString}:${minutesString}:${secondsString}`;
+	let timeString = `${hoursString}:${minutesString}`;
+	if (showSeconds)
+	{
+		timeString += `:${secondsString}`;
+	}
 
 	if (is12Hour)
 	{
