@@ -1,9 +1,9 @@
 // Make the DIV element draggable:
-let PredictedTimeRatio = 0.75;
+let PredictedTimeRatio = 0.5;
 let marker = document.getElementById("predictedTimeMarker");
-MakeElementDraggable(marker, true, false);
+MakeElementDraggable(marker);
 
-function MakeElementDraggable(element, xDraggable, yDraggable)
+function MakeElementDraggable(element)
 {
 	var xPos = 0, lastXPos = 0;
 
@@ -15,7 +15,6 @@ function MakeElementDraggable(element, xDraggable, yDraggable)
 
 		// get the mouse cursor position at startup:
 		lastXPos = e.clientX;
-		lastYPos = e.clientY;
 
 		document.onmouseup = DragEnd;
 		// call a function whenever the cursor moves:
@@ -26,16 +25,15 @@ function MakeElementDraggable(element, xDraggable, yDraggable)
 		e = e || window.event;
 		e.preventDefault();
 
-		if (xDraggable) {
-			xPos = lastXPos - e.clientX;
-			lastXPos = e.clientX;
+		xPos = lastXPos - e.clientX;
+		lastXPos = e.clientX;
 
-			PredictedTimeRatio = (element.offsetLeft - xPos) / element.parentElement.clientWidth;
+		PredictedTimeRatio = (element.offsetLeft - xPos) / element.parentElement.clientWidth;
 
-			PredictedTimeRatio = Math.max(0, Math.min(1, PredictedTimeRatio));
+		PredictedTimeRatio = Math.max(0, Math.min(1, PredictedTimeRatio));
 
-			element.style.left = (PredictedTimeRatio * 100) + "%";
-		}
+		element.style.left = (PredictedTimeRatio * 100) + "%";
+		ForceRefresh();
 	}
 
 	function DragEnd() {
@@ -88,15 +86,27 @@ class TimeZone
 
 		let ratioPerDay = 1 / this.NumberOfVisibleDays;
 		let ratioPerHour = ratioPerDay / 24;
+		let ratioPerMinute = ratioPerHour / 60;
+		let ratioPerSecond = ratioPerMinute / 60;
 
-		let offsetRatio = (ratioPerHour * -this.TimeOffset);
+		let now = new Date();
+		let offsetTime = AddHoursOffset(now, this.TimeOffset);
+
+		let offsetRatio = offsetTime.getUTCHours() * ratioPerHour;
+		offsetRatio += offsetTime.getUTCMinutes() * ratioPerMinute;
+		offsetRatio += offsetTime.getUTCSeconds() * ratioPerSecond;
+
+		let dayOffset = 1;
+		offsetRatio -= ratioPerDay * dayOffset;
 		dayList.style.left = (offsetRatio * 100) + "%";
 
 
 		for (let dayIndex = 0; dayIndex < this.NumberOfDaysPerRow; dayIndex++)
 		{
 			const dayDiv = document.getElementById(`${this.Key}_day${dayIndex}`);
-			dayDiv.innerHTML = dayIndex;
+
+			let dayDate = AddDaysOffset(now, dayIndex - 2);
+			dayDiv.innerHTML = DateToString(dayDate, false);
 
 			// check if selected
 			let dayStartRatio = offsetRatio + dayIndex * ratioPerDay;
@@ -125,15 +135,20 @@ AddTimeZone(`You (${Intl.DateTimeFormat().resolvedOptions().timeZone})`, GetUser
 AddTimeZone("UTC", 0);
 AddTimeZone("Eastern Time", -5);
 
-UpdateTimeZones();
+RegularRefresh();
 
-function UpdateTimeZones()
+function RegularRefresh()
+{
+	ForceRefresh();
+
+	setTimeout(RegularRefresh, 1000);
+}
+
+function ForceRefresh()
 {
 	for (let loop = 0; loop < TimeZones.length; loop++) {
 		TimeZones[loop].Draw(PredictedTimeRatio);
 	}
-
-	setTimeout(UpdateTimeZones, 250);
 }
 
 function AddTimeZone(name, timeOffset)
