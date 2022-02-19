@@ -125,9 +125,13 @@ class TimeZone
 
 		}
 
+		// offset labelTime by predictedTimeRatio
+		let labelTime = AddHoursOffset(offsetTime, predictedTimeRatio / ratioPerHour);
+
+		// draw label
 		let timeDayLabel = document.getElementById(`${this.Key}_Time`);
 		timeDayLabel.style.left = (predictedTimeRatio * 100) + "%";
-		timeDayLabel.innerHTML = TimeToString(offsetTime, false, false);
+		timeDayLabel.innerHTML = TimeToString(labelTime, false, false);
 	}
 
 	Remove(){
