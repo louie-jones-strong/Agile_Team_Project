@@ -14,7 +14,7 @@
 	--color: var(--ColourMainRGB-Contrast);
 
 	z-index: 10;
-	left: calc(50% - 5.5em);
+	left: 50%;
 }
 
 #predictedTimeMarker{
@@ -24,7 +24,7 @@
 
 	cursor:move;
 	z-index: 11;
-	left: calc(75% - 5.5em);
+	left: 75%;
 }
 
 .timeMarker{
@@ -35,6 +35,7 @@
 	width: 10em;
 	padding: 0.5em;
 	border-radius: 1em;
+	border-bottom-left-radius: 0;
 }
 
 #predictedTimeMarker > .material-icons{
@@ -58,7 +59,7 @@
 .markerLine{
 	position: absolute;
 	top: 100%;
-	left: calc(50% - 1.5px);
+	left: 0;
 	width: 3px;
 	height: calc(var(--timeZone-height) * (var(--number-TimeZones) + 0.5) );
 	background-color: var(--backgroundColor);
@@ -92,10 +93,11 @@
 	top: 0;
 	padding-block: 0.1em;
 	border-radius: 1rem;
-	background: linear-gradient(to right,#4b4c4d 0%,#4b4c4d 24.99%,#575b5c 25%,#575b5c 32.99%,#6b7071 33%,#6b7071 74.99%,#575b5c 75%,#575b5c 90.99%,#4b4c4d 91%,#4b4c4d 100%);
-	color: white;
 	position: relative;
 	overflow: hidden;
+
+	background: linear-gradient(to right,#4b4c4d 0%,#4b4c4d 24.99%,#575b5c 25%,#575b5c 32.99%,#6b7071 33%,#6b7071 74.99%,#575b5c 75%,#575b5c 90.99%,#4b4c4d 91%,#4b4c4d 100%);
+	color: white;
 }
 
 .day.selected{
