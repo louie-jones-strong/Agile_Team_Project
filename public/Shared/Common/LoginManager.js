@@ -12,16 +12,16 @@ function LoginPopup()
 
 			<button class="positive">Login</button>
 		</form>
-		<button class="center shaded" onclick="CreateAccountPopup()">Create Account</button>`
+		<button class="center shaded" onclick="RegisterPopup()">Create Account</button>`
 
 	OpenPopup(popupBodyHtml)
 }
 
-function CreateAccountPopup()
+function RegisterPopup()
 {
 	let popupBodyHtml = `
 		<h3 class="center popupTitle">Create Account</h3>
-		<form class="center" action="/createAccount" method="get">
+		<form class="center" action="/register" method="get">
 			<label for"username">Username:</label>
 			<input class="center" type="text" id="username" name="username" required><br>
 
