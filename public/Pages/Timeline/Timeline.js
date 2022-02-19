@@ -1,5 +1,5 @@
 // Make the DIV element draggable:
-let PredictedTimeRatio = 0;
+let PredictedTimeRatio = 0.75;
 let marker = document.getElementById("predictedTimeMarker");
 MakeElementDraggable(marker, true, false);
 
