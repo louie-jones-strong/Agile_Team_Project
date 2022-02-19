@@ -97,8 +97,8 @@ class TimeZone
 		offsetRatio += offsetTime.getUTCMinutes() * ratioPerMinute;
 		offsetRatio += offsetTime.getUTCSeconds() * ratioPerSecond;
 
-		let dayOffset = 1;
-		offsetRatio -= ratioPerDay * dayOffset;
+		offsetRatio *= -1;
+
 		dayList.style.left = (offsetRatio * 100) + "%";
 
 
