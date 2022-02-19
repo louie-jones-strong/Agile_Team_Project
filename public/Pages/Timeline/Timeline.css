@@ -6,6 +6,7 @@
 
 	--timeZone-height: 3.5em;
 	--number-TimeZones: 2;
+	overflow: hidden;
 }
 
 /* markers */
