@@ -71,6 +71,8 @@
 .timeZone{
 	position: relative;
 	height: var(--timeZone-height);
+
+	text-shadow: 1px 1px var(--BackgroundColourRGB);
 }
 
 .dayList{
@@ -78,6 +80,7 @@
 	display: flex;
 	width: 125vw;
 	left: -10vw;
+	text-shadow: none;
 }
 
 .timeZone > h4{
