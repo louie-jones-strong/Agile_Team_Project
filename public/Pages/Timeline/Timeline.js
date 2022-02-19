@@ -44,11 +44,16 @@ function MakeElementDraggable(element)
 }
 
 let TimeZones = [];
+const NumberOfDaysPerRow = 5;
+const NumberOfVisibleDays = 4;
+
+const RatioPerDay = 1 / NumberOfVisibleDays;
+const RatioPerHour = RatioPerDay / 24;
+const RatioPerMinute = RatioPerHour / 60;
+const RatioPerSecond = RatioPerMinute / 60;
 
 class TimeZone
 {
-	NumberOfDaysPerRow = 5;
-	NumberOfVisibleDays = 4;
 
 	constructor(name, timeOffset) {
 
@@ -65,7 +70,7 @@ class TimeZone
 				<h4 id='${this.Key}_Time' class="dayTimeLabel">12:12</h4>
 				<div id='${this.Key}_dayList' class="dayList">`;
 
-		for (let index = 0; index < this.NumberOfDaysPerRow; index++)
+		for (let index = 0; index < NumberOfDaysPerRow; index++)
 		{
 			html += `<div id='${this.Key}_day${index}' class="day shaded selected">date day${index}</div>`;
 		}
@@ -85,24 +90,19 @@ class TimeZone
 	Draw(predictedTimeRatio) {
 		let dayList = document.getElementById(`${this.Key}_dayList`);
 
-		let ratioPerDay = 1 / this.NumberOfVisibleDays;
-		let ratioPerHour = ratioPerDay / 24;
-		let ratioPerMinute = ratioPerHour / 60;
-		let ratioPerSecond = ratioPerMinute / 60;
-
 		let now = new Date();
 		let offsetTime = AddHoursOffset(now, this.TimeOffset);
 
-		let offsetRatio = offsetTime.getUTCHours() * ratioPerHour;
-		offsetRatio += offsetTime.getUTCMinutes() * ratioPerMinute;
-		offsetRatio += offsetTime.getUTCSeconds() * ratioPerSecond;
+		let offsetRatio = offsetTime.getUTCHours() * RatioPerHour;
+		offsetRatio += offsetTime.getUTCMinutes() * RatioPerMinute;
+		offsetRatio += offsetTime.getUTCSeconds() * RatioPerSecond;
 
 		offsetRatio *= -1;
 
 		dayList.style.left = (offsetRatio * 100) + "%";
 
 
-		for (let dayIndex = 0; dayIndex < this.NumberOfDaysPerRow; dayIndex++)
+		for (let dayIndex = 0; dayIndex < NumberOfDaysPerRow; dayIndex++)
 		{
 			const dayDiv = document.getElementById(`${this.Key}_day${dayIndex}`);
 
@@ -110,8 +110,8 @@ class TimeZone
 			dayDiv.innerHTML = DateToString(dayDate, false);
 
 			// check if selected
-			let dayStartRatio = offsetRatio + dayIndex * ratioPerDay;
-			let dayEndRatio = offsetRatio + (dayIndex+1) * ratioPerDay;
+			let dayStartRatio = offsetRatio + dayIndex * RatioPerDay;
+			let dayEndRatio = offsetRatio + (dayIndex+1) * RatioPerDay;
 
 			if (dayStartRatio < predictedTimeRatio &&
 				dayEndRatio >= predictedTimeRatio)
@@ -126,7 +126,7 @@ class TimeZone
 		}
 
 		// offset labelTime by predictedTimeRatio
-		let labelTime = AddHoursOffset(offsetTime, predictedTimeRatio / ratioPerHour);
+		let labelTime = AddHoursOffset(offsetTime, predictedTimeRatio / RatioPerHour);
 
 		// draw label
 		let timeDayLabel = document.getElementById(`${this.Key}_Time`);
@@ -158,6 +158,17 @@ function RegularRefresh()
 
 function ForceRefresh()
 {
+
+	let now = new Date();
+
+	let currentTimeMarker = document.getElementById(`currentTime`);
+	currentTimeMarker.innerHTML = TimeToString(now, false, false);
+
+	let predictedTime = AddHoursOffset(now, PredictedTimeRatio / RatioPerHour);
+
+	let predictedTimeMarker = document.getElementById(`predictedTime`);
+	predictedTimeMarker.innerHTML = TimeToString(predictedTime, false, false);
+
 	for (let loop = 0; loop < TimeZones.length; loop++) {
 		TimeZones[loop].Draw(PredictedTimeRatio);
 	}
