@@ -132,8 +132,11 @@ class TimeZone
 }
 
 AddTimeZone(`You (${Intl.DateTimeFormat().resolvedOptions().timeZone})`, GetUserTimeZone());
-AddTimeZone("UTC", 0);
-AddTimeZone("Eastern Time", -5);
+
+for (let index = 0; index < 25; index++)
+{
+	AddTimeZone("Time", index - 12);
+}
 
 RegularRefresh();
 
