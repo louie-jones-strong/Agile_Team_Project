@@ -1,10 +1,11 @@
 // Make the DIV element draggable:
+let PredictedTimeRatio = 0;
 let marker = document.getElementById("predictedTimeMarker");
 MakeElementDraggable(marker, true, false);
 
 function MakeElementDraggable(element, xDraggable, yDraggable)
 {
-	var xPos = 0, yPos = 0, lastXPos = 0, lastYPos = 0;
+	var xPos = 0, lastXPos = 0;
 
 	element.onmousedown = DragStart;
 
@@ -29,21 +30,11 @@ function MakeElementDraggable(element, xDraggable, yDraggable)
 			xPos = lastXPos - e.clientX;
 			lastXPos = e.clientX;
 
-			let ratio = (element.offsetLeft - xPos) / element.parentElement.clientWidth;
+			PredictedTimeRatio = (element.offsetLeft - xPos) / element.parentElement.clientWidth;
 
-			ratio = Math.max(0, Math.min(1, ratio));
+			PredictedTimeRatio = Math.max(0, Math.min(1, PredictedTimeRatio));
 
-			element.style.left = (ratio * 100) + "%";
-		}
-
-		if (yDraggable) {
-			yPos = lastYPos - e.clientY;
-			lastYPos = e.clientY;
-
-			let ratio = (element.offsetTop - yPos) / element.parentElement.clientHeight;
-			ratio = Math.max(0, Math.min(1, ratio));
-
-			element.style.top = (ratio * 100) + "%";
+			element.style.left = (PredictedTimeRatio * 100) + "%";
 		}
 	}
 
@@ -58,26 +49,31 @@ let TimeZones = [];
 
 class TimeZone
 {
-	constructor(name, timezone) {
+	NumberOfDaysPerRow = 5;
+	NumberOfVisibleDays = 4;
+
+	constructor(name, timeOffset) {
 
 		this.Key = `${TimeZones.length}`;
+		this.TimeOffset = timeOffset;
 
 		let timeZoneHolder = document.getElementById("timeZoneHolder");
 
-		let clockCard = document.createElement("div");
-		clockCard.id = `${this.Key}_TimeOffset`
-		clockCard.classList = "timeZone"
-		clockCard.innerHTML =`
-				<h4 id='${this.Key}_TimeTitle'>${name} ${timezone}</h4>
-				<div class="dayList">
-					<div class="day shaded">date day1</div>
-					<div class="day shaded">date day2</div>
-					<div class="day shaded selected">date day3</div>
-					<div class="day shaded">date day4</div>
-					<div class="day shaded">date day5</div>
-				</div>`
+		let timeZone = document.createElement("div");
+		timeZone.id = `${this.Key}_TimeOffset`
+		timeZone.classList = "timeZone"
 
-		timeZoneHolder.appendChild(clockCard);
+		let html =`<h4 id='${this.Key}_TimeTitle'>${name} ${this.TimeOffset}</h4>
+				<div id='${this.Key}_dayList' class="dayList">`;
+
+		for (let index = 0; index < this.NumberOfDaysPerRow; index++)
+		{
+			html += `<div id='${this.Key}_day${index}' class="day shaded selected">date day${index}</div>`;
+		}
+		html += `</div>`;
+
+		timeZone.innerHTML = html;
+		timeZoneHolder.appendChild(timeZone);
 
 
 		let timeLinesHolder = document.getElementById("timeLinesHolder");
@@ -87,8 +83,36 @@ class TimeZone
 		this.Draw();
 	}
 
-	Draw() {
+	Draw(predictedTimeRatio) {
+		let dayList = document.getElementById(`${this.Key}_dayList`);
 
+		let ratioPerDay = 1 / this.NumberOfVisibleDays;
+		let ratioPerHour = ratioPerDay / 24;
+
+		let offsetRatio = (ratioPerHour * -this.TimeOffset);
+		dayList.style.left = (offsetRatio * 100) + "%";
+
+
+		for (let dayIndex = 0; dayIndex < this.NumberOfDaysPerRow; dayIndex++)
+		{
+			const dayDiv = document.getElementById(`${this.Key}_day${dayIndex}`);
+			dayDiv.innerHTML = dayIndex;
+
+			// check if selected
+			let dayStartRatio = offsetRatio + dayIndex * ratioPerDay;
+			let dayEndRatio = offsetRatio + (dayIndex+1) * ratioPerDay;
+
+			if (dayStartRatio < predictedTimeRatio &&
+				dayEndRatio >= predictedTimeRatio)
+			{
+				dayDiv.classList.add("selected");
+			}
+			else
+			{
+				dayDiv.classList.remove("selected");
+			}
+
+		}
 	}
 
 	Remove(){
@@ -106,7 +130,7 @@ UpdateTimeZones();
 function UpdateTimeZones()
 {
 	for (let loop = 0; loop < TimeZones.length; loop++) {
-		TimeZones[loop].Draw();
+		TimeZones[loop].Draw(PredictedTimeRatio);
 	}
 
 	setTimeout(UpdateTimeZones, 250);
