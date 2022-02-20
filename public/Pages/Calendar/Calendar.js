@@ -224,10 +224,12 @@ function GetUserList()
 function CreateEventPopup()
 {
 	let popupBodyHtml = `
-		<h3 class="center">Create New Event</h3>`;
-		popupBodyHtml += EventPopupBody();
+		<h3 class="center">Create New Event</h3>
+		<form onsubmit="return CreateEvent();">`;
+	popupBodyHtml += EventPopupBody();
 
-		popupBodyHtml += `<button class="positive rounded" onClick="CreateEvent()">Create</button>`;
+	popupBodyHtml += `<button class="positive rounded">Create</button>
+		</form>`;
 
 	OpenPopup(popupBodyHtml);
 
@@ -239,13 +241,15 @@ function EditEventPopup(monthOffset, eventId)
 {
 	let event = EventDataCache[monthOffset][eventId];
 
-	let popupBodyHtml = `<h3 class="center">Edit Event</h3>`;
+	let popupBodyHtml = `<h3 class="center">Edit Event</h3>
+		<form id="editPopupForm" onsubmit="return EditEvent();">`;
 	popupBodyHtml += EventPopupBody(event);
 
 	popupBodyHtml += `
+		</form>
 		<div style="display:flex; justify-content:center;">
 			<button class="negative rounded" onClick="RemoveEventPopup('${eventId}')">Remove</button>
-			<button class="positive rounded" onClick="EditEvent(${eventId})">Save</button>
+			<button class="positive rounded" form="editPopupForm">Save</button>
 		</div>`;
 
 	OpenPopup(popupBodyHtml);
@@ -261,8 +265,7 @@ function EditEventPopup(monthOffset, eventId)
 
 function RemoveEventPopup(eventId)
 {
-	let popupBodyHtml = `<h3 class="center">Remove Event</h3>`;
-	popupBodyHtml += `
+	let popupBodyHtml = `<h3 class="center">Remove Event</h3>
 		<p class="center">Are you sure you want to remove this event?</p>
 		<div style="display:flex; justify-content:center;">
 			<button class="positive rounded" onClick="RemoveEvent('${eventId}')">Remove</button>
@@ -295,8 +298,12 @@ function EventPopupBody(event)
 	let isoStr = event.EventDateTime.toISOString();
 	event.EventDateTime = isoStr.substring(0,isoStr.length-1)
 
-	let popupBodyHtml = `
-		<div id="errorHolder" class="hide center negative rounded" style="padding: 1em;">
+	let popupBodyHtml = "";
+
+	if (event.EventID)
+		popupBodyHtml+=	`<input type="hidden" id="eventId" value="${event.EventID}">`;
+
+	popupBodyHtml += `<div id="errorHolder" class="hide center negative rounded" style="padding: 1em;">
 		</div>
 		<div style="display:flex;">
 			<div>
@@ -338,7 +345,7 @@ function EventPopupBody(event)
 
 		<div>
 			<label for="eventDescription">Description:</label>
-			<textarea type="text" id="eventDescription" name="EventDescription" value="${event.EventDescription}" required></textarea>
+			<textarea type="text" id="eventDescription" name="EventDescription">${event.EventDescription}</textarea>
 		</div>`
 
 	return popupBodyHtml;
@@ -468,10 +475,14 @@ function CreateEvent()
 				errorHolder.innerHTML = response.responseText
 			}
 		});
+
+	return false;
 }
 
-function EditEvent(eventID)
+function EditEvent()
 {
+	let eventID = document.getElementById("eventId").value;
+
 	let bodyData = {
 		EventName: document.getElementById("eventName").value,
 		EventColor: document.getElementById("eventColor").value,
@@ -502,12 +513,15 @@ function EditEvent(eventID)
 				errorHolder.innerHTML = response.responseText
 			}
 		});
+
+	return false;
 }
 
-function RemoveEvent(eventId)
+function RemoveEvent(eventID)
 {
+
 	Delete(`/RemoveEvent?
-		EventID=${eventId}`,
+		EventID=${eventID}`,
 		"", [], function(response)
 		{
 			if (response.status == 200)
@@ -521,4 +535,6 @@ function RemoveEvent(eventId)
 				errorHolder.innerHTML = response.responseText
 			}
 		});
+
+	return false;
 }
