@@ -111,7 +111,10 @@ function GetEventsHtml(monthOffset, date)
 	if (monthData)
 	{
 		// we have this data so lets show it
-		monthData.forEach(event => {
+		for (const key in monthData)
+		{
+
+			let event = monthData[key];
 			event.EventDateTime = new Date(event.EventDateTime);
 
 			if (IsSameDay(event.EventDateTime, date))
@@ -124,7 +127,7 @@ function GetEventsHtml(monthOffset, date)
 				{
 					// full day event
 					html += `<div
-								onclick="EditEventPopup(${event.EventID})"
+								onclick="EditEventPopup(${monthOffset}, ${event.EventID})"
 								class="event fullDayEvent ${event.EventColor}Event">
 							${eventName}
 						</div>`;
@@ -133,13 +136,13 @@ function GetEventsHtml(monthOffset, date)
 				{
 					// part of day event
 					html += `<div
-								onclick="EditEventPopup(${event.EventID})"
+								onclick="EditEventPopup(${monthOffset}, ${event.EventID})"
 								class="event partDayEvent ${event.EventColor}Event">
 						${eventTime} ${eventName}
 					</div>`;
 				}
 			}
-		});
+		};
 	}
 	else
 	{
@@ -156,7 +159,7 @@ function GetEventList(monthOffset)
 		return;
 	}
 
-	EventDataCache[monthOffset] = [];
+	EventDataCache[monthOffset] = {};
 
 	// set start date range
 	let dateRangeStart = new Date();
@@ -178,10 +181,19 @@ function GetEventList(monthOffset)
 
 	// todo get user id
 	Get(`/eventList?UserID=${1}&dateRangeStart=${dateRangeStart}&dateRangeEnd=${dateRangeEnd}`,
-		"", [], function(response)
+		"", {}, function(response)
 		{
 			let events = JSON.parse(response.responseText);
-			EventDataCache[monthOffset] = events;
+			EventDataCache[monthOffset] = {};
+
+			for (const index in events)
+			{
+				let eventID = events[index].EventID
+				EventDataCache[monthOffset][eventID] = events[index];
+
+				GetEventAttendees(monthOffset, eventID);
+			}
+
 
 			if (CurrentMonthOffset-1 <= monthOffset &&
 				CurrentMonthOffset+1 >= monthOffset)
@@ -190,9 +202,19 @@ function GetEventList(monthOffset)
 			}
 		});
 }
+
+function GetEventAttendees(monthOffset, eventId)
+{
+	Get(`/attendees?EventID=${eventId}`,
+		"", {}, function(response)
+		{
+			let attendees = JSON.parse(response.responseText);
+			EventDataCache[monthOffset][eventId].Attendees = attendees;
+		});
+}
 function GetUserList()
 {
-	Get(`/users`, "", [], function(response)
+	Get(`/users`, "", {}, function(response)
 		{
 			UserList = JSON.parse(response.responseText);
 		});
@@ -213,16 +235,9 @@ function CreateEventPopup()
 	UpdateAttendeeSuggestions();
 }
 
-function EditEventPopup(eventId)
+function EditEventPopup(monthOffset, eventId)
 {
-	let event = {};
-
-	EventDataCache[0].forEach(item => {
-		if (item.EventID == eventId)
-		{
-			event = item;
-		}
-	});
+	let event = EventDataCache[monthOffset][eventId];
 
 	let popupBodyHtml = `<h3 class="center">Edit Event</h3>`;
 	popupBodyHtml += EventPopupBody(event);
@@ -234,9 +249,13 @@ function EditEventPopup(eventId)
 		</div>`;
 
 	OpenPopup(popupBodyHtml);
-
-
 	Attendees = [];
+
+	for (const index in event.Attendees)
+	{
+		AddAttendeeToPopup(event.Attendees[index].UserID);
+	}
+
 	UpdateAttendeeSuggestions();
 }
 

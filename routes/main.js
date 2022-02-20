@@ -167,6 +167,29 @@ module.exports = function(app, port)
 		});
 	});
 
+	app.get("/attendees",function(req, res)
+	{
+		let sanitizedEventID = req.sanitize(req.query.EventID);
+
+		if (sanitizedEventID == null)
+		{
+			res.sendStatus(404);
+			return;
+		}
+
+		let sqlQuery = `SELECT UserID FROM EventAttendees WHERE EventID=${sanitizedEventID}`
+
+		db.query(sqlQuery, (err, result) => {
+			if (err) {
+				console.log(err);
+				res.sendStatus(400);
+				return;
+			}
+
+			res.send(result);
+		});
+	});
+
 	app.post("/CreateEvent",function(req, res)
 	{
 		console.log("/CreateEvent", req.query, req.body);

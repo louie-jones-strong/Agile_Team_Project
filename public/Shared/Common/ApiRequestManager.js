@@ -23,9 +23,9 @@ function SendRequest(method, url, bodyData, headerData, onResponse)
 	let xhr = new XMLHttpRequest();
 	xhr.open(method, url, true);
 
-	headerData.forEach(kvp => {
-		xhr.setRequestHeader(kvp[0], kvp[1]);
-	});
+	for (const key in headerData) {
+		xhr.setRequestHeader(key, headerData[key]);
+	}
 
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4) {
