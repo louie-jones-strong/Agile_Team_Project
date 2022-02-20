@@ -1,0 +1,121 @@
+
+
+#timeLinesHolder{
+	position: relative;
+	padding-top: 5em;
+
+	--timeZone-height: 3.5em;
+	--number-TimeZones: 2;
+	overflow: hidden;
+}
+
+/* markers */
+#currentTimeMarker{
+	--backgroundColor: var(--ColourMainRGB);
+	--color: var(--ColourMainRGB-Contrast);
+
+	z-index: 10;
+	left: 50%;
+}
+
+#predictedTimeMarker{
+	--backgroundColor: var(--ColourAccentRGB);
+	--color: var(--ColourAccentRGB-Contrast);
+
+
+	cursor:move;
+	z-index: 11;
+	left: 50%;
+}
+
+.timeMarker{
+	background-color: var(--backgroundColor);
+	border: 2px solid var(--BackgroundColourRGB);
+	position: absolute;
+	top: 0;
+	width: 10em;
+	padding: 0.5em;
+	border-radius: 1em;
+	border-bottom-left-radius: 0;
+}
+
+#predictedTimeMarker > .material-icons{
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	background-color: transparent;
+	font-size: 1.5rem;
+
+	display: flex;
+	align-items: center;
+}
+
+.timeMarker *{
+	color: var(--color);
+	background-color: var(--backgroundColor);
+	margin: 0px;
+}
+
+.markerLine{
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 3px;
+	height: calc(var(--timeZone-height) * (var(--number-TimeZones) + 0.5) );
+	background-color: var(--backgroundColor);
+	border: 2px solid var(--BackgroundColourRGB);
+}
+
+
+/* each line */
+.timeZone{
+	position: relative;
+	height: var(--timeZone-height);
+
+	text-shadow: 1px 1px var(--BackgroundColourRGB);
+}
+
+.dayList{
+	position: absolute;
+	display: flex;
+	width: 125vw;
+	left: -10vw;
+	text-shadow: none;
+}
+
+.timeZone > h4{
+	padding-left: 0.5em;
+	margin-top: 0em;
+	margin-bottom: 0.1em;
+}
+
+.day{
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	padding-block: 0.1em;
+	border-radius: 1rem;
+	position: relative;
+	overflow: hidden;
+
+	background: linear-gradient(to right,#4b4c4d 0%,#4b4c4d 24.99%,#575b5c 25%,#575b5c 32.99%,#6b7071 33%,#6b7071 74.99%,#575b5c 75%,#575b5c 90.99%,#4b4c4d 91%,#4b4c4d 100%);
+	color: white;
+}
+
+.day.selected{
+	background: linear-gradient(to right,#5485b1 0%,#5485b1 24.99%,#3cafc5 25%,#3cafc5 32.99%,#55c8e4 33%,#55c8e4 74.99%,#3cafc5 75%,#3cafc5 90.99%,#5485b1 91%,#5485b1 100%);
+	color: black;
+}
+
+
+
+.dayTimeLabel{
+	z-index: 11;
+	position:absolute;
+	left: 50%;
+	top: 0;
+	width: max-content;
+	max-height: max-content;
+}

@@ -6,12 +6,14 @@
 	<%- include('Components/Head', {
 		PageData: PageData,
 		HeadData: {
-			Title: "WT: About",
+			Title: "WT: Timeline",
 			Description: "",
 			Url: "",
 			Thumbnail: "",
 		}
 	}); %>
+	<link rel="stylesheet" href="Pages/Timeline/Timeline.css">
+	<script src="Shared/Optinal/TimeUtility.js"></script>
 </head>
 
 <body class="dark">
@@ -24,8 +26,29 @@
 		<!-- shared common header -->
 		<%- include('Components/Header'); %>
 
-		<div class="centeredFrame">
+		<h1 class="center">Timelines</h1>
+
+		<div id="timeLinesHolder">
+
+			<div id="currentTimeMarker" class="timeMarker shaded">
+				<h4 id="currentTime" class="center">12:12</h4>
+				<p class="center">Current Local Time</p>
+				<div class="markerLine"></div>
+			</div>
+
+			<div id="predictedTimeMarker" class="timeMarker shaded">
+				<span class="material-icons">drag_indicator</span>
+				<div>
+					<h4 id="predictedTime" class="center">12:12</h4>
+					<p class="center">Local Time</p>
+				</div>
+				<div class="markerLine"></div>
+			</div>
+
+			<div id="timeZoneHolder">
+			</div>
 		</div>
+		<script src="Pages/Timeline/Timeline.js"></script>
 
 		<%- include('Components/PopupHolder'); %>
 

@@ -15,12 +15,12 @@ class Clock
 		clockCard.innerHTML =`
 			<div class="clockTop">
 				<div class="left">
-					<button class="editButton topButton" onclick='EditClock("${this.Key}")'></button>
+					<button class="editButton topButton shaded" onclick='EditClock("${this.Key}")'></button>
 				</div>
 				<div class="center">
 				</div>
 				<div class="right">
-					<button class="removeButton topButton" onclick='RemoveClock("${this.Key}")'></button>
+					<button class="removeButton topButton shaded" onclick='RemoveClock("${this.Key}")'></button>
 				</div>
 			</div>
 
