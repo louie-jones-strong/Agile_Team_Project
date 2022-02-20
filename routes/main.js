@@ -1,4 +1,4 @@
-
+const admin = require("../firebase-services");
 // this turns of the Analytics (we only want Analytics from users not dev)
 const IsDevMode = true;
 
@@ -77,38 +77,8 @@ module.exports = function(app, port)
 
 //#region Login flow
 
-	app.get("/createAccount",function(req, res)
-	{
-		console.log("/createAccount", req.query);
-
-		let sanitizeUsername = req.sanitize(req.query.username);
-		let sqlQuery = `INSERT INTO Users (Username)VALUES('${sanitizeUsername}')`;
-
-		db.query(sqlQuery, (err, result) => {
-			if (err) {
-				console.log(err);
-				return;
-			}
-		});
-	});
-
-	app.get("/login",function(req, res)
-	{
-		console.log("/login", req.query);
-
-		let sanitizeUsername = req.sanitize(req.query.username);
-		let sqlQuery = `SELECT UserID FROM Users WHERE Username = '${sanitizeUsername}'`;
-
-		db.query(sqlQuery, (err, result) => {
-			if (err) {
-				console.log(err);
-				res.sendStatus(404);
-				return;
-			}
-
-			res.send({UserID: result[0].UserID});
-		});
-	});
+	app.post("/register", admin.register)
+	app.post("/logout", admin.checkIfAuthenticated, admin.logout);
 
 //#endregion Login flow
 
