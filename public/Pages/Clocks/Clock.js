@@ -20,7 +20,7 @@ class Clock
 				<div class="center">
 				</div>
 				<div class="right">
-					<button class="removeButton topButton shaded" onclick='RemoveClock("${this.Key}")'></button>
+					<button class="removeButton topButton shaded" onclick='RemoveClockPopup("${this.Key}")'></button>
 				</div>
 			</div>
 
@@ -97,6 +97,20 @@ function AddClock(name, timeOffset)
 	ClockCount += 1;
 }
 
+
+function RemoveClockPopup(clockKey)
+{
+	let popupBodyHtml = `<h3 class="center">Remove Timezone</h3>
+		<p class="center">Are you sure you want to remove this Timezone?</p>
+		<div style="display:flex; justify-content:center;">
+			<button class="positive rounded" onClick="RemoveClock('${clockKey}')">Remove</button>
+			<button class="negative rounded" onClick="ClosePopup()">Cancel</button>
+		</div>`;
+
+
+	OpenPopup(popupBodyHtml);
+}
+
 function RemoveClock(clockKey)
 {
 	for (let loop = 0; loop < Clocks.length; loop++)
@@ -109,4 +123,5 @@ function RemoveClock(clockKey)
 			break;
 		}
 	}
+	ClosePopup();
 }
