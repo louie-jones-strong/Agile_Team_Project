@@ -6,7 +6,6 @@ const bodyParser = require ("body-parser");
 const expressSanitizer = require('express-sanitizer');
 const app = express();
 
-
 const db = mysql.createConnection ({
 	host: "localhost",
 	user: "root",
@@ -17,10 +16,17 @@ const db = mysql.createConnection ({
 
 // connect to database
 db.connect((err) => {
-	if (err) {
-		throw err;
+	if (err)
+	{
+		console.error();
+		console.error(`=================================================`);
+		console.error(`failed to create Connection to your MySQL server.`);
+		console.error(`Did you forget to add your Password!`);
 	}
-	console.log("Connected to database");
+	else
+	{
+		console.log("Connected to database");
+	}
 });
 global.db = db;
 
@@ -62,7 +68,7 @@ function LogRequest(req, res, next)
 	next();
 
 	console.log(res.statusCode, `took: ${performance.now() - startTime} ms`);
-	if (res.statusCode >= 300)
+	if (res.statusCode >= 400)
 	{
 		console.log(res.statusMessage)
 	}
