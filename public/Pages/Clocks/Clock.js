@@ -103,8 +103,8 @@ function RemoveClockPopup(clockKey)
 	let popupBodyHtml = `<h3 class="center">Remove Timezone</h3>
 		<p class="center">Are you sure you want to remove this Timezone?</p>
 		<div style="display:flex; justify-content:center;">
-			<button class="positive rounded" onClick="RemoveClock('${clockKey}')">Remove</button>
-			<button class="negative rounded" onClick="ClosePopup()">Cancel</button>
+			<button class="positive shaded rounded" onClick="RemoveClock('${clockKey}')">Remove</button>
+			<button class="negative shaded rounded" onClick="ClosePopup()">Cancel</button>
 		</div>`;
 
 
