@@ -1,11 +1,10 @@
-let Clocks = [];
-let ClockCount = 0;
+let Clocks = {};
 
 class Clock
 {
 	constructor(name, timezone) {
 
-		this.Key = `${ClockCount}`;
+		this.Key = `${Object.keys(Clocks).length}`;
 
 		let clockHolder = document.getElementById("clockHolder");
 
@@ -83,18 +82,12 @@ UpdateClocks();
 
 function UpdateClocks()
 {
-	for (let loop = 0; loop < Clocks.length; loop++) {
-		Clocks[loop].Draw();
+	for (const key in Clocks)
+	{
+		Clocks[key].Draw();
 	}
 
 	setTimeout(UpdateClocks, 250);
-}
-
-function AddClock(name, timeOffset)
-{
-	let newClock = new Clock(name, timeOffset);
-	Clocks.push(newClock);
-	ClockCount += 1;
 }
 
 
@@ -113,15 +106,12 @@ function RemoveClockPopup(clockKey)
 
 function RemoveClock(clockKey)
 {
-	for (let loop = 0; loop < Clocks.length; loop++)
-	{
-		const item = Clocks[loop];
-		if ( item.Key === clockKey)
-		{
-			item.Remove();
-			Clocks.splice(loop, 1);
-			break;
-		}
-	}
+	Clocks[clockKey].Remove();
+	delete Clocks[clockKey];
 	ClosePopup();
+}
+function AddClock(name, timeOffset)
+{
+	let newClock = new Clock(name, timeOffset);
+	Clocks[newClock.Key] = newClock;
 }
