@@ -6,13 +6,15 @@ const bodyParser = require ("body-parser");
 const expressSanitizer = require('express-sanitizer');
 const app = express();
 
-const db = mysql.createConnection ({
-	host: "localhost",
-	user: "root",
-	password: "",
-	database: "welltimed"
+let mySQLCredentials = require("./MySQLCredentials.json");
 
+const db = mysql.createConnection ({
+	host: mySQLCredentials.host,
+	user: mySQLCredentials.user,
+	password: mySQLCredentials.password,
+	database: "welltimed"
 });
+
 
 // connect to database
 db.connect((err) => {

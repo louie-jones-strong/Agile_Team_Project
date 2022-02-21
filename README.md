@@ -4,8 +4,7 @@ Github repository for course 'CM2020 Agile Software Projects'. Members of the te
 
 ## How to launch app:
 - Setup MySQL database locally (see DatabasePlan.sql)
-  - if you have a password for your MySQL set it in index.js  <br/>
-    (DO NOT COMMIT YOUR PASSWORDS!!)
+- Add MySQL Credentials to `MySQLCredentials.json` in the repo root
 - install packages `npm install`
 - Add our firebase credentials file to repo root
 - run server `node index.js`
