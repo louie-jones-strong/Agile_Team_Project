@@ -43,7 +43,7 @@ function DrawCalendar()
 	GetEventList(CurrentMonthOffset+1);
 
 	let currentCalendar = document.getElementById("currentCalendar");
-	currentCalendar.innerHTML = GetMonthString(now.getUTCMonth());
+	currentCalendar.innerHTML = DateToString(now, false, false);
 
 	let calendarHolder = document.getElementById("calendarHolder");
 

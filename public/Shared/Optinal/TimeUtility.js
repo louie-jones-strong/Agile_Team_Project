@@ -92,7 +92,7 @@ function FixedCharCountNumber(number, charCount)
 	return numberString;
 }
 
-function DateToString(time, isNumbers)
+function DateToString(time, isNumbers, showDay=true, showYear=true)
 {
 	let years = time.getUTCFullYear();
 	let months = time.getUTCMonth();
@@ -102,7 +102,17 @@ function DateToString(time, isNumbers)
 
 	if (isNumbers)
 	{
-		dateString = `${days}/${months}/${years}`;
+		if (showDay)
+		{
+			dateString += `${days}/`;
+		}
+
+		dateString += `${months}`;
+
+		if (showYear)
+		{
+			dateString += `/${years}`;
+		}
 	}
 	else
 	{
@@ -110,7 +120,17 @@ function DateToString(time, isNumbers)
 		let monthsString = GetMonthString(months);
 		let daysString = GetOrdinalString(days);
 
-		dateString = `${daysString} of ${monthsString} ${years}`;
+		if (showDay)
+		{
+			dateString += `${daysString} of `;
+		}
+
+		dateString += `${monthsString}`;
+
+		if (showYear)
+		{
+			dateString += ` ${years}`;
+		}
 	}
 	return dateString;
 }

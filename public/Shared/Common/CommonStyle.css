@@ -216,6 +216,7 @@ button{
 	border: none;
 	padding: 0px 0px;
 	background-color: transparent;
+	cursor:pointer;
 }
 
 button:disabled{

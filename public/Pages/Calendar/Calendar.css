@@ -1,8 +1,38 @@
 .calendar {
 	padding-top: 5em;
-	border-radius: 2em;
 }
 
+/* calendarTop */
+.calendarTop{
+	border-top-left-radius: 2em;
+	border-top-right-radius: 2em;
+	margin-top: 2em;
+	padding-bottom: 0.5em;
+	padding-inline: 1em;
+	display: flex;
+	justify-content: space-between;
+}
+
+.calendarTop button{
+	transform: scale(1);
+	transition: transform 0.2s;
+}
+
+.calendarTop button:hover,
+.calendarTop button:focus{
+	transform: scale(1.1);
+}
+
+#currentCalendar{
+	justify-self: center;
+	margin-top: 1em;
+}
+
+.create > *{
+	margin: 0.5em;
+}
+
+/* table */
 .calendar table{
 	width: 100%;
 }
