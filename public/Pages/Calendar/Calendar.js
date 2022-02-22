@@ -228,7 +228,10 @@ function CreateEventPopup()
 		<form onsubmit="return CreateEvent();">`;
 	popupBodyHtml += EventPopupBody();
 
-	popupBodyHtml += `<button class="positive rounded">Create</button>
+	popupBodyHtml += `
+		<div style="display:flex; justify-content:center;">
+			<button class="positive rounded shaded">Create</button>
+		</div>
 		</form>`;
 
 	OpenPopup(popupBodyHtml);
@@ -248,8 +251,8 @@ function EditEventPopup(monthOffset, eventId)
 	popupBodyHtml += `
 		</form>
 		<div style="display:flex; justify-content:center;">
-			<button class="negative rounded" onClick="RemoveEventPopup('${eventId}')">Remove</button>
-			<button class="positive rounded" form="editPopupForm">Save</button>
+			<button class="negative rounded shaded" onClick="RemoveEventPopup('${eventId}')">Remove</button>
+			<button class="positive rounded shaded" form="editPopupForm">Save</button>
 		</div>`;
 
 	OpenPopup(popupBodyHtml);
@@ -268,8 +271,8 @@ function RemoveEventPopup(eventId)
 	let popupBodyHtml = `<h3 class="center">Remove Event</h3>
 		<p class="center">Are you sure you want to remove this event?</p>
 		<div style="display:flex; justify-content:center;">
-			<button class="positive rounded" onClick="RemoveEvent('${eventId}')">Remove</button>
-			<button class="negative rounded" onClick="ClosePopup()">Cancel</button>
+			<button class="positive rounded shaded" onClick="RemoveEvent('${eventId}')">Remove</button>
+			<button class="negative rounded shaded" onClick="ClosePopup()">Cancel</button>
 		</div>`;
 
 
