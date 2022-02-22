@@ -50,6 +50,7 @@
 	padding-right: 0.5em;
 	padding-top: 0.5em;
 	justify-self: right;
+	transition: width 0.2s;
 }
 
 .closePopup::after{
@@ -65,7 +66,7 @@
 	content: "Close";
 }
 
-.popupBody{
+#popupBody{
 	padding-inline: 2em;
 	padding-bottom: 1.5em;
 	display: flex;
