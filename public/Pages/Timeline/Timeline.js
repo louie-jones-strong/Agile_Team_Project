@@ -43,7 +43,7 @@ function MakeElementDraggable(element)
 	}
 }
 
-let TimeZones = [];
+let Timelines = [];
 const NumberOfDaysPerRow = 5;
 const NumberOfVisibleDays = 4;
 
@@ -52,46 +52,51 @@ const RatioPerHour = RatioPerDay / 24;
 const RatioPerMinute = RatioPerHour / 60;
 const RatioPerSecond = RatioPerMinute / 60;
 
-class TimeZone
+class TimeLine
 {
 
-	constructor(name, timeOffset) {
+	constructor(timeZone) {
 
-		this.Key = `${TimeZones.length}`;
-		this.TimeOffset = timeOffset;
+		this.TimeZone = timeZone;
 
-		let timeZoneHolder = document.getElementById("timeZoneHolder");
+		let timelineHolder = document.getElementById("timeLinesHolder");
 
-		let timeZone = document.createElement("div");
-		timeZone.id = `${this.Key}_TimeOffset`
-		timeZone.classList = "timeZone"
+		let timeline = document.createElement("div");
+		timeline.id = `${this.TimeZone.Id}_TimeOffset`
+		timeline.classList = "timeline"
 
-		let html =`<h4 id='${this.Key}_TimeTitle'>${name} ${this.TimeOffset}</h4>
-				<h4 id='${this.Key}_Time' class="dayTimeLabel">12:12</h4>
-				<div id='${this.Key}_dayList' class="dayList">`;
+		let html =`
+				<div class="timelineDescription">
+					<button class="editButton shaded" onclick='EditTimeZonePopup("${this.TimeZone.Id}")'></button>
+					<button class="removeButton shaded" onclick='RemoveTimeZonePopup("${this.TimeZone.Id}")'></button>
+					<h4 id='${this.TimeZone.Id}_TimeTitle'>${this.TimeZone.Name} ${this.TimeZone.Offset}</h4>
+				</div>
+
+				<h4 id='${this.TimeZone.Id}_Time' class="dayTimeLabel">12:12</h4>
+				<div id='${this.TimeZone.Id}_dayList' class="dayList">`;
 
 		for (let index = 0; index < NumberOfDaysPerRow; index++)
 		{
-			html += `<div id='${this.Key}_day${index}' class="day shaded selected">date day${index}</div>`;
+			html += `<div id='${this.TimeZone.Id}_day${index}' class="day shaded selected">date day${index}</div>`;
 		}
 		html += `</div>`;
 
-		timeZone.innerHTML = html;
-		timeZoneHolder.appendChild(timeZone);
+		timeline.innerHTML = html;
+		timelineHolder.appendChild(timeline);
 
 
-		let timeLinesHolder = document.getElementById("timeLinesHolder");
+		let timelinesManager = document.getElementById("timelinesManager");
 
-		timeLinesHolder.style.setProperty('--number-TimeZones', TimeZones.length + 1);
+		timelinesManager.style.setProperty('--number-Timelines', Timelines.length + 1);
 
 		this.Draw();
 	}
 
 	Draw(predictedTimeRatio) {
-		let dayList = document.getElementById(`${this.Key}_dayList`);
+		let dayList = document.getElementById(`${this.TimeZone.Id}_dayList`);
 
 		let now = new Date();
-		let offsetTime = AddHoursOffset(now, this.TimeOffset);
+		let offsetTime = AddHoursOffset(now, this.TimeZone.Offset);
 
 		let offsetRatio = offsetTime.getUTCHours() * RatioPerHour;
 		offsetRatio += offsetTime.getUTCMinutes() * RatioPerMinute;
@@ -104,7 +109,7 @@ class TimeZone
 
 		for (let dayIndex = 0; dayIndex < NumberOfDaysPerRow; dayIndex++)
 		{
-			const dayDiv = document.getElementById(`${this.Key}_day${dayIndex}`);
+			const dayDiv = document.getElementById(`${this.TimeZone.Id}_day${dayIndex}`);
 
 			let dayDate = AddDaysOffset(now, dayIndex - 2);
 			dayDiv.innerHTML = DateToString(dayDate, false);
@@ -129,20 +134,11 @@ class TimeZone
 		let labelTime = AddHoursOffset(offsetTime, predictedTimeRatio / RatioPerHour);
 
 		// draw label
-		let timeDayLabel = document.getElementById(`${this.Key}_Time`);
+		let timeDayLabel = document.getElementById(`${this.TimeZone.Id}_Time`);
 		timeDayLabel.style.left = (predictedTimeRatio * 100) + "%";
 		timeDayLabel.innerHTML = TimeToString(labelTime, false, false);
 	}
-
-	Remove(){
-		let temp = document.getElementById(`${this.Key}_Timezone`);
-		temp.parentNode.removeChild(temp);
-	}
 }
-
-AddTimeZone(`You (${Intl.DateTimeFormat().resolvedOptions().timeZone})`, GetUserTimeZone());
-AddTimeZone("UTC", 0);
-AddTimeZone("Eastern Time", -5);
 
 RegularRefresh();
 
@@ -166,13 +162,25 @@ function ForceRefresh()
 	let predictedTimeMarker = document.getElementById(`predictedTime`);
 	predictedTimeMarker.innerHTML = TimeToString(predictedTime, false, false);
 
-	for (let loop = 0; loop < TimeZones.length; loop++) {
-		TimeZones[loop].Draw(PredictedTimeRatio);
+	for (let loop = 0; loop < Timelines.length; loop++) {
+		Timelines[loop].Draw(PredictedTimeRatio);
 	}
 }
 
-function AddTimeZone(name, timeOffset)
+function UpdateTimeZoneVisuals(timeZones)
 {
-	let newTimeZone = new TimeZone(name, timeOffset);
-	TimeZones.push(newTimeZone);
+
+	let clockHolder = document.getElementById("timeLinesHolder");
+	clockHolder.innerHTML = "";
+
+	Timelines = [];
+	for (const key in timeZones)
+	{
+		const timeZone = timeZones[key];
+
+
+		let newTimeLine = new TimeLine(timeZone);
+		Timelines.push(newTimeLine);
+	}
+	ForceRefresh();
 }

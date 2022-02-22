@@ -1,11 +1,11 @@
 
 
-#timeLinesHolder{
+#timelinesManager{
 	position: relative;
 	padding-top: 5em;
 
-	--timeZone-height: 3.5em;
-	--number-TimeZones: 2;
+	--timeline-height: 3.5em;
+	--number-Timelines: 2;
 	overflow: hidden;
 }
 
@@ -62,18 +62,38 @@
 	top: 100%;
 	left: 0;
 	width: 3px;
-	height: calc(var(--timeZone-height) * (var(--number-TimeZones) + 0.5) );
+	height: calc(var(--timeline-height) * (var(--number-Timelines) + 0.5) );
 	background-color: var(--backgroundColor);
 	border: 2px solid var(--BackgroundColourRGB);
 }
 
 
 /* each line */
-.timeZone{
+.timeline{
 	position: relative;
-	height: var(--timeZone-height);
+	height: var(--timeline-height);
 
 	text-shadow: 1px 1px var(--BackgroundColourRGB);
+}
+
+.timelineDescription{
+	display: flex;
+	margin-left: 0.25em;
+}
+
+.editButton,
+.removeButton{
+	width: 1.5em;
+	margin: 0.1em;
+	padding: 0.2em;
+	border-radius: 0.5em;
+}
+
+.timelineDescription > h4,
+.timeline > h4{
+	padding-left: 0.5em;
+	margin-top: 0em;
+	margin-bottom: 0.1em;
 }
 
 .dayList{
@@ -82,12 +102,6 @@
 	width: 125vw;
 	left: -10vw;
 	text-shadow: none;
-}
-
-.timeZone > h4{
-	padding-left: 0.5em;
-	margin-top: 0em;
-	margin-bottom: 0.1em;
 }
 
 .day{

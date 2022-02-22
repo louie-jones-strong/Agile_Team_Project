@@ -14,6 +14,7 @@
 	}); %>
 	<link rel="stylesheet" type="text/css" href="Shared/Optinal/Clock.css">
 	<link rel="stylesheet" type="text/css" href="Shared/Optinal/CardHolder.css">
+	<link rel="stylesheet" type="text/css" href="Shared/Optinal/TimeZone/TimeZone.css">
 	<script src="Shared/Optinal/TimeUtility.js"></script>
 	<script src="Shared/Optinal/ClockFace.js"></script>
 </head>
@@ -35,9 +36,10 @@
 		<div id="clockHolder">
 		</div>
 		<script src="Pages/Clocks/Clock.js"></script>
+		<script src="Shared/Optinal/TimeZone/TimeZone.js"></script>
 
 		<div class="center">
-			<button class="addButton shaded" onclick= "AddClock('New Clock', 0)"></button>
+			<button class="addButton shaded" onclick= "AddTimeZonePopup()"></button>
 		</div>
 
 		<%- include('Components/PopupHolder'); %>
