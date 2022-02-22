@@ -180,7 +180,7 @@ function GetEventList(monthOffset)
 
 
 	// todo get user id
-	Get(`/eventList?UserID=${1}&dateRangeStart=${dateRangeStart}&dateRangeEnd=${dateRangeEnd}`,
+	Get(`/events?UserID=${1}&dateRangeStart=${dateRangeStart}&dateRangeEnd=${dateRangeEnd}`,
 		"", {}, function(response)
 		{
 			let events = JSON.parse(response.responseText);

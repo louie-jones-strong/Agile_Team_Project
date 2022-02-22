@@ -119,7 +119,7 @@ module.exports = function(app)
 
 //#region events
 
-	app.get("/eventList",function(req, res)
+	app.get("/events",function(req, res)
 	{
 		let sanitizedUserID = req.sanitize(req.query.UserID);
 		let sanitizedDateRangeStart = req.sanitize(req.query.dateRangeStart);
