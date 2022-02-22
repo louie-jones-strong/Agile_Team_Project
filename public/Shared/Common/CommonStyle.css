@@ -141,6 +141,32 @@ body.light{
 	background: linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(0,0,0,0.35) 100%);
 }
 
+.sheen{
+	position: relative;
+	overflow: hidden;
+}
+
+.sheen::after{
+	content: "";
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+	width: 200%;
+	height: 200%;
+
+	background: linear-gradient( 70deg, rgb(0, 0, 0, 0) 50%, rgb(255, 255, 255, 0.75) 80%, rgb(0, 0, 0, 0) 90%);
+
+	animation-name: sheenSlide;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes sheenSlide {
+	0% {transform:translateX(-100%);}
+	70% {transform:translateX(-100%);}
+	100% {transform:translateX(100%);}
+}
 
 .rounded{
 	border-radius: 1.5em;
