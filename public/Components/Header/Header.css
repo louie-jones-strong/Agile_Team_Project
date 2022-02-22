@@ -12,7 +12,7 @@ Header{
 
 #headerLogo{
 	height: 100%;
-	width: max-content;
+	width: auto;
 }
 
 .headerCenter{
