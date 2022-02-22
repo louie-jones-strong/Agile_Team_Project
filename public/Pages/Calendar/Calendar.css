@@ -58,7 +58,7 @@
 }
 
 .currentDay {
-	background: rgba(var(--ColourMain), 0.45);
+	background: rgba(var(--ColourAccent), 1);
 }
 
 .day.otherMonth{
