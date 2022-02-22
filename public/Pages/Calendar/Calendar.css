@@ -44,6 +44,9 @@
 	width: calc(100% / 7);
 }
 
+.calendar table td{
+	height: calc(80vh /5);
+}
 
 /* Days (1-31) */
 .day {
