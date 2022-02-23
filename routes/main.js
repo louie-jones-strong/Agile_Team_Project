@@ -171,7 +171,7 @@ app.post("/EditUserLastTimezone",function(req, res)
 	}
 	if (isNaN(sanitizedTimeZoneOffset))
 	{
-		res.sendStatus(500);
+		res.sendStatus(400);
 		return;
 	}
 
@@ -188,32 +188,13 @@ app.post("/EditUserLastTimezone",function(req, res)
 		res.send(result);
 	});
 });
-
-app.get("/AllUserTimezone",function(req, res)
+app.get("/UserTimezones",function(req, res)
 {
-	console.log("/AllUserTimezone", req.query);
-
-	let sqlQuery = `SELECT * FROM UserTimezone`
-
-
-	db.query(sqlQuery, (err, result) => {
-		if (err) {
-			console.log(err);
-			res.sendStatus(400);
-			return;
-		}
-
-		res.send(result);
-	});
-});
-app.get("/UserTimezoneByUserId",function(req, res)
-{
-	console.log("/UserTimezoneByUserId", req.query);
+	console.log("/UserTimezones", req.query);
 
 	var sanitizedUserID = req.sanitize(req.query.UserID);
 
-		if (sanitizedUserID == null)
-		{
+		if (sanitizedUserID == null) {
 			res.sendStatus(404);
 			return;
 		}
@@ -291,15 +272,15 @@ app.post("/DeleteUserTimezone",function(req, res)
 {
 	console.log("/DeleteUserTimezone", req.query);
 
-	var sanitizedUserID = req.sanitize(req.query.UserID);
+	var sanitizedID = req.sanitize(req.query.ID);
 
-	if (sanitizedUserID == null)
+	if (sanitizedUserID == null || sanitizedID == null)
 	{
 		res.sendStatus(404);
 		return;
 	}
 
-	let sqlQuery = `DELETE FROM UserTimezone WHERE UserId = ${sanitizedUserID}`
+	let sqlQuery = `DELETE FROM UserTimezone WHERE ID = ${sanitizedID}`
 
 	db.query(sqlQuery, (err, result) => {
 		if (err) {
