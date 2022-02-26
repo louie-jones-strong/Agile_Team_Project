@@ -7,6 +7,10 @@ html, body{
 	scroll-behavior: smooth;
 }
 
+.content{
+	height: 100vh;
+}
+
 body{
 	overflow-x: hidden;
 	background-color: var(--BackgroundColourRGB);
@@ -150,7 +154,6 @@ body.light{
 .sheen::after{
 	content: "";
 	position: absolute;
-	content: "";
 	top: 0;
 	left: 0;
 	width: 200%;

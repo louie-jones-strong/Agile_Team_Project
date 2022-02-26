@@ -23,6 +23,27 @@
 	transform: scale(1.1);
 }
 
+.changeMonth{
+	clip-path: circle();
+	padding: 0.25em;
+
+	transition: all 0.2s;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.changeMonth > *{
+	color: var(--BackgroundColour-ContrastRGB);
+}
+
+.changeMonth:hover,
+.changeMonth:focus{
+	background-color: var(--BackgroundColour-ContrastRGB);
+}
+.changeMonth:hover > *,
+.changeMonth:focus > *{
+	color: var(--BackgroundColourRGB);
+}
+
 #currentCalendar{
 	justify-self: center;
 	margin-top: 1em;
