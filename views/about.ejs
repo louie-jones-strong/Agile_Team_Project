@@ -3,7 +3,7 @@
 
 <!-- Metadata about the page itself for search engines -->
 <head>
-	<%- include('Components/Head', {
+	<%- include('components/Head', {
 		PageData: PageData,
 		HeadData: {
 			Title: "WT: About",
@@ -16,15 +16,15 @@
 </head>
 
 <body class="dark">
-	<%- include('Components/Background'); %>
+	<%- include('components/Background'); %>
 
 
 	<div class="content">
 		<!-- shared common header -->
-		<%- include('Components/AccessibilityHelper'); %>
+		<%- include('components/AccessibilityHelper'); %>
 
 		<!-- shared common header -->
-		<%- include('Components/Header'); %>
+		<%- include('components/Header'); %>
 
 		<div class="centeredFrame">
 			<h1 class="center reveal fromLeft">About WellTimed</h1>
@@ -128,10 +128,10 @@
 
 		</div>
 
-		<%- include('Components/PopupHolder'); %>
+		<%- include('components/PopupHolder'); %>
 
 		<!-- Shared common footer -->
-		<%- include('Components/Footer'); %>
+		<%- include('components/Footer'); %>
 
 		<script src="Shared/Optinal/vanilla-tilt.js"></script>
 		<script>
@@ -147,6 +147,6 @@
 	</div>
 
 	<!-- Shared common loader -->
-	<%- include('Components/Loader'); %>
+	<%- include('components/Loader'); %>
 </body>
 </html>

@@ -3,7 +3,7 @@
 
 <!-- Metadata about the page itself for search engines -->
 <head>
-	<%- include('Components/Head', {
+	<%- include('components/Head', {
 		PageData: PageData,
 		HeadData: {
 			Title: "WellTimed",
@@ -19,15 +19,15 @@
 </head>
 
 <body class="dark">
-	<%- include('Components/Background'); %>
+	<%- include('components/Background'); %>
 	<link rel="stylesheet" href="Pages/Home/HomePage.css">
 
 	<div class="content">
 		<!-- shared common header -->
-		<%- include('Components/AccessibilityHelper'); %>
+		<%- include('components/AccessibilityHelper'); %>
 
 		<!-- shared common header -->
-		<%- include('Components/Header'); %>
+		<%- include('components/Header'); %>
 
 		<section id="homeCover">
 			<section id="homeLeftSide">
@@ -100,11 +100,11 @@
 			</section>
 		</section>
 
-		<%- include('Components/PopupHolder'); %>
+		<%- include('components/PopupHolder'); %>
 
 	</div>
 
 	<!-- Shared common loader -->
-	<%- include('Components/Loader'); %>
+	<%- include('components/Loader'); %>
 </body>
 </html>
