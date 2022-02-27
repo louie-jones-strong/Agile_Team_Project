@@ -1,9 +1,7 @@
-
 // this turns of the Analytics (we only want Analytics from users not dev)
 const IsDevMode = true;
 
-
-module.exports = function(app)
+module.exports = function(app, auth)
 {
 
 //#region Pages
@@ -65,43 +63,74 @@ module.exports = function(app)
 
 //#region Login flow
 
-	app.get("/createAccount",function(req, res)
+	app.post("/register", auth.Register, function(req, res)
 	{
-		console.log("/createAccount", req.query);
+		let sanitizedUsername = req.sanitize(req.query.Username);
 
-		let sanitizeUsername = req.sanitize(req.query.username);
-		let sqlQuery = `INSERT INTO Users (Username)VALUES('${sanitizeUsername}')`;
+		let sqlQuery = `INSERT INTO Users (Username)VALUES('${sanitizedUsername}')`;
 
 		db.query(sqlQuery, (err, result) => {
 			if (err) {
 				console.log(err);
+				res.sendStatus(400);
 				return;
 			}
+
+			// get last id added
+			db.query(`SELECT LAST_INSERT_ID()`, (err, result) => {
+				if (err) {
+					console.log(err);
+					res.sendStatus(500);
+					return;
+				}
+
+				userId = result[0]['LAST_INSERT_ID()'];
+
+
+				// get user data
+				let sqlQuery = `SELECT * FROM Users WHERE (UserID =${userId}`;
+
+				db.query(sqlQuery, (err, result) => {
+					if (err) {
+						console.log(err);
+						res.sendStatus(400);
+						return;
+					}
+
+					res.send(result);
+				});
+			});
 		});
-	});
+	}, );
 
-	app.get("/login",function(req, res)
+	app.post("/login", auth.Login, function(req, res)
 	{
-		console.log("/login", req.query);
+		let sanitizedUserID = req.sanitize(req.query.UserID);
+		console.log("login UserID: ", sanitizedUserID);
 
-		let sanitizeUsername = req.sanitize(req.query.username);
-		let sqlQuery = `SELECT UserID FROM Users WHERE Username = '${sanitizeUsername}'`;
+		let sqlQuery = `SELECT * FROM Users WHERE UserID='${sanitizedUserID}'`;
 
 		db.query(sqlQuery, (err, result) => {
 			if (err) {
 				console.log(err);
-				res.sendStatus(404);
+				res.sendStatus(400);
 				return;
 			}
+			if (result.length != 1)
+			{
+				res.sendStatus(400);
+			}
 
-			res.send({UserID: result[0].UserID});
+			res.send(result[0]);
 		});
 	});
+
+	app.post("/logout", auth.CheckIfAuthenticated, auth.Logout);
+
+	// app.delete("/user", auth.CheckIfAuthenticated, auth.Delete, function(req, res){});
 
 	app.get("/users", function(req, res)
 	{
-		console.log("/users");
-
 		let sqlQuery = `SELECT UserID, Username FROM Users`;
 
 		db.query(sqlQuery, (err, result) => {
@@ -178,7 +207,6 @@ module.exports = function(app)
 
 	app.post("/CreateEvent",function(req, res)
 	{
-		console.log("/CreateEvent", req.query, req.body);
 
 		let sanitizedUserID = req.sanitize(req.query.UserID);
 
@@ -261,7 +289,6 @@ module.exports = function(app)
 
 	app.delete("/RemoveEvent",function(req, res)
 	{
-		console.log("/RemoveEvent", req.query);
 
 		let sanitizedEventID = req.sanitize(req.query.EventID);
 
@@ -296,8 +323,6 @@ module.exports = function(app)
 
 	app.post("/EditEvent",function(req, res)
 	{
-		console.log("/EditEvent", req.query, req.body);
-
 		let sanitizedEventID = req.sanitize(req.query.EventID);
 		let sanitizedEventName = req.sanitize(req.query.EventName);
 		if (sanitizedEventID == null)

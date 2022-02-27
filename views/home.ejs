@@ -3,7 +3,7 @@
 
 <!-- Metadata about the page itself for search engines -->
 <head>
-	<%- include('components/Head', {
+	<%- include('Components/Head', {
 		PageData: PageData,
 		HeadData: {
 			Title: "WellTimed",
@@ -13,21 +13,21 @@
 		}
 	}); %>
 
+	<link rel="stylesheet" href="Pages/Home/HomePage.css">
 	<link rel="stylesheet" href="Shared/Optinal/Clock.css">
 	<script src="Shared/Optinal/TimeUtility.js"></script>
 	<script src="Shared/Optinal/ClockFace.js"></script>
 </head>
 
 <body class="dark">
-	<%- include('components/Background'); %>
-	<link rel="stylesheet" href="Pages/Home/HomePage.css">
+	<%- include('Components/Background'); %>
 
 	<div class="content">
 		<!-- shared common header -->
-		<%- include('components/AccessibilityHelper'); %>
+		<%- include('Components/AccessibilityHelper'); %>
 
 		<!-- shared common header -->
-		<%- include('components/Header'); %>
+		<%- include('Components/Header'); %>
 
 		<section id="homeCover">
 			<section id="homeLeftSide">
@@ -37,7 +37,7 @@
 					Your Time
 				</h2>
 
-				<button id="homeCreateAccount" class="rounded shaded sheen" onclick="CreateAccountPopup()">
+				<button id="homeRegister" class="rounded shaded" onclick="RegisterPopup()">
 					<h4>Signup Now</h4>
 				</button>
 
@@ -100,11 +100,11 @@
 			</section>
 		</section>
 
-		<%- include('components/PopupHolder'); %>
+		<%- include('Components/PopupHolder'); %>
 
 	</div>
 
 	<!-- Shared common loader -->
-	<%- include('components/Loader'); %>
+	<%- include('Components/Loader'); %>
 </body>
 </html>

@@ -43,8 +43,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(LogRequest);
 
+let auth = require("./routes/simpleAuth_Service");
+
 // logic for each end point
-require("./routes/main")(app);
+require("./routes/main")(app, auth);
 
 
 app.set("view engine", "ejs");

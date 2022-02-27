@@ -153,6 +153,12 @@ function GetEventsHtml(monthOffset, date)
 
 function GetEventList(monthOffset)
 {
+	let userId = TryGetUserId();
+	if (!userId)
+	{
+		return;
+	}
+
 	EventDataCache[monthOffset]
 	if (EventDataCache[monthOffset])
 	{
@@ -177,10 +183,7 @@ function GetEventList(monthOffset)
 	let endIsoStr = dateRangeEnd.toISOString();
 	dateRangeEnd = endIsoStr.substring(0,endIsoStr.length-1)
 
-
-
-	// todo get user id
-	Get(`/events?UserID=${1}&dateRangeStart=${dateRangeStart}&dateRangeEnd=${dateRangeEnd}`,
+	Get(`/events?UserID=${userId}&dateRangeStart=${dateRangeStart}&dateRangeEnd=${dateRangeEnd}`,
 		"", {}, function(response)
 		{
 			let events = JSON.parse(response.responseText);
@@ -205,6 +208,12 @@ function GetEventList(monthOffset)
 
 function GetEventAttendees(monthOffset, eventId)
 {
+	let userId = TryGetUserId();
+	if (!userId)
+	{
+		return;
+	}
+
 	Get(`/attendees?EventID=${eventId}`,
 		"", {}, function(response)
 		{
@@ -214,6 +223,12 @@ function GetEventAttendees(monthOffset, eventId)
 }
 function GetUserList()
 {
+	let userId = TryGetUserId();
+	if (!userId)
+	{
+		return;
+	}
+
 	Get(`/users`, "", {}, function(response)
 		{
 			UserList = JSON.parse(response.responseText);
@@ -223,6 +238,12 @@ function GetUserList()
 //#region Popups
 function CreateEventPopup()
 {
+	let userId = TryGetUserId();
+	if (!userId)
+	{
+		return;
+	}
+
 	let popupBodyHtml = `
 		<h3 class="center">Create New Event</h3>
 		<form onsubmit="return CreateEvent();">`;
@@ -242,6 +263,12 @@ function CreateEventPopup()
 
 function EditEventPopup(monthOffset, eventId)
 {
+	let userId = TryGetUserId();
+	if (!userId)
+	{
+		return;
+	}
+
 	let event = EventDataCache[monthOffset][eventId];
 
 	let popupBodyHtml = `<h3 class="center">Edit Event</h3>
@@ -268,6 +295,12 @@ function EditEventPopup(monthOffset, eventId)
 
 function RemoveEventPopup(eventId)
 {
+	let userId = TryGetUserId();
+	if (!userId)
+	{
+		return;
+	}
+
 	let popupBodyHtml = `<h3 class="center">Remove Event</h3>
 		<p class="center">Are you sure you want to remove this event?</p>
 		<div style="display:flex; justify-content:center;">
@@ -447,8 +480,14 @@ function UpdateAttendeeSuggestions()
 
 function CreateEvent()
 {
+	let userId = TryGetUserId();
+	if (!userId)
+	{
+		return;
+	}
+
 	let bodyData = {
-		UserID: 1, //todo from login
+		UserID: userId,
 		EventName: document.getElementById("eventName").value,
 		EventColor: document.getElementById("eventColor").value,
 		EventDescription: document.getElementById("eventDescription").value,
@@ -458,7 +497,7 @@ function CreateEvent()
 
 
 	Post(`/CreateEvent?
-		UserID=${1}&
+		UserID=${bodyData["UserID"]}&
 		EventName=${bodyData["EventName"]}&
 		EventDescription=${bodyData["EventDescription"]}&
 		EventDateTime=${bodyData["EventDateTime"]}&
@@ -484,6 +523,12 @@ function CreateEvent()
 
 function EditEvent()
 {
+	let userId = TryGetUserId();
+	if (!userId)
+	{
+		return;
+	}
+
 	let eventID = document.getElementById("eventId").value;
 
 	let bodyData = {
@@ -522,6 +567,11 @@ function EditEvent()
 
 function RemoveEvent(eventID)
 {
+	let userId = TryGetUserId();
+	if (!userId)
+	{
+		return;
+	}
 
 	Delete(`/RemoveEvent?
 		EventID=${eventID}`,

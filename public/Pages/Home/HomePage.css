@@ -41,7 +41,7 @@
 }
 
 
-#homeCreateAccount{
+#homeRegister{
 	margin-left: 6vw;
 	padding: 1.5em;
 	background: var(--PositiveColour);
@@ -49,7 +49,7 @@
 	text-transform: uppercase;
 }
 
-#homeCreateAccount > *{
+#homeRegister > *{
 	margin: 0px;
 	padding: 0px;
 	color: var(--PositiveColour-Contrast);
