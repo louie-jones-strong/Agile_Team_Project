@@ -65,7 +65,11 @@ function TimeZonePopupBody(timeZone)
 
 function UiRemoveTimeZone(timeZoneKey)
 {
-	// todo send request to our api to sync state
+	let userId = TryGetUserId();
+	if (userId)
+	{
+		// todo send request to our api to sync state
+	}
 
 
 	delete TimeZones[timeZoneKey];
@@ -78,7 +82,11 @@ function UiRemoveTimeZone(timeZoneKey)
 
 function UiAddTimeZone()
 {
-	// todo send request to our api to sync state
+	let userId = TryGetUserId();
+	if (userId)
+	{
+		// todo send request to our api to sync state
+	}
 
 	let name = document.getElementById("timeZoneName").value;
 	let offset = document.getElementById("timeZoneOffset").value;
@@ -93,7 +101,11 @@ function UiAddTimeZone()
 
 function UiEditTimeZone(timeZoneKey)
 {
-	// todo send request to our api to sync state
+	let userId = TryGetUserId();
+	if (userId)
+	{
+		// todo send request to our api to sync state
+	}
 
 	//update visuals
 	TimeZones[timeZoneKey].Name = document.getElementById("timeZoneName").value;
@@ -127,3 +139,9 @@ function AddTimeZone(name, offset)
 
 	TimeZoneIndex += 1;
 }
+
+document.addEventListener(OnLoginStateChangeEventName, function () {
+	//todo get users timezones
+	UpdateTimeZoneVisuals(TimeZones);
+
+}, false);

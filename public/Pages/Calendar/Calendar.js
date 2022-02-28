@@ -591,3 +591,9 @@ function RemoveEvent(eventID)
 
 	return false;
 }
+
+
+document.addEventListener(OnLoginStateChangeEventName, function () {
+	ForceUpdatePage();
+
+}, false);

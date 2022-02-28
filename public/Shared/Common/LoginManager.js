@@ -58,6 +58,7 @@ function LoginPromptPopup()
 //#endregion
 
 let UserData = null;
+const OnLoginStateChangeEventName = "OnLoginStateChange";
 
 
 
@@ -73,6 +74,7 @@ function Login()
 			if (response.status == 200)
 			{
 				UserData = JSON.parse(response.responseText);
+				UpdateLoginState()
 				ClosePopup();
 			}
 		});
@@ -99,6 +101,8 @@ function Register()
 		{
 			if (response.status == 200)
 			{
+				UserData = JSON.parse(response.responseText);
+				UpdateLoginState()
 				ClosePopup();
 			}
 		});
@@ -122,3 +126,13 @@ function TryGetUserId()
 		return null;
 	}
 }
+
+
+
+function UpdateLoginState()
+{
+	var myCustomEvent = new Event(OnLoginStateChangeEventName);
+	document.dispatchEvent(myCustomEvent);
+}
+
+
