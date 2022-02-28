@@ -59,6 +59,12 @@ function LoginPromptPopup()
 
 let UserData = null;
 const OnLoginStateChangeEventName = "OnLoginStateChange";
+const LocalStorageKey_Email = "Auth_Email";
+const LocalStorageKey_Password = "Auth_Password";
+
+window.addEventListener('DOMContentLoaded', (event) => {
+	TryLoginWithLocalStorage();
+});
 
 
 
@@ -67,6 +73,24 @@ function Login()
 	let email = document.getElementById("email").value;
 	let password = document.getElementById("password").value;
 
+	SendLoginRequest(email, password);
+	return false;
+}
+
+function TryLoginWithLocalStorage()
+{
+
+	let email = localStorage.getItem(LocalStorageKey_Email);
+	let password = localStorage.getItem(LocalStorageKey_Password);
+
+	if (email != null && password != null)
+	{
+		SendLoginRequest(email, password);
+	}
+}
+
+function SendLoginRequest(email, password)
+{
 	Post(`/login?email=${email}&password=${password}`,
 		``,
 		{}, function(response)
@@ -76,9 +100,11 @@ function Login()
 				UserData = JSON.parse(response.responseText);
 				UpdateLoginState()
 				ClosePopup();
+
+				localStorage.setItem(LocalStorageKey_Email, email);
+				localStorage.setItem(LocalStorageKey_Password, password);
 			}
 		});
-	return false;
 }
 
 function Register()
@@ -95,8 +121,8 @@ function Register()
 	}
 
 
-	Post(`/register`,
-		`Username=${username}&email=${email}&password=${password1}`,
+	Post(`/register?Username=${username}&email=${email}&password=${password1}`,
+		``,
 		{}, function(response)
 		{
 			if (response.status == 200)

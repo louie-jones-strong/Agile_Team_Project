@@ -88,7 +88,7 @@ module.exports = function(app, auth)
 
 
 				// get user data
-				let sqlQuery = `SELECT * FROM Users WHERE (UserID =${userId}`;
+				let sqlQuery = `SELECT * FROM Users WHERE UserID =${userId}`;
 
 				db.query(sqlQuery, (err, result) => {
 					if (err) {

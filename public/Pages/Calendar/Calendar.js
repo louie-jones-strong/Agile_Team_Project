@@ -594,6 +594,7 @@ function RemoveEvent(eventID)
 
 
 document.addEventListener(OnLoginStateChangeEventName, function () {
+	GetUserList();
 	ForceUpdatePage();
 
 }, false);
