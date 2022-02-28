@@ -2,9 +2,15 @@
 
 function LoginPopup()
 {
+	if (IsSignedIn())
+	{
+		SignedInPopup();
+		return;
+	}
+
 	let popupBodyHtml = `
 		<h3 class="center popupTitle">Login</h3>
-		<form class="center" onsubmit="return Login();">
+		<form class="center" onsubmit="return LoginUi();">
 			<label for"email">Email:</label>
 			<input class="center" type="email" id="email" required><br>
 
@@ -21,9 +27,15 @@ function LoginPopup()
 
 function RegisterPopup()
 {
+	if (IsSignedIn())
+	{
+		SignedInPopup();
+		return;
+	}
+
 	let popupBodyHtml = `
 		<h3 class="center popupTitle">Create Account</h3>
-		<form class="center" onsubmit="return Register();">
+		<form class="center" onsubmit="return RegisterUi();">
 			<label for"username">Username:</label>
 			<input class="center" id="username" required><br>
 
@@ -55,6 +67,21 @@ function LoginPromptPopup()
 	OpenPopup(popupBodyHtml)
 }
 
+function SignedInPopup()
+{
+	let popupBodyHtml = `
+		<h3 class="center popupTitle">Logged In</h3>
+		<p class="center">You are currently logged in as: <br>
+		"${UserData.Username}" <br>
+		UserID: ${UserData.UserID}</p>
+
+		<div style="display:flex; justify-content:center;">
+			<button class="negative rounded shaded" onclick="LogOutUi()">Log Out</button>
+		</div>`
+
+	OpenPopup(popupBodyHtml)
+}
+
 //#endregion
 
 let UserData = null;
@@ -68,13 +95,48 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
 
-function Login()
+function LoginUi()
 {
 	let email = document.getElementById("email").value;
 	let password = document.getElementById("password").value;
 
 	SendLoginRequest(email, password);
 	return false;
+}
+
+function RegisterUi()
+{
+	let username = document.getElementById("username").value;
+	let email = document.getElementById("email").value;
+	let password1 = document.getElementById("password").value;
+	let password2 = document.getElementById("passwordConfirm").value;
+
+	if (!(password1 === password2))
+	{
+		alert("passwords should be the same");
+		return false;
+	}
+
+
+	Post(`/register?Username=${username}&email=${email}&password=${password1}`,
+		``,
+		{}, function(response)
+		{
+			if (response.status == 200)
+			{
+				UserData = JSON.parse(response.responseText);
+				UpdateLoginState()
+				ClosePopup();
+			}
+		});
+	return false;
+}
+
+function LogOutUi()
+{
+	location.reload();
+	localStorage.setItem(LocalStorageKey_Email, null);
+	localStorage.setItem(LocalStorageKey_Password, null);
 }
 
 function TryLoginWithLocalStorage()
@@ -107,33 +169,7 @@ function SendLoginRequest(email, password)
 		});
 }
 
-function Register()
-{
-	let username = document.getElementById("username").value;
-	let email = document.getElementById("email").value;
-	let password1 = document.getElementById("password").value;
-	let password2 = document.getElementById("passwordConfirm").value;
 
-	if (!(password1 === password2))
-	{
-		alert("passwords should be the same");
-		return false;
-	}
-
-
-	Post(`/register?Username=${username}&email=${email}&password=${password1}`,
-		``,
-		{}, function(response)
-		{
-			if (response.status == 200)
-			{
-				UserData = JSON.parse(response.responseText);
-				UpdateLoginState()
-				ClosePopup();
-			}
-		});
-	return false;
-}
 
 function IsSignedIn()
 {
