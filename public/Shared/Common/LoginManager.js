@@ -176,17 +176,18 @@ function IsSignedIn()
 	return UserData != null;
 }
 
-function TryGetUserId()
+function TryGetUserId(allowLoginPrompt=true)
 {
 	if (IsSignedIn())
 	{
 		return UserData["UserID"]
 	}
-	else
+
+	if (allowLoginPrompt)
 	{
 		LoginPromptPopup();
-		return null;
 	}
+	return null;
 }
 
 

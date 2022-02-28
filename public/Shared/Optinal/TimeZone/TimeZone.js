@@ -65,7 +65,7 @@ function TimeZonePopupBody(timeZone)
 
 function UiRemoveTimeZone(timeZoneKey)
 {
-	let userId = TryGetUserId();
+	let userId = TryGetUserId(allowLoginPrompt=false);
 	if (userId)
 	{
 		// todo send request to our api to sync state
@@ -82,7 +82,7 @@ function UiRemoveTimeZone(timeZoneKey)
 
 function UiAddTimeZone()
 {
-	let userId = TryGetUserId();
+	let userId = TryGetUserId(allowLoginPrompt=false);
 	if (userId)
 	{
 		// todo send request to our api to sync state
@@ -101,7 +101,7 @@ function UiAddTimeZone()
 
 function UiEditTimeZone(timeZoneKey)
 {
-	let userId = TryGetUserId();
+	let userId = TryGetUserId(allowLoginPrompt=false);
 	if (userId)
 	{
 		// todo send request to our api to sync state
