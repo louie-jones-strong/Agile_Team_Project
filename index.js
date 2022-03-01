@@ -65,15 +65,7 @@ app.listen(port, () => {
 
 function LogRequest(req, res, next)
 {
-	let startTime = performance.now();
-
 	console.log();
 	console.log(req.method, req._parsedUrl.pathname, req.query, req.body);
 	next();
-
-	console.log(res.statusCode, `took: ${performance.now() - startTime} ms`);
-	if (res.statusCode >= 400)
-	{
-		console.log(res.statusMessage)
-	}
 }

@@ -2,7 +2,8 @@
 Github repository for course 'CM2020 Agile Software Projects'. Members of the team 'Group 44 (Tutor Group 05)'
 
 ## How to run tests
-- `npm test`
+- Run local server `node index.js`
+- Run Tests`npm test`
 
 ## How to launch app:
 - Setup MySQL database locally (see DatabasePlan.sql)
