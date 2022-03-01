@@ -145,7 +145,8 @@ function TryLoginWithLocalStorage()
 	let email = localStorage.getItem(LocalStorageKey_Email);
 	let password = localStorage.getItem(LocalStorageKey_Password);
 
-	if (email != null && password != null)
+	if (email != null && password != null &&
+		email != "null" && password != "null")
 	{
 		SendLoginRequest(email, password);
 	}
