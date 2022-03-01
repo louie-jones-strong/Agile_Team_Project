@@ -76,8 +76,22 @@ function SignedInPopup()
 		UserID: ${UserData.UserID}</p>
 
 		<div style="display:flex; justify-content:center;">
+			<button class="negative rounded shaded" onclick="ConfirmDeletePopup()">Delete</button>
 			<button class="negative rounded shaded" onclick="LogOutUi()">Log Out</button>
 		</div>`
+
+	OpenPopup(popupBodyHtml)
+}
+
+function ConfirmDeletePopup()
+{
+	let popupBodyHtml = `<h3 class="center">Delete User Data</h3>
+		<p class="center">Are you sure you want to do this?</p>
+		<p style="color:red; background-color:white;">THIS WILL DELETE YOUR DATA FOREVER!</p>
+		<div style="display:flex; justify-content:center;">
+			<button class="negative shaded rounded" onClick="DeleteUi()">Delete</button>
+			<button class="positive shaded rounded" onClick="ClosePopup()">Cancel</button>
+		</div>`;
 
 	OpenPopup(popupBodyHtml)
 }
@@ -139,6 +153,27 @@ function LogOutUi()
 	localStorage.setItem(LocalStorageKey_Password, null);
 }
 
+function DeleteUi()
+{
+	let userId = TryGetUserId();
+	if (!userId)
+	{
+		return;
+	}
+
+	Delete(`/user?UserID=${userId}`,
+		``,
+		{}, function(response)
+		{
+			if (response.status == 200)
+			{
+				location.reload();
+				localStorage.setItem(LocalStorageKey_Email, null);
+				localStorage.setItem(LocalStorageKey_Password, null);
+			}
+		});
+}
+
 function TryLoginWithLocalStorage()
 {
 
@@ -190,8 +225,6 @@ function TryGetUserId(allowLoginPrompt=true)
 	}
 	return null;
 }
-
-
 
 function UpdateLoginState()
 {

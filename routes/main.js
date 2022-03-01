@@ -127,7 +127,44 @@ module.exports = function(app, auth)
 
 	app.post("/logout", auth.CheckIfAuthenticated, auth.Logout);
 
-	// app.delete("/user", auth.CheckIfAuthenticated, auth.Delete, function(req, res){});
+	app.delete("/user", auth.CheckIfAuthenticated, auth.Delete, function(req, res)
+	{
+		let sanitizedUserID = req.sanitize(req.query.UserID);
+
+		// remove EventAttendees
+		let sqlQuery = `DELETE FROM EventAttendees WHERE (UserID = ${sanitizedUserID} OR
+		EventID IN (SELECT EventID FROM Events WHERE EventCreator=${sanitizedUserID}))`;
+
+		db.query(sqlQuery, (err, result) => {
+			if (err) {
+				console.log(err);
+				res.sendStatus(500);
+				return;
+			}
+
+			// remove event
+			let sqlQuery = `DELETE FROM Events WHERE EventCreator = ${sanitizedUserID}`;
+			db.query(sqlQuery, (err, result) => {
+				if (err) {
+					console.log(err);
+					res.sendStatus(500);
+					return;
+				}
+
+				// remove user
+				let sqlQuery = `DELETE FROM Users WHERE UserID = ${sanitizedUserID}`;
+				db.query(sqlQuery, (err, result) => {
+					if (err) {
+						console.log(err);
+						res.sendStatus(500);
+						return;
+					}
+
+					res.send(200);
+				});
+			});
+		});
+	});
 
 	app.get("/users", function(req, res)
 	{
