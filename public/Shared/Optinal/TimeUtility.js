@@ -53,11 +53,11 @@ function TimeToString(time, is12Hour, showSeconds)
 		isPm = temp.IsPm;
 	}
 
-	let hoursString = FixedCharCountNumber(hours, 2);
+	let hoursString = FixedCharCountNumber(hours, 2, 0);
 
-	let minutesString = FixedCharCountNumber(minutes, 2);
+	let minutesString = FixedCharCountNumber(minutes, 2, 0);
 
-	let secondsString = FixedCharCountNumber(seconds, 2);
+	let secondsString = FixedCharCountNumber(seconds, 2, 0);
 
 	let timeString = `${hoursString}:${minutesString}`;
 	if (showSeconds)
@@ -168,13 +168,23 @@ function HourTo12Hour(hour)
 	return {Hour:hour, IsPm:isPm};
 }
 
-function FixedCharCountNumber(number, charCount)
+function FixedCharCountNumber(number, minLeadingChars, minTrailingChars)
 {
-	let numberString = `${number}`;
+	let leadingString = `${Math.round(number)}`;
+	let trailingString = `${number}`;
+	trailingString = trailingString.substring(leadingString.length + 1);
 
-	let zerosToAdd = Math.max(0, (charCount - numberString.length));
+	let leadingZerosToAdd = Math.max(0, (minLeadingChars - leadingString.length));
+	let trailingZerosToAdd = Math.max(0, (minTrailingChars - trailingString.length));
+	let addDecimalPoint = trailingString.length == 0 && minTrailingChars > 0;
 
-	numberString = "0".repeat(zerosToAdd) + numberString;
+	let numberString = "0".repeat(leadingZerosToAdd);
+	numberString += number;
+	if (addDecimalPoint)
+	{
+		numberString += ".";
+	}
+	numberString += "0".repeat(trailingZerosToAdd);
 
 	return numberString;
 }

@@ -60,6 +60,35 @@ describe('TimeUtility', function ()
 			});
 		});
 	});
+
+	describe('FixedCharCountNumber()', function ()
+	{
+
+		let tests = [
+			{Input: {Number: 0, MinLeadingChars:0, MinTrailingChars:0}, Expected: "0"},
+			{Input: {Number: 0, MinLeadingChars:1, MinTrailingChars:0}, Expected: "0"},
+			{Input: {Number: 0, MinLeadingChars:2, MinTrailingChars:0}, Expected: "00"},
+			{Input: {Number: 0, MinLeadingChars:0, MinTrailingChars:2}, Expected: "0.00"},
+			{Input: {Number: 1, MinLeadingChars:0, MinTrailingChars:2}, Expected: "1.00"},
+			{Input: {Number: 1, MinLeadingChars:2, MinTrailingChars:0}, Expected: "01"},
+			{Input: {Number: 1.2, MinLeadingChars:0, MinTrailingChars:0}, Expected: "1.2"},
+			{Input: {Number: 1.2, MinLeadingChars:2, MinTrailingChars:2}, Expected: "01.20"},
+			];
+
+		tests.forEach(test => {
+			it(`FixedCharCountNumber(${test.Input.Number}, ${test.Input.MinLeadingChars}, ${test.Input.MinTrailingChars})`,
+				function () {
+
+				let output = timeUtility.FixedCharCountNumber(
+					test.Input.Number,
+					test.Input.MinLeadingChars,
+					test.Input.MinTrailingChars);
+
+				assert.equal(output, test.Expected);
+			});
+		});
+	});
+
 	describe('GetOrdinalString()', function ()
 	{
 
