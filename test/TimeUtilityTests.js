@@ -55,8 +55,11 @@ describe('TimeUtility', function ()
 			it(`HourTo12Hour(${test.Input})`, function () {
 
 				let output = timeUtility.HourTo12Hour(test.Input);
-				assert.equal(output[0], test.Expected.Hour);
-				assert.equal(output[1], test.Expected.IsPm);
+				assert.equal(output.Hour, test.Expected.Hour);
+				assert.equal(output.IsPm, test.Expected.IsPm);
+			});
+		});
+	});
 	describe('GetOrdinalString()', function ()
 	{
 

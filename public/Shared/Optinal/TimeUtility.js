@@ -44,10 +44,13 @@ function TimeToString(time, is12Hour, showSeconds)
 	let hours = time.getUTCHours();
 	let minutes = time.getUTCMinutes();
 	let seconds = time.getUTCSeconds();
+	let isPm = false;
 
 	if (is12Hour)
 	{
-		[hours, isPm] = HourTo12Hour(hours);
+		let temp = HourTo12Hour(hours);
+		hours = temp.Hour;
+		isPm = temp.IsPm;
 	}
 
 	let hoursString = FixedCharCountNumber(hours, 2);
@@ -162,7 +165,7 @@ function HourTo12Hour(hour)
 	let isPm = hour >= 12;
 	hour = hour % 12;
 
-	return [hour, isPm];
+	return {Hour:hour, IsPm:isPm};
 }
 
 function FixedCharCountNumber(number, charCount)
