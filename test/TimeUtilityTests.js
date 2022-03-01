@@ -26,125 +26,37 @@ describe('TimeUtility', function ()
 
 	describe('HourTo12Hour()', function ()
 	{
-		describe('int values', function ()
-		{
-			it('HourTo12Hour(-1)', function () {
 
-				let output = timeUtility.HourTo12Hour(-1);
-				assert.equal(output[0], 11);
-				assert.equal(output[1], true);
-			});
+		let tests = [
+			// int values
+			{Input: -1, Expected: {Hour:-1, IsPm:true}},
+			{Input: 0, Expected: {Hour:0, IsPm:false}},
+			{Input: 1, Expected: {Hour:1, IsPm:false}},
+			{Input: 11, Expected: {Hour:11, IsPm:false}},
+			{Input: 12, Expected: {Hour:0, IsPm:true}},
+			{Input: 13, Expected: {Hour:1, IsPm:true}},
+			{Input: 23, Expected: {Hour:11, IsPm:true}},
+			{Input: 24, Expected: {Hour:0, IsPm:true}},
+			{Input: 25, Expected: {Hour:1, IsPm:false}},
+			// float values
+			{Input: -0.5, Expected: {Hour:-0.5, IsPm:true}},
+			{Input: 0.5, Expected: {Hour:0.5, IsPm:false}},
+			{Input: 11.5, Expected: {Hour:11.5, IsPm:false}},
+			{Input: 12.5, Expected: {Hour:0.5, IsPm:true}},
+			{Input: 23.5, Expected: {Hour:11.5, IsPm:true}},
+			{Input: 24.5, Expected: {Hour:0.5, IsPm:false}},
+			// handling invalid values
+			{Input: null, Expected: {Hour:0, IsPm:false}},
+			{Input: "string", Expected: {Hour:0, IsPm:false}},
+			{Input: undefined, Expected: {Hour:0, IsPm:false}},
+			];
 
-			it('HourTo12Hour(0)', function () {
+		tests.forEach(test => {
+			it(`HourTo12Hour(${test.Input})`, function () {
 
-				let output = timeUtility.HourTo12Hour(0);
-				assert.equal(output[0], 0);
-				assert.equal(output[1], false);
-			});
-
-			it('HourTo12Hour(11)', function () {
-
-				let output = timeUtility.HourTo12Hour(11);
-				assert.equal(output[0], 11);
-				assert.equal(output[1], false);
-			});
-
-			it('HourTo12Hour(12)', function () {
-
-				let output = timeUtility.HourTo12Hour(12);
-				assert.equal(output[0], 0);
-				assert.equal(output[1], true);
-			});
-
-			it('HourTo12Hour(13)', function () {
-
-				let output = timeUtility.HourTo12Hour(13);
-				assert.equal(output[0], 1);
-				assert.equal(output[1], true);
-			});
-
-			it('HourTo12Hour(23)', function () {
-
-				let output = timeUtility.HourTo12Hour(23);
-				assert.equal(output[0], 11);
-				assert.equal(output[1], true);
-			});
-
-			it('HourTo12Hour(24)', function () {
-
-				let output = timeUtility.HourTo12Hour(24);
-				assert.equal(output[0], 0);
-				assert.equal(output[1], true);
-			});
-
-			it('HourTo12Hour(25)', function () {
-
-				let output = timeUtility.HourTo12Hour(25);
-				assert.equal(output[0], 1);
-				assert.equal(output[1], false);
-			});
-		});
-
-		describe('float values', function ()
-		{
-			it('HourTo12Hour(-0.5)', function () {
-
-				let output = timeUtility.HourTo12Hour(-0.5);
-				assert.equal(output[0], 11.5);
-				assert.equal(output[1], true);
-			});
-
-
-			it('HourTo12Hour(0.5)', function () {
-
-				let output = timeUtility.HourTo12Hour(0.5);
-				assert.equal(output[0], 0.5);
-				assert.equal(output[1], false);
-			});
-
-			it('HourTo12Hour(11.5)', function () {
-
-				let output = timeUtility.HourTo12Hour(11.5);
-				assert.equal(output[0], 11.5);
-				assert.equal(output[1], false);
-			});
-
-			it('HourTo12Hour(12.5)', function () {
-
-				let output = timeUtility.HourTo12Hour(12.5);
-				assert.equal(output[0], 0.5);
-				assert.equal(output[1], true);
-			});
-
-			it('HourTo12Hour(24.5)', function () {
-
-				let output = timeUtility.HourTo12Hour(24.5);
-				assert.equal(output[0], 0.5);
-				assert.equal(output[1], false);
-			});
-		});
-
-		describe('handling invalid values', function ()
-		{
-			it('HourTo12Hour()', function () {
-
-				let output = timeUtility.HourTo12Hour();
-				assert.equal(output[0], 0);
-				assert.equal(output[1], false);
-			});
-
-			it('HourTo12Hour("string")', function () {
-
-				let output = timeUtility.HourTo12Hour("string");
-				assert.equal(output[0], 0);
-				assert.equal(output[1], false);
-			});
-
-			it('HourTo12Hour(null)', function () {
-
-				let output = timeUtility.HourTo12Hour(null);
-				assert.equal(output[0], 0);
-				assert.equal(output[1], false);
+				let output = timeUtility.HourTo12Hour(test.Input);
+				assert.equal(output[0], test.Expected.Hour);
+				assert.equal(output[1], test.Expected.IsPm);
 			});
 		});
 	});
