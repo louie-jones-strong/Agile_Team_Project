@@ -194,17 +194,20 @@ function GetOrdinalString(number)
 {
 	let lastDigit = number % 10;
 
-	if (lastDigit == 1)
+	if (!(10 < number && number <= 20))
 	{
-		return `${number}st`;
-	}
-	else if (lastDigit == 2)
-	{
-		return `${number}nd`;
-	}
-	else if (lastDigit == 3)
-	{
-		return `${number}rd`;
+		if (lastDigit == 1)
+		{
+			return `${number}st`;
+		}
+		else if (lastDigit == 2)
+		{
+			return `${number}nd`;
+		}
+		else if (lastDigit == 3)
+		{
+			return `${number}rd`;
+		}
 	}
 	return `${number}th`;
 }
