@@ -90,6 +90,35 @@ describe('TimeUtility', function ()
 			});
 		});
 	});
+
+	describe('GetMonthString()', function ()
+	{
+
+		let tests = [
+			{Input: -1, Expected: "invalid"},
+			{Input: 0, Expected: "January"},
+			{Input: 1, Expected: "February"},
+			{Input: 2, Expected: "March"},
+			{Input: 3, Expected: "April"},
+			{Input: 4, Expected: "May"},
+			{Input: 5, Expected: "June"},
+			{Input: 6, Expected: "July"},
+			{Input: 7, Expected: "August"},
+			{Input: 8, Expected: "September"},
+			{Input: 9, Expected: "October"},
+			{Input: 10, Expected: "November"},
+			{Input: 11, Expected: "December"},
+			{Input: 12, Expected: "invalid"},
+			{Input: undefined, Expected: "invalid"},
+			{Input: null, Expected: "invalid"},
+			{Input: "string", Expected: "invalid"},
+			];
+
+		tests.forEach(test => {
+			it(`GetMonthString(${test.Input})`, function () {
+
+				let output = timeUtility.GetMonthString(test.Input);
+				assert.equal(output, test.Expected);
 			});
 		});
 	});
