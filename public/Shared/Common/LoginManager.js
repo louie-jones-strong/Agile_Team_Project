@@ -196,6 +196,10 @@ function UpdateLoginState()
 {
 	var myCustomEvent = new Event(OnLoginStateChangeEventName);
 	document.dispatchEvent(myCustomEvent);
+
+	let loginButton = document.getElementById("loginButton");
+	loginButton.classList.remove("sheen");
+	loginButton.innerHTML = `Signed In`;
 }
 
 
