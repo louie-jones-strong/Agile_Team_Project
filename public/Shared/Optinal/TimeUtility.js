@@ -160,6 +160,7 @@ function DateToString(time, isNumbers, showDay=true, showYear=true)
 	return dateString;
 }
 
+//#region formatting funcs
 function HourTo12Hour(hour)
 {
 	hour = parseFloat(hour);
@@ -257,6 +258,7 @@ function GetMonthString(month)
 
 	return "invalid";
 }
+//#endregion
 
 // for testing
 if (typeof exports != 'undefined')

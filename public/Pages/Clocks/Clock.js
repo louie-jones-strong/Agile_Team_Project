@@ -68,7 +68,6 @@ function RegularRefresh()
 	{
 		Clocks[index].Draw();
 	}
-
 	setTimeout(RegularRefresh, 250);
 }
 
@@ -84,6 +83,6 @@ function UpdateTimeZoneVisuals(timeZones)
 		const timeZone = timeZones[key];
 
 		let newClock = new Clock(timeZone);
-		Clocks = newClock;
+		Clocks.push(newClock);
 	}
 }
