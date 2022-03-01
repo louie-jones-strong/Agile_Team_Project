@@ -162,6 +162,22 @@ function DateToString(time, isNumbers, showDay=true, showYear=true)
 
 function HourTo12Hour(hour)
 {
+	hour = parseFloat(hour);
+	if (isNaN(hour))
+	{
+		hour = 0;
+	}
+
+	if (hour > 24)
+	{
+		hour %= 24;
+	}
+
+	if (hour < 0)
+	{
+		hour = 24 + hour;
+	}
+
 	let isPm = hour >= 12;
 	hour = hour % 12;
 

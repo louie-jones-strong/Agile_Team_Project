@@ -29,7 +29,7 @@ describe('TimeUtility', function ()
 
 		let tests = [
 			// int values
-			{Input: -1, Expected: {Hour:-1, IsPm:true}},
+			{Input: -1, Expected: {Hour:11, IsPm:true}},
 			{Input: 0, Expected: {Hour:0, IsPm:false}},
 			{Input: 1, Expected: {Hour:1, IsPm:false}},
 			{Input: 11, Expected: {Hour:11, IsPm:false}},
@@ -39,7 +39,7 @@ describe('TimeUtility', function ()
 			{Input: 24, Expected: {Hour:0, IsPm:true}},
 			{Input: 25, Expected: {Hour:1, IsPm:false}},
 			// float values
-			{Input: -0.5, Expected: {Hour:-0.5, IsPm:true}},
+			{Input: -0.5, Expected: {Hour:11.5, IsPm:true}},
 			{Input: 0.5, Expected: {Hour:0.5, IsPm:false}},
 			{Input: 11.5, Expected: {Hour:11.5, IsPm:false}},
 			{Input: 12.5, Expected: {Hour:0.5, IsPm:true}},
