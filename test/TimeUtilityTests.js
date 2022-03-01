@@ -57,6 +57,39 @@ describe('TimeUtility', function ()
 				let output = timeUtility.HourTo12Hour(test.Input);
 				assert.equal(output[0], test.Expected.Hour);
 				assert.equal(output[1], test.Expected.IsPm);
+	describe('GetOrdinalString()', function ()
+	{
+
+		let tests = [
+			{Input: 0, Expected: "0th"},
+			{Input: 1, Expected: "1st"},
+			{Input: 2, Expected: "2nd"},
+			{Input: 3, Expected: "3rd"},
+			{Input: 4, Expected: "4th"},
+			{Input: 5, Expected: "5th"},
+			{Input: 6, Expected: "6th"},
+			{Input: 7, Expected: "7th"},
+			{Input: 8, Expected: "8th"},
+			{Input: 9, Expected: "9th"},
+			{Input: 10, Expected: "10th"},
+			{Input: 11, Expected: "11th"},
+			{Input: 12, Expected: "12th"},
+			{Input: 13, Expected: "13th"},
+			{Input: 20, Expected: "20th"},
+			{Input: 21, Expected: "21st"},
+			{Input: 22, Expected: "22nd"},
+			{Input: 23, Expected: "23rd"},
+			{Input: 24, Expected: "24th"},
+			];
+
+		tests.forEach(test => {
+			it(`GetOrdinalString(${test.Input})`, function () {
+
+				let output = timeUtility.GetOrdinalString(test.Input);
+				assert.equal(output, test.Expected);
+			});
+		});
+	});
 			});
 		});
 	});
