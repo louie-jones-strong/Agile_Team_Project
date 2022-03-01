@@ -3,6 +3,11 @@ const MsPerMinute = MsPerSecond * 60;
 const MsPerHour = MsPerMinute * 60;
 const MsPerDay = MsPerHour * 24;
 
+function GetUserTimeZone()
+{
+	return new Date().getTimezoneOffset() / -60;
+}
+
 function AddHoursOffset(time, hourOffset)
 {
 
@@ -73,23 +78,40 @@ function TimeToString(time, is12Hour, showSeconds)
 	return timeString;
 }
 
-function HourTo12Hour(hour)
+function GetFirstDayOfTheMonth(time)
 {
-	let isPm = hour >= 12;
-	hour = hour % 12;
+	let newTime = new Date(time.valueOf());
 
-	return [hour, isPm];
+	//offset back to the start of the month
+	newTime.setDate(1);
+	return newTime.getDay();
 }
 
-function FixedCharCountNumber(number, charCount)
+function GetDaysInMonth(time, monthOffset)
 {
-	let numberString = `${number}`;
+	let newTime = AddMonthsOffset(time, monthOffset)
 
-	let zerosToAdd = Math.max(0, (charCount - numberString.length));
+	let ms = newTime.valueOf();
+	newTime = new Date(ms - MsPerDay);
 
-	numberString = "0".repeat(zerosToAdd) + numberString;
+	return newTime.getDate();
+}
 
-	return numberString;
+function IsSameDay(now1, now2)
+{
+
+	return now1.getUTCFullYear() == now2.getUTCFullYear() &&
+		now1.getUTCMonth() == now2.getUTCMonth() &&
+		now1.getDate() == now2.getDate();
+}
+
+function GetMonthOffset(now1, now2)
+{
+	let monthOffset = (now1.getUTCFullYear() - now2.getUTCFullYear()) * 12;
+
+	monthOffset += now1.getUTCMonth() - now2.getUTCMonth()
+
+	return monthOffset;
 }
 
 function DateToString(time, isNumbers, showDay=true, showYear=true)
@@ -133,6 +155,25 @@ function DateToString(time, isNumbers, showDay=true, showYear=true)
 		}
 	}
 	return dateString;
+}
+
+function HourTo12Hour(hour)
+{
+	let isPm = hour >= 12;
+	hour = hour % 12;
+
+	return [hour, isPm];
+}
+
+function FixedCharCountNumber(number, charCount)
+{
+	let numberString = `${number}`;
+
+	let zerosToAdd = Math.max(0, (charCount - numberString.length));
+
+	numberString = "0".repeat(zerosToAdd) + numberString;
+
+	return numberString;
 }
 
 /// 1 -> 1st, 2 -> 2nd, 3 -> 3rd, 4 -> 4th
@@ -181,46 +222,24 @@ function GetMonthString(month)
 		return "November";
 	if (month == 11)
 		return "December";
+
+	//return "invalid";
 }
 
-function GetUserTimeZone()
+// for testing
+if (typeof exports != 'undefined')
 {
-	return new Date().getTimezoneOffset() / -60;
-}
+	module.exports = {
+		//const
+		MsPerSecond,
+		MsPerMinute,
+		MsPerHour,
+		MsPerDay,
 
-
-function GetFirstDayOfTheMonth(time)
-{
-	let newTime = new Date(time.valueOf());
-
-	//offset back to the start of the month
-	newTime.setDate(1);
-	return newTime.getDay();
-}
-
-function GetDaysInMonth(time, monthOffset)
-{
-	let newTime = AddMonthsOffset(time, monthOffset)
-
-	let ms = newTime.valueOf();
-	newTime = new Date(ms - MsPerDay);
-
-	return newTime.getDate();
-}
-
-function IsSameDay(now1, now2)
-{
-
-	return now1.getUTCFullYear() == now2.getUTCFullYear() &&
-		now1.getUTCMonth() == now2.getUTCMonth() &&
-		now1.getDate() == now2.getDate();
-}
-
-function GetMonthOffset(now1, now2)
-{
-	let monthOffset = (now1.getUTCFullYear() - now2.getUTCFullYear()) * 12;
-
-	monthOffset += now1.getUTCMonth() - now2.getUTCMonth()
-
-	return monthOffset;
+		//formatting funcs
+		HourTo12Hour,
+		FixedCharCountNumber,
+		GetOrdinalString,
+		GetMonthString,
+	};
 }
