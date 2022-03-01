@@ -226,7 +226,7 @@ function GetMonthString(month)
 	if (month == 11)
 		return "December";
 
-	//return "invalid";
+	return "invalid";
 }
 
 // for testing
