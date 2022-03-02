@@ -149,13 +149,15 @@ document.addEventListener(OnLoginStateChangeEventName, function () {
 			{
 				let TimeZonesArray = JSON.parse(response.responseText);
 				let TimeZones = TimeZonesArray.reduce((obj,item)=>{					
-					return {...obj,[item.ID] : item}
+					return {...obj,[item.ID] : {
+						Id: item.ID,
+						Name: item.timezoneName,
+						Offset: item.TimeZoneOffset,
+						UserID: item.UserID}}
 				}, {});
 				UpdateTimeZoneVisuals(TimeZones);
 			}
 		})
 	}
-
-
 
 }, false);
