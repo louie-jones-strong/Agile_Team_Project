@@ -418,7 +418,6 @@ module.exports = function(app, auth)
 //#region user timezones
 app.get("/UserTimezones",function(req, res)
 {
-	console.log("/UserTimezones", req.query);
 
 	let sanitizedUserID = req.sanitize(req.query.UserID);
 
@@ -442,7 +441,6 @@ app.get("/UserTimezones",function(req, res)
 });
 app.post("/AddUserTimezone",function(req, res)
 {
-	console.log("/AddUserTimezone", req.query);
 
 	let sanitizedUserID = req.sanitize(req.query.UserID);
 	let sanitizedTimezoneName = req.sanitize(req.query.TimezoneName);
@@ -472,7 +470,6 @@ app.post("/AddUserTimezone",function(req, res)
 });
 app.post("/EditUserTimezone",function(req, res)
 {
-	console.log("/EditUserTimezone", req.query);
 
 	let sanitizedID = req.sanitize(req.query.ID);
 	let sanitizedTimeZoneOffset= req.sanitize(req.query.TimeZoneOffset);
@@ -498,7 +495,6 @@ app.post("/EditUserTimezone",function(req, res)
 });
 app.post("/DeleteUserTimezone",function(req, res)
 {
-	console.log("/DeleteUserTimezone", req.query);
 
 	let sanitizedID = req.sanitize(req.query.ID);
 
