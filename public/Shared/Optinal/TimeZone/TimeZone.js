@@ -140,7 +140,6 @@ function AddTimeZone(name, offset)
 }
 
 document.addEventListener(OnLoginStateChangeEventName, function () {
-	//todo get users timezones
 	let userId = TryGetUserId(allowLoginPrompt=false);
 	if (userId)
 	{
@@ -148,7 +147,10 @@ document.addEventListener(OnLoginStateChangeEventName, function () {
 		{
 			if (response.status == 200)
 			{
-				TimeZones = JSON.parse(response.responseText);
+				let TimeZonesArray = JSON.parse(response.responseText);
+				let TimeZones = TimeZonesArray.reduce((obj,item)=>{					
+					return {...obj,[item.ID] : item}
+				}, {});
 				UpdateTimeZoneVisuals(TimeZones);
 			}
 		})
