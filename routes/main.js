@@ -438,7 +438,7 @@ app.post("/AddUserTimezone",function(req, res)
 	console.log("/AddUserTimezone", req.query);
 
 	var sanitizedUserID = req.sanitize(req.query.UserID);
-	var sanitizedUserName = req.sanitize(req.query.UserName);
+	var sanitizedTimezoneName = req.sanitize(req.query.TimezoneName);
 	var sanitizedTimeZoneOffset= req.sanitize(req.query.TimeZoneOffset);
 
 
@@ -449,9 +449,9 @@ app.post("/AddUserTimezone",function(req, res)
 	}
 
 	let sqlQuery = `INSERT INTO UserTimezone
-		(UserId, Username, TimeZoneOffset)
+		(UserId, timezoneName, TimeZoneOffset)
 		VALUES
-		(${sanitizedUserID}, '${sanitizedUserName}', '${sanitizedTimeZoneOffset}')`
+		(${sanitizedUserID}, '${sanitizedTimezoneName}', '${sanitizedTimeZoneOffset}')`
 
 	db.query(sqlQuery, (err, result) => {
 		if (err) {
