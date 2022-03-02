@@ -7,3 +7,11 @@ function UpdateClocks()
 
 	setTimeout(UpdateClocks, 250);
 }
+
+
+
+document.addEventListener(OnLoginStateChangeEventName, function () {
+	let homeRegister = document.getElementById("homeRegister");
+	homeRegister.remove();
+
+}, false);

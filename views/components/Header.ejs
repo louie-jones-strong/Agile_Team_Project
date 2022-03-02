@@ -4,14 +4,14 @@
 	<img id="headerLogo" src="Assets/Logo/Logo.png" alt="Logo">
 
 	<nav>
-		<a href="/" class="<% if (PageData.PageName == 'home') { %> selected<%}%>">Home</a>
-		<a href="/about" class="<% if (PageData.PageName == 'about') { %> selected<%}%>">About</a>
-		<a href="/clocks" class="<% if (PageData.PageName == 'clocks') { %> selected<%}%>">Clocks</a>
-		<a href="/timeline" class="<% if (PageData.PageName == 'timeline') { %> selected<%}%>">Timeline</a>
-		<a href="/calendar" class="<% if (PageData.PageName == 'calendar') { %> selected<%}%>">Calendar</a>
+		<a href="/" class="<% if (PageData.PageName == 'home') { %> selected<%}%>"><h2>Home</h4></a>
+		<a href="/about" class="<% if (PageData.PageName == 'about') { %> selected<%}%>"><h2>About</h4></a>
+		<a href="/clocks" class="<% if (PageData.PageName == 'clocks') { %> selected<%}%>"><h2>Clocks</h4></a>
+		<a href="/timeline" class="<% if (PageData.PageName == 'timeline') { %> selected<%}%>"><h2>Timeline</h4></a>
+		<a href="/calendar" class="<% if (PageData.PageName == 'calendar') { %> selected<%}%>"><h2>Calendar</h4></a>
 	</nav>
 
-	<button class="loginButton glass frosted" onclick="LoginPopup()">
+	<button id="loginButton" class="glass frosted sheen" onclick="LoginPopup()">
 		<img class="loginIcon" src="Assets/Icons/person.svg">
 		Login
 	</button>

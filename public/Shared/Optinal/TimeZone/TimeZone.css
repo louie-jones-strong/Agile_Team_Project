@@ -1,0 +1,55 @@
+/* add new button */
+.addButton{
+	width: 2em;
+	height: 2em;
+	background-color: var(--PositiveColour);
+	color: var(--PositiveColour-Contrast);
+	border-radius: 0.5em;
+	margin: 0.25em;
+	margin-top: 2em;
+	transition: all 0.1s;
+	overflow: hidden;
+}
+
+.addButton::after{
+	content: "+";
+}
+
+.addButton:focus,
+.addButton:hover{
+	width: 10em;
+}
+
+.addButton:focus::after,
+.addButton:hover::after{
+	content: "Add Time Zone";
+}
+
+
+/* edit button */
+.editButton{
+	background-color: var(--PositiveColour);
+	color: var(--PositiveColour-Contrast);
+	padding-block: 0.15em;
+	padding-inline: 0.2em;
+}
+
+.editButton::after{
+	content: "\00270E";
+}
+
+
+
+/* remove button */
+.removeButton{
+	background-color: var(--InvalidColour);
+	color: var(--InvalidColour-Contrast);
+	padding-block: 0.15em;
+	padding-inline: 0.2em;
+}
+
+.removeButton::after{
+	content: "X";
+}
+
+

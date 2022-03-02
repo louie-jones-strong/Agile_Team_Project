@@ -7,7 +7,12 @@ html, body{
 	scroll-behavior: smooth;
 }
 
+.content{
+	height: 100vh;
+}
+
 body{
+	overflow-x: hidden;
 	background-color: var(--BackgroundColourRGB);
 
 	margin: 0px;
@@ -24,7 +29,7 @@ body{
 
 	--ColourMain: 0, 4, 255;
 	--ColourMainRGB: rgb(var(--ColourMain));
-	--ColourMainRGB-Contrast: black;
+	--ColourMainRGB-Contrast: white;
 
 	--ColourAccent: 255, 136, 0;
 	--ColourAccentRGB: rgb(var(--ColourAccent));
@@ -125,6 +130,48 @@ body.light{
 				0 0 3px 0 var(--ColourAccentRGB);
 }
 
+.shaded{
+	position: relative;
+	box-shadow: 0em 0.125em 0.25em 0 rgba(0,0,0,50%);
+}
+
+.shaded::before{
+	border-radius: inherit;
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(to bottom,rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 50%,rgba(0,0,0,0.35) 100%);
+}
+
+.sheen{
+	position: relative;
+	overflow: hidden;
+}
+
+.sheen::after{
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 200%;
+	height: 200%;
+
+	background: linear-gradient( 70deg, rgb(0, 0, 0, 0) 50%, rgb(255, 255, 255, 0.75) 80%, rgb(0, 0, 0, 0) 90%);
+
+	animation-name: sheenSlide;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes sheenSlide {
+	0% {transform:translateX(-100%);}
+	70% {transform:translateX(-100%);}
+	100% {transform:translateX(100%);}
+}
+
 .rounded{
 	border-radius: 1.5em;
 }
@@ -173,24 +220,28 @@ button{
 	border: none;
 	padding: 0px 0px;
 	background-color: transparent;
+	cursor:pointer;
 }
 
 button:disabled{
 	cursor:not-allowed;
 }
 
-button.positive{
+.positive{
 	background-color: var(--PositiveColour);
 	color: var(--PositiveColour-Contrast);
+}
+
+.negative{
+	background-color: var(--InvalidColour);
+	color: var(--InvalidColour-Contrast);
+}
+
+button.rounded{
 	padding-block: 0.25em;
 	padding-inline: 0.5em;
 	border-radius: 0.5em;
 	margin: 1em;
-}
-
-button.negative{
-	background-color: var(--InvalidColour);
-	color: var(--InvalidColour-Contrast);
 }
 
 /* Tables */
@@ -226,7 +277,10 @@ ul li::before{
 
 /* inputs */
 
-input{
+input,
+textarea,
+select,
+#eventAttendeesHolder{
 	background-color: transparent;
 	color: var(--Colour-Text1);
 	border-radius: 0.35em;
@@ -237,8 +291,10 @@ input{
 	margin-top: 0em;
 }
 
-input:focus,
-input:hover{
+input:focus, input:hover,
+textarea:focus, textarea:hover,
+select:focus, select:hover,
+#eventAttendeesHolder:focus, #eventAttendeesHolder:hover{
 	background-color: var(--Colour-Text4);
 	color: var(--BackgroundColourRGB);
 }
@@ -250,4 +306,15 @@ label{
 
 input[type="number"]{
 	width: 3em;
+}
+
+textarea{
+	width: 100%;
+	height: 4em;
+	resize: none;
+}
+
+option{
+	background-color: var(--Colour-Text4);
+	color: var(--BackgroundColourRGB);
 }

@@ -21,7 +21,7 @@ function UpdateClockFace(faceKey, timezone)
 
 	if (digitalTime != null)
 	{
-		digitalTime.innerHTML = TimeToString(offsetTime, true);
+		digitalTime.innerHTML = TimeToString(offsetTime, true, true);
 	}
 
 	if (date != null)

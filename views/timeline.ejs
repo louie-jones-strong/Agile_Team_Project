@@ -3,37 +3,66 @@
 
 <!-- Metadata about the page itself for search engines -->
 <head>
-	<%- include('Components/Head', {
+	<%- include('components/Head', {
 		PageData: PageData,
 		HeadData: {
-			Title: "WT: About",
+			Title: "WT: Timeline",
 			Description: "",
 			Url: "",
 			Thumbnail: "",
 		}
 	}); %>
+	<link rel="stylesheet" href="Pages/Timeline/Timeline.css">
+	<link rel="stylesheet" type="text/css" href="Shared/Optinal/TimeZone/TimeZone.css">
+	<script src="Shared/Optinal/TimeUtility.js"></script>
 </head>
 
 <body class="dark">
-	<%- include('Components/Background'); %>
+	<%- include('components/Background'); %>
 
 	<div class="content">
 		<!-- shared common header -->
-		<%- include('Components/AccessibilityHelper'); %>
+		<%- include('components/AccessibilityHelper'); %>
 
 		<!-- shared common header -->
-		<%- include('Components/Header'); %>
+		<%- include('components/Header'); %>
 
-		<div class="centeredFrame">
+		<h1 class="center">Timelines</h1>
+
+		<div id="timelinesManager">
+
+			<div id="currentTimeMarker" class="timeMarker shaded">
+				<h4 id="currentTime" class="center">12:12</h4>
+				<p class="center">Current Local Time</p>
+				<div class="markerLine"></div>
+			</div>
+
+			<div id="predictedTimeMarker" class="timeMarker shaded">
+				<span class="material-icons">drag_indicator</span>
+				<div>
+					<h4 id="predictedTime" class="center">12:12</h4>
+					<p class="center">Local Time</p>
+				</div>
+				<div class="markerLine"></div>
+			</div>
+
+			<div id="timeLinesHolder">
+			</div>
+		</div>
+		<script src="Pages/Timeline/Timeline.js"></script>
+		<script src="Shared/Optinal/TimeZone/TimeZone.js"></script>
+
+		<div class="center">
+			<button class="addButton shaded" onclick= "AddTimeZonePopup()"></button>
 		</div>
 
-		<%- include('Components/PopupHolder'); %>
+		<%- include('components/PopupHolder'); %>
 
 		<!-- Shared common footer -->
-		<%- include('Components/Footer'); %>
+		<%- include('components/Footer'); %>
 	</div>
 
 	<!-- Shared common loader -->
-	<%- include('Components/Loader'); %>
+	<%- include('components/Loader'); %>
 </body>
 </html>

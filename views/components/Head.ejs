@@ -22,7 +22,15 @@
 <% if (PageData.IsDevMode) { %>
 	<!-- Dev Mode so no Analytics -->
 <% }else{ %>
-	<!-- todo add Analytics here -->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YRHZDRZ7F1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-YRHZDRZ7F1');
+	</script>
 <% } %>
 
 <!-- just this page -->

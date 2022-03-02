@@ -1,6 +1,6 @@
 #clockHolder{
 	width: 100%;
-	height: 100%;
+	height: max-content;
 	align-items: center;
 	overflow: hidden;
 	display: flex;
@@ -16,7 +16,8 @@
 	margin-bottom: 0.5em;
 }
 
-.topButton{
+.topButton.editButton,
+.topButton.removeButton{
 	width: 2em;
 	height: 2em;
 	transition: all 0.2s;
@@ -26,6 +27,8 @@
 	border-width: 2px;
 	border-color: black;
 	border-top: none;
+	margin: 0;
+	overflow: hidden;
 }
 
 .topButton:focus,
@@ -34,16 +37,10 @@
 }
 
 /* edit button */
-.editButton{
-	background-color: var(--PositiveColour);
-	color: var(--PositiveColour-Contrast);
+.topButton.editButton{
 	border-bottom-right-radius: 0.5em;
 	padding-left: 0.25em;
 	border-left: none;
-}
-
-.editButton::after{
-	content: "\00270E";
 }
 
 .editButton:focus::after,
@@ -52,16 +49,10 @@
 }
 
 /* remove button */
-.removeButton{
-	background-color: var(--InvalidColour);
-	color: var(--InvalidColour-Contrast);
+.topButton.removeButton{
 	border-bottom-left-radius: 0.5em;
 	padding-right: 0.25em;
 	border-right: none;
-}
-
-.removeButton::after{
-	content: "X";
 }
 
 .removeButton:focus::after,
@@ -69,31 +60,10 @@
 	content: "Remove";
 }
 
-/* add new button */
-.addButton{
-	width: 2em;
-	height: 2em;
-	background-color: var(--PositiveColour);
-	color: var(--PositiveColour-Contrast);
-	border-radius: 0.5em;
-	margin: 0.25em;
-	transition: all 0.1s;
+.card > div > h4{
+	margin-top: 0.2em;
+	margin-bottom: 0.4em;
 }
-
-.addButton::after{
-	content: "+";
-}
-
-.addButton:focus,
-.addButton:hover{
-	width: 6em;
-}
-
-.addButton:focus::after,
-.addButton:hover::after{
-	content: "Add Clock";
-}
-
 
 
 /* clock face */

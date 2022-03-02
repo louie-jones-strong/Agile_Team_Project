@@ -3,7 +3,7 @@
 
 <!-- Metadata about the page itself for search engines -->
 <head>
-	<%- include('Components/Head', {
+	<%- include('components/Head', {
 		PageData: PageData,
 		HeadData: {
 			Title: "WT: Calendar",
@@ -17,28 +17,36 @@
 </head>
 
 <body class="dark">
-	<%- include('Components/Background'); %>
+	<%- include('components/Background'); %>
 
 	<div class="content">
 		<!-- shared common header -->
-		<%- include('Components/AccessibilityHelper'); %>
+		<%- include('components/AccessibilityHelper'); %>
 
 		<!-- shared common header -->
-		<%- include('Components/Header'); %>
+		<%- include('components/Header'); %>
 
 		<div class="calendar">
 
-			<div>
-				<h3 id="currentCalendar">November</h3>
-			</div>
+			<div class="calendarTop glass frosted">
+				<div class="left">
+					<button onclick="CurrentMonth()" class="glass frosted rounded">Today</button>
+					<button onclick="PreviousMonth()" class="changeMonth">
+						<span class="material-icons">arrow_back_ios</span>
+					</button>
 
-			<div class="centeredFrame">
-				<button onclick="PreviousMonth()" class="positive">Previous Month</button>
-				<button onclick="CurrentMonth()" class="positive">Current Month</button>
+					<button onclick="NextMonth()" class="changeMonth">
+						<span class="material-icons">arrow_forward_ios</span>
+					</button>
+				</div>
 
-				<button onclick="CreateEventPopup()" class="positive">Create</button>
+				<h3 id="currentCalendar"></h3>
 
-				<button onclick="NextMonth()" class="positive">Next Month</button>
+				<div class="right">
+					<button onclick="CreateEventPopup()" class="create positive rounded shaded sheen">
+						<h4 class="positive">Create</h4>
+					</button>
+				</div>
 			</div>
 
 			<table id="calendarHolder" class="glass frosted">
@@ -46,12 +54,12 @@
 			</table>
 		</div>
 
-		<%- include('Components/PopupHolder'); %>
+		<%- include('components/PopupHolder'); %>
 
 		<script src="Pages/Calendar/Calendar.js"></script>
 	</div>
 
 	<!-- Shared common loader -->
-	<%- include('Components/Loader'); %>
+	<%- include('components/Loader'); %>
 </body>
 </html>

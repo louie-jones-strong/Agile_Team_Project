@@ -12,7 +12,7 @@ Header{
 
 #headerLogo{
 	height: 100%;
-	width: max-content;
+	width: auto;
 }
 
 .headerCenter{
@@ -33,8 +33,10 @@ nav > a{
 
 	font-size: 2rem;
 	color: var(--Colour-Text1);
-	font-family: 'Roboto', sans-serif;
-	font-weight: 500;
+}
+
+nav > a > *{
+	margin: 0px;
 }
 
 nav > a.selected{

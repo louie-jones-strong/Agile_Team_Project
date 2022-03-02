@@ -1,8 +1,59 @@
 .calendar {
 	padding-top: 5em;
-	border-radius: 2em;
 }
 
+/* calendarTop */
+.calendarTop{
+	border-top-left-radius: 2em;
+	border-top-right-radius: 2em;
+	margin-top: 2em;
+	padding-bottom: 0.5em;
+	padding-inline: 1em;
+	display: flex;
+	justify-content: space-between;
+}
+
+.calendarTop button{
+	transform: scale(1);
+	transition: transform 0.2s;
+}
+
+.calendarTop button:hover,
+.calendarTop button:focus{
+	transform: scale(1.1);
+}
+
+.changeMonth{
+	clip-path: circle();
+	padding: 0.25em;
+
+	transition: all 0.2s;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.changeMonth > *{
+	color: var(--BackgroundColour-ContrastRGB);
+}
+
+.changeMonth:hover,
+.changeMonth:focus{
+	background-color: var(--BackgroundColour-ContrastRGB);
+}
+.changeMonth:hover > *,
+.changeMonth:focus > *{
+	color: var(--BackgroundColourRGB);
+}
+
+#currentCalendar{
+	justify-self: center;
+	margin-top: 1em;
+}
+
+.create > *{
+	margin: 0.5em;
+}
+
+/* table */
 .calendar table{
 	width: 100%;
 }
@@ -14,6 +65,9 @@
 	width: calc(100% / 7);
 }
 
+.calendar table td{
+	height: calc(80vh /5);
+}
 
 /* Days (1-31) */
 .day {
@@ -28,7 +82,7 @@
 }
 
 .currentDay {
-	background: rgba(var(--ColourMain), 0.45);
+	background: rgba(var(--ColourAccent), 1);
 }
 
 .day.otherMonth{
@@ -62,8 +116,6 @@
 
 	color: var(--Colour-Text1);
 	cursor: pointer;
-
-	--EventColour: #1abc9c;
 }
 
 .event::after{
@@ -102,4 +154,98 @@
 	clip-path: circle();
 	background-color: var(--EventColour);
 	padding-left: 0.5em;
+}
+
+
+/* event colours */
+
+.redEvent{
+	--EventColour: hsl(357, 50%, 55%);
+}
+
+.greenEvent{
+	--EventColour: hsl(140, 50%, 55%);
+}
+
+.blueEvent{
+	--EventColour: hsl(204, 50%, 55%);
+}
+
+.pinkEvent{
+	--EventColour: hsl(288, 50%, 55%);
+}
+
+
+
+/* eventAttendees */
+
+#eventAttendeesHolder{
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	position: relative;
+}
+
+.eventAttendee{
+	display: flex;
+	margin: 0.25em;
+	border-radius: 0.5em;
+	padding: 0.1em;
+	padding-inline: 0.5em;
+
+	background-color: var(--ColourAccentRGB);
+	color: var(--ColourAccentRGB-Contrast);
+}
+
+.eventAttendee button{
+	margin-left: 1em;
+	color: var(--ColourAccentRGB-Contrast);
+}
+
+#eventAttendeeInput{
+	margin: 0.25em;
+	border: none;
+}
+
+#eventAttendeesToolTip{
+	display: none;
+	position: absolute;
+	left: 1em;
+	top: calc(100% + 0.1em);
+	width: calc(100% - 2em);
+	height: max-content;
+	z-index: 100;
+	border-bottom-right-radius: 1em;
+	border-bottom-left-radius: 1em;
+	border: 1px solid var(--Colour-Text1);
+
+	background-color: rgba(var(--BackgroundColour), 0.8);
+}
+
+#eventAttendeesHolder:focus-within > #eventAttendeesToolTip{
+	display:block;
+}
+
+#eventAttendeesToolTip > h4{
+	margin: 0em;
+	padding: 0em;
+	margin-inline:0.2em;
+	text-align: center;
+	color: var(--Colour-Text1);
+}
+
+#eventAttendeesToolTip  > button{
+	width: 100%;
+	text-align: center;
+	padding-block: 0.25em;
+	padding-inline: 0.5em;
+
+	background-color: transparent;
+	color: var(--Colour-Text1);
+	transition: all 0.25s;
+}
+
+#eventAttendeesToolTip > button:focus, #eventAttendeesToolTip > button:hover{
+	background-color: var(--Colour-Text4);
+	color: var(--BackgroundColourRGB);
 }
