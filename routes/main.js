@@ -105,8 +105,16 @@ module.exports = function(app, auth)
 
 	app.post("/login", auth.Login, function(req, res)
 	{
+		
 		let sanitizedUserID = req.sanitize(req.query.UserID);
 		console.log("login UserID: ", sanitizedUserID);
+		var sanitizedTimeZoneOffset= req.sanitize(req.query.TimeZoneOffset);
+
+		if (sanitizedUserID == null || sanitizedTimeZoneOffset == null)
+		{
+			res.sendStatus(404);
+			return;
+		}
 
 		let sqlQuery = `SELECT * FROM Users WHERE UserID='${sanitizedUserID}'`;
 
@@ -120,6 +128,16 @@ module.exports = function(app, auth)
 			{
 				res.sendStatus(400);
 			}
+
+			let sqlQuery = `UPDATE UserTimezone SET TimeZoneOffset = ${sanitizedTimeZoneOffset} UserID='${sanitizedUserID}'`
+
+			db.query(sqlQuery, (err, result) => {
+				if (err) {
+					console.log(err);
+					return;
+				}
+				
+			});
 
 			res.send(result[0]);
 		});
@@ -391,39 +409,6 @@ module.exports = function(app, auth)
 //#endregion events
 
 //#region user timezones
-app.post("/EditUserLastTimezone",function(req, res)
-{
-	console.log("/EditUserLastTimezone", req.query);
-
-	var sanitizedUserID = req.sanitize(req.query.UserID);
-	var sanitizedTimeZoneOffset= req.sanitize(req.query.LastTimezone,
-		);
-
-
-	if (sanitizedUserID == null)
-	{
-		res.sendStatus(404);
-		return;
-	}
-	if (isNaN(sanitizedTimeZoneOffset))
-	{
-		res.sendStatus(400);
-		return;
-	}
-
-	let sqlQuery = `UPDATE Users SET LastTimezone
-	= ${sanitizedTimeZoneOffset} WHERE UserID = ${sanitizedUserID}`
-
-	db.query(sqlQuery, (err, result) => {
-		if (err) {
-			console.log(err);
-			res.sendStatus(400);
-			return;
-		}
-
-		res.send(result);
-	});
-});
 app.get("/UserTimezones",function(req, res)
 {
 	console.log("/UserTimezones", req.query);
