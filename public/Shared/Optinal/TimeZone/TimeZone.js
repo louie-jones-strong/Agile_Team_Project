@@ -144,7 +144,7 @@ document.addEventListener(OnLoginStateChangeEventName, function () {
 	let userId = TryGetUserId(allowLoginPrompt=false);
 	if (userId)
 	{
-		get(`/UserTimezones?UserID=${userId}`,{},[],function(response)
+		Get(`/UserTimezones?UserID=${userId}`,{},[],function(response)
 		{
 			if (response.status == 200)
 			{
@@ -154,6 +154,6 @@ document.addEventListener(OnLoginStateChangeEventName, function () {
 		})
 	}
 
-	
+
 
 }, false);
