@@ -246,7 +246,7 @@ app.post("/EditUserTimezone",function(req, res)
 {
 	console.log("/EditUserTimezone", req.query);
 
-	var sanitizedUserID = req.sanitize(req.query.UserID);
+	var sanitizedID = req.sanitize(req.query.ID);
 	var sanitizedTimeZoneOffset= req.sanitize(req.query.TimeZoneOffset);
 
 
@@ -256,7 +256,7 @@ app.post("/EditUserTimezone",function(req, res)
 		return;
 	}
 
-	let sqlQuery = `UPDATE UserTimezone SET TimeZoneOffset = ${sanitizedTimeZoneOffset} WHERE UserId = ${sanitizedUserID}`
+	let sqlQuery = `UPDATE UserTimezone SET TimeZoneOffset = ${sanitizedTimeZoneOffset} WHERE ID = ${sanitizedID}`
 
 	db.query(sqlQuery, (err, result) => {
 		if (err) {
