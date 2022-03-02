@@ -293,5 +293,4 @@ app.post("/DeleteUserTimezone",function(req, res)
 	});
 });
 //end user timezones
-
 }
