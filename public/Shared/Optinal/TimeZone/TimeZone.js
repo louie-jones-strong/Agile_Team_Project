@@ -68,7 +68,7 @@ function UiRemoveTimeZone(timeZoneKey)
 	let userId = TryGetUserId(allowLoginPrompt=false);
 	if (userId)
 	{
-		// todo send request to our api to sync state
+		Post(`/DeleteUserTimezone?ID=${timeZoneKey}`,{},[],null)
 	}
 
 
@@ -83,13 +83,13 @@ function UiRemoveTimeZone(timeZoneKey)
 function UiAddTimeZone()
 {
 	let userId = TryGetUserId(allowLoginPrompt=false);
-	if (userId)
-	{
-		// todo send request to our api to sync state
-	}
-
 	let name = document.getElementById("timeZoneName").value;
 	let offset = document.getElementById("timeZoneOffset").value;
+
+	if (userId)
+	{
+		Post(`/AddUserTimezone?UserID=${userId}&TimezoneName=${name}&TimeZoneOffset=${offset}`,{},[],null)
+	}
 
 	//update visuals
 	AddTimeZone(name, offset);
@@ -102,15 +102,14 @@ function UiAddTimeZone()
 function UiEditTimeZone(timeZoneKey)
 {
 	let userId = TryGetUserId(allowLoginPrompt=false);
+	TimeZones[timeZoneKey].Name = document.getElementById("timeZoneName").value;
+	TimeZones[timeZoneKey].Offset = document.getElementById("timeZoneOffset").value;
 	if (userId)
 	{
-		// todo send request to our api to sync state
+		Post(`/EditUserTimezone?ID=${TimeZones[timeZoneKey].Id}&TimezoneName=${TimeZones[timeZoneKey].Name}&TimeZoneOffset=${TimeZones[timeZoneKey].Offset}`,{},[],null)
 	}
 
 	//update visuals
-	TimeZones[timeZoneKey].Name = document.getElementById("timeZoneName").value;
-	TimeZones[timeZoneKey].Offset = document.getElementById("timeZoneOffset").value;
-
 	UpdateTimeZoneVisuals(TimeZones);
 	ClosePopup();
 	return false;
@@ -142,6 +141,19 @@ function AddTimeZone(name, offset)
 
 document.addEventListener(OnLoginStateChangeEventName, function () {
 	//todo get users timezones
-	UpdateTimeZoneVisuals(TimeZones);
+	let userId = TryGetUserId(allowLoginPrompt=false);
+	if (userId)
+	{
+		get(`/UserTimezones?UserID=${userId}`,{},[],function(response)
+		{
+			if (response.status == 200)
+			{
+				TimeZones = JSON.parse(response.responseText);
+				UpdateTimeZoneVisuals(TimeZones);
+			}
+		})
+	}
+
+	
 
 }, false);
