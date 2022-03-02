@@ -66,8 +66,9 @@ module.exports = function(app, auth)
 	app.post("/register", auth.Register, function(req, res)
 	{
 		let sanitizedUsername = req.sanitize(req.query.Username);
+		let sanitizedTimeZoneOffset = req.sanitize(req.query.TimeZoneOffset);
 
-		let sqlQuery = `INSERT INTO Users (Username)VALUES('${sanitizedUsername}')`;
+		let sqlQuery = `INSERT INTO Users (Username, LastTimezone)VALUES('${sanitizedUsername}', ${sanitizedTimeZoneOffset})`;
 
 		db.query(sqlQuery, (err, result) => {
 			if (err) {
@@ -105,12 +106,11 @@ module.exports = function(app, auth)
 
 	app.post("/login", auth.Login, function(req, res)
 	{
-		
+
 		let sanitizedUserID = req.sanitize(req.query.UserID);
 		console.log("login UserID: ", sanitizedUserID);
-		var sanitizedTimeZoneOffset= req.sanitize(req.query.TimeZoneOffset);
 
-		if (sanitizedUserID == null || sanitizedTimeZoneOffset == null)
+		if (sanitizedUserID == null)
 		{
 			res.sendStatus(404);
 			return;
@@ -129,15 +129,22 @@ module.exports = function(app, auth)
 				res.sendStatus(400);
 			}
 
-			let sqlQuery = `UPDATE UserTimezone SET TimeZoneOffset = ${sanitizedTimeZoneOffset} UserID='${sanitizedUserID}'`
+			// update last TimeZoneOffset
+			let sanitizedTimeZoneOffset = req.sanitize(req.query.TimeZoneOffset);
+			console.log("sanitizedTimeZoneOffset: ", sanitizedTimeZoneOffset);
 
-			db.query(sqlQuery, (err, result) => {
-				if (err) {
-					console.log(err);
-					return;
-				}
-				
-			});
+			if (sanitizedTimeZoneOffset)
+			{
+				let sqlQuery = `UPDATE Users SET LastTimezone = ${sanitizedTimeZoneOffset} WHERE UserID='${sanitizedUserID}'`
+
+				db.query(sqlQuery, (err, result) => {
+					if (err) {
+						console.log(err);
+						return;
+					}
+
+				});
+			}
 
 			res.send(result[0]);
 		});
@@ -413,7 +420,7 @@ app.get("/UserTimezones",function(req, res)
 {
 	console.log("/UserTimezones", req.query);
 
-	var sanitizedUserID = req.sanitize(req.query.UserID);
+	let sanitizedUserID = req.sanitize(req.query.UserID);
 
 		if (sanitizedUserID == null) {
 			res.sendStatus(404);
@@ -437,9 +444,9 @@ app.post("/AddUserTimezone",function(req, res)
 {
 	console.log("/AddUserTimezone", req.query);
 
-	var sanitizedUserID = req.sanitize(req.query.UserID);
-	var sanitizedTimezoneName = req.sanitize(req.query.TimezoneName);
-	var sanitizedTimeZoneOffset= req.sanitize(req.query.TimeZoneOffset);
+	let sanitizedUserID = req.sanitize(req.query.UserID);
+	let sanitizedTimezoneName = req.sanitize(req.query.TimezoneName);
+	let sanitizedTimeZoneOffset= req.sanitize(req.query.TimeZoneOffset);
 
 
 	if (sanitizedUserID == null)
@@ -467,8 +474,8 @@ app.post("/EditUserTimezone",function(req, res)
 {
 	console.log("/EditUserTimezone", req.query);
 
-	var sanitizedID = req.sanitize(req.query.ID);
-	var sanitizedTimeZoneOffset= req.sanitize(req.query.TimeZoneOffset);
+	let sanitizedID = req.sanitize(req.query.ID);
+	let sanitizedTimeZoneOffset= req.sanitize(req.query.TimeZoneOffset);
 
 
 	if (sanitizedUserID == null)
@@ -493,7 +500,7 @@ app.post("/DeleteUserTimezone",function(req, res)
 {
 	console.log("/DeleteUserTimezone", req.query);
 
-	var sanitizedID = req.sanitize(req.query.ID);
+	let sanitizedID = req.sanitize(req.query.ID);
 
 	if (sanitizedUserID == null || sanitizedID == null)
 	{

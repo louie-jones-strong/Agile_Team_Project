@@ -132,7 +132,9 @@ function RegisterUi()
 	}
 
 
-	Post(`/register?Username=${username}&email=${email}&password=${password1}`,
+	let userTimeZone = GetUserTimeZone();
+
+	Post(`/register?Username=${username}&email=${email}&password=${password1}&TimeZoneOffset=${userTimeZone}`,
 		``,
 		{}, function(response)
 		{
@@ -189,7 +191,9 @@ function TryLoginWithLocalStorage()
 
 function SendLoginRequest(email, password)
 {
-	Post(`/login?email=${email}&password=${password}`,
+	let userTimeZone = GetUserTimeZone();
+
+	Post(`/login?email=${email}&password=${password}&TimeZoneOffset=${userTimeZone}`,
 		``,
 		{}, function(response)
 		{
@@ -228,7 +232,7 @@ function TryGetUserId(allowLoginPrompt=true)
 
 function UpdateLoginState()
 {
-	var myCustomEvent = new Event(OnLoginStateChangeEventName);
+	let myCustomEvent = new Event(OnLoginStateChangeEventName);
 	document.dispatchEvent(myCustomEvent);
 
 	let loginButton = document.getElementById("loginButton");
