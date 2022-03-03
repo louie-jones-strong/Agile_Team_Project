@@ -68,7 +68,7 @@ function UiRemoveTimeZone(timeZoneKey)
 	let userId = TryGetUserId(allowLoginPrompt=false);
 	if (userId)
 	{
-		Post(`/DeleteUserTimezone?ID=${timeZoneKey}`,{},[],null)
+		Post(`/DeleteUserTimezone?UserID=${userId}&ID=${timeZoneKey}`,{},[],null)
 	}
 
 
@@ -106,7 +106,7 @@ function UiEditTimeZone(timeZoneKey)
 	TimeZones[timeZoneKey].Offset = document.getElementById("timeZoneOffset").value;
 	if (userId)
 	{
-		Post(`/EditUserTimezone?ID=${TimeZones[timeZoneKey].Id}&TimezoneName=${TimeZones[timeZoneKey].Name}&TimeZoneOffset=${TimeZones[timeZoneKey].Offset}`,{},[],null)
+		Post(`/EditUserTimezone?UserID=${userId}&ID=${TimeZones[timeZoneKey].Id}&TimezoneName=${TimeZones[timeZoneKey].Name}&TimeZoneOffset=${TimeZones[timeZoneKey].Offset}`,{},[],null)
 	}
 
 	//update visuals

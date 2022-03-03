@@ -175,7 +175,7 @@ module.exports = function(app, auth)
 					res.sendStatus(500);
 					return;
 				}
-				
+
 				// remove userTimezones
 				let sqlQuery = `DELETE FROM UserTimezone WHERE UserID = ${sanitizedUserID}`;
 				db.query(sqlQuery, (err, result) => {
@@ -184,7 +184,7 @@ module.exports = function(app, auth)
 						res.sendStatus(500);
 						return;
 					}
-					
+
 					// remove user
 					let sqlQuery = `DELETE FROM Users WHERE UserID = ${sanitizedUserID}`;
 					db.query(sqlQuery, (err, result) => {
@@ -196,7 +196,7 @@ module.exports = function(app, auth)
 
 						res.send(200);
 					});
-				});	
+				});
 			});
 		});
 	});
@@ -431,10 +431,11 @@ app.get("/UserTimezones",function(req, res)
 
 	let sanitizedUserID = req.sanitize(req.query.UserID);
 
-		if (sanitizedUserID == null) {
-			res.sendStatus(404);
-			return;
-		}
+	if (sanitizedUserID == null)
+	{
+		res.sendStatus(404);
+		return;
+	}
 
 	let sqlQuery = `SELECT * FROM UserTimezone WHERE UserId = ${sanitizedUserID}`
 
@@ -486,12 +487,6 @@ app.post("/EditUserTimezone",function(req, res)
 	let sanitizedTimezoneName = req.sanitize(req.query.TimezoneName);
 
 
-	if (sanitizedUserID == null)
-	{
-		res.sendStatus(404);
-		return;
-	}
-
 	let sqlQuery = `UPDATE UserTimezone SET TimeZoneOffset = ${sanitizedTimeZoneOffset}, timezoneName = ${sanitizedTimezoneName} WHERE ID = ${sanitizedID}`
 
 	db.query(sqlQuery, (err, result) => {
@@ -509,7 +504,7 @@ app.post("/DeleteUserTimezone",function(req, res)
 
 	let sanitizedID = req.sanitize(req.query.ID);
 
-	if (sanitizedUserID == null || sanitizedID == null)
+	if (sanitizedID == null)
 	{
 		res.sendStatus(404);
 		return;
