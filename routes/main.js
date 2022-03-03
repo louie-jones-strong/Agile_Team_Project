@@ -175,18 +175,28 @@ module.exports = function(app, auth)
 					res.sendStatus(500);
 					return;
 				}
-
-				// remove user
-				let sqlQuery = `DELETE FROM Users WHERE UserID = ${sanitizedUserID}`;
+				
+				// remove userTimezones
+				let sqlQuery = `DELETE FROM UserTimezone WHERE UserID = ${sanitizedUserID}`;
 				db.query(sqlQuery, (err, result) => {
 					if (err) {
 						console.log(err);
 						res.sendStatus(500);
 						return;
 					}
+					
+					// remove user
+					let sqlQuery = `DELETE FROM Users WHERE UserID = ${sanitizedUserID}`;
+					db.query(sqlQuery, (err, result) => {
+						if (err) {
+							console.log(err);
+							res.sendStatus(500);
+							return;
+						}
 
-					res.send(200);
-				});
+						res.send(200);
+					});
+				});	
 			});
 		});
 	});
