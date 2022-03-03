@@ -92,7 +92,7 @@ function UiAddTimeZone()
 	}
 
 	//update visuals
-	AddTimeZone(name, offset);
+	AddTimeZone(name, offset, true);
 
 	UpdateTimeZoneVisuals(TimeZones);
 	ClosePopup();
@@ -120,21 +120,34 @@ function UiEditTimeZone(timeZoneKey)
 
 let TimeZones = {};
 let TimeZoneIndex = 0;
+ClearTimeZones();
 
-AddTimeZone(`You (${Intl.DateTimeFormat().resolvedOptions().timeZone})`, GetUserTimeZone());
-AddTimeZone("UTC", 0);
-AddTimeZone("Eastern Time", -6);
+AddTimeZone(`You (${Intl.DateTimeFormat().resolvedOptions().timeZone})`, GetUserTimeZone(), false);
+AddTimeZone("UTC", 0, true);
+AddTimeZone("Eastern Time", -6, true);
 
 UpdateTimeZoneVisuals(TimeZones);
 
-function AddTimeZone(name, offset)
+function ClearTimeZones()
 {
-	let timeZone = {
-		Id: TimeZoneIndex,
-		Name: name,
-		Offset: offset};
+	TimeZones = {};
+	TimeZoneIndex = 0;
+}
 
-	TimeZones[timeZone.Id] = timeZone;
+function AddTimeZone(name, offset, editable, id=undefined)
+{
+	if (!id)
+	{
+		id =  -TimeZoneIndex;
+	}
+
+	let timeZone = {
+		Id: id,
+		Name: name,
+		Offset: offset,
+		Editable: editable};
+
+	TimeZones[id] = timeZone;
 
 	TimeZoneIndex += 1;
 }
@@ -147,14 +160,18 @@ document.addEventListener(OnLoginStateChangeEventName, function () {
 		{
 			if (response.status == 200)
 			{
-				let TimeZonesArray = JSON.parse(response.responseText);
-				let TimeZones = TimeZonesArray.reduce((obj,item)=>{					
-					return {...obj,[item.ID] : {
-						Id: item.ID,
-						Name: item.timezoneName,
-						Offset: item.TimeZoneOffset,
-						UserID: item.UserID}}
-				}, {});
+				let timeZonesArray = JSON.parse(response.responseText);
+				console.log(timeZonesArray);
+				ClearTimeZones();
+				AddTimeZone(`You (${Intl.DateTimeFormat().resolvedOptions().timeZone})`, GetUserTimeZone(), editable=false);
+
+				for (let index = 0; index < timeZonesArray.length; index++)
+				{
+					const item = timeZonesArray[index];
+
+					AddTimeZone(item.timezoneName, item.TimeZoneOffset, editable=true, item.ID);
+				}
+
 				UpdateTimeZoneVisuals(TimeZones);
 			}
 		})

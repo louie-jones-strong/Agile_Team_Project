@@ -11,24 +11,28 @@ class Clock
 		let clockCard = document.createElement("div");
 		clockCard.id = `${this.Timezone.Id}_Clock`
 		clockCard.classList = "card glass"
-		clockCard.innerHTML =`
-			<div class="clockTop">
-				<div class="left">
-					<button class="editButton topButton shaded" onclick='EditTimeZonePopup("${this.Timezone.Id}")'></button>
-				</div>
-				<div class="center">
-				</div>
-				<div class="right">
-					<button class="removeButton topButton shaded" onclick='RemoveTimeZonePopup("${this.Timezone.Id}")'></button>
-				</div>
-			</div>
+		let html = "";
 
-			<div style="display:flex; justify-content: center;">
-				<h4 id='${this.Timezone.Id}_TimeTitle'>${this.Timezone.Name} </h4>
-				<h4 id='${this.Timezone.Id}_Timezone'>${this.Timezone.Offset}</h4>
-			</div>
+		if (this.Timezone.Editable)
+		{
+			html += `
+				<div class="clockTop">
+					<div class="left">
+						<button class="editButton topButton shaded" onclick='EditTimeZonePopup("${this.Timezone.Id}")'></button>
+					</div>
+					<div class="center">
+					</div>
+					<div class="right">
+						<button class="removeButton topButton shaded" onclick='RemoveTimeZonePopup("${this.Timezone.Id}")'></button>
+					</div>
+				</div>`;
+		}
 
-			<div class='clock glass frosted'>
+		html += `<div style="display:flex; justify-content: center;">
+					<h4 id='${this.Timezone.Id}_TimeTitle'>${this.Timezone.Name} </h4>
+					<h4 id='${this.Timezone.Id}_Timezone'>${this.Timezone.Offset}</h4>
+				</div>
+				<div class='clock glass frosted'>
 				<div id='${this.Timezone.Id}_SecondsHand' class="hand second"></div>
 				<div id='${this.Timezone.Id}_MinutesHand' class="hand minute"></div>
 				<div id='${this.Timezone.Id}_HoursHand' class="hand hour"></div>
@@ -49,8 +53,9 @@ class Clock
 				</div>
 			</div>
 			<h3 id='${this.Timezone.Id}_DigitalTime'>xx:xx:xx</h3>
-			<h3 id='${this.Timezone.Id}_Date'>xx:xx:xx</h3>`
+			<h3 id='${this.Timezone.Id}_Date'>xx:xx:xx</h3>`;
 
+		clockCard.innerHTML = html;
 		clockHolder.appendChild(clockCard);
 		this.Draw();
 	}

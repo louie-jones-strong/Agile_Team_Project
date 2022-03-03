@@ -65,11 +65,13 @@ class TimeLine
 		timeline.id = `${this.TimeZone.Id}_TimeOffset`
 		timeline.classList = "timeline"
 
-		let html =`
-				<div class="timelineDescription">
-					<button class="editButton shaded" onclick='EditTimeZonePopup("${this.TimeZone.Id}")'></button>
-					<button class="removeButton shaded" onclick='RemoveTimeZonePopup("${this.TimeZone.Id}")'></button>
-					<h4 id='${this.TimeZone.Id}_TimeTitle'>${this.TimeZone.Name} ${this.TimeZone.Offset}</h4>
+		let html =`<div class="timelineDescription">`;
+		if (this.TimeZone.Editable)
+		{
+			html += `<button class="editButton shaded" onclick='EditTimeZonePopup("${this.TimeZone.Id}")'></button>
+					<button class="removeButton shaded" onclick='RemoveTimeZonePopup("${this.TimeZone.Id}")'></button>`;
+		}
+		html += `<h4 id='${this.TimeZone.Id}_TimeTitle'>${this.TimeZone.Name} ${this.TimeZone.Offset}</h4>
 				</div>
 
 				<h4 id='${this.TimeZone.Id}_Time' class="dayTimeLabel">12:12</h4>
