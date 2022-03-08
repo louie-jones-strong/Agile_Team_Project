@@ -65,10 +65,10 @@ function TimeZonePopupBody(timeZone)
 
 function UiRemoveTimeZone(timeZoneKey)
 {
-	let userId = TryGetUserId(allowLoginPrompt=false);
-	if (userId)
+	let userID = TryGetUserID(allowLoginPrompt=false);
+	if (userID)
 	{
-		Post(`/DeleteUserTimezone?UserID=${userId}&ID=${timeZoneKey}`,{},[],null)
+		Post(`/DeleteUserTimezone?UserID=${userID}&ID=${timeZoneKey}`,{},[],null)
 	}
 
 
@@ -82,13 +82,13 @@ function UiRemoveTimeZone(timeZoneKey)
 
 function UiAddTimeZone()
 {
-	let userId = TryGetUserId(allowLoginPrompt=false);
+	let userID = TryGetUserID(allowLoginPrompt=false);
 	let name = document.getElementById("timeZoneName").value;
 	let offset = document.getElementById("timeZoneOffset").value;
 
-	if (userId)
+	if (userID)
 	{
-		Post(`/AddUserTimezone?UserID=${userId}&TimezoneName=${name}&TimeZoneOffset=${offset}`,{},[],null)
+		Post(`/AddUserTimezone?UserID=${userID}&TimezoneName=${name}&TimeZoneOffset=${offset}`,{},[],null)
 	}
 
 	//update visuals
@@ -101,12 +101,12 @@ function UiAddTimeZone()
 
 function UiEditTimeZone(timeZoneKey)
 {
-	let userId = TryGetUserId(allowLoginPrompt=false);
+	let userID = TryGetUserID(allowLoginPrompt=false);
 	TimeZones[timeZoneKey].Name = document.getElementById("timeZoneName").value;
 	TimeZones[timeZoneKey].Offset = document.getElementById("timeZoneOffset").value;
-	if (userId)
+	if (userID)
 	{
-		Post(`/EditUserTimezone?UserID=${userId}&ID=${TimeZones[timeZoneKey].Id}&TimezoneName=${TimeZones[timeZoneKey].Name}&TimeZoneOffset=${TimeZones[timeZoneKey].Offset}`,{},[],null)
+		Post(`/EditUserTimezone?UserID=${userID}&ID=${TimeZones[timeZoneKey].Id}&TimezoneName=${TimeZones[timeZoneKey].Name}&TimeZoneOffset=${TimeZones[timeZoneKey].Offset}`,{},[],null)
 	}
 
 	//update visuals
@@ -153,10 +153,10 @@ function AddTimeZone(name, offset, editable, id=undefined)
 }
 
 document.addEventListener(OnLoginStateChangeEventName, function () {
-	let userId = TryGetUserId(allowLoginPrompt=false);
-	if (userId)
+	let userID = TryGetUserID(allowLoginPrompt=false);
+	if (userID)
 	{
-		Get(`/UserTimezones?UserID=${userId}`,{},[],function(response)
+		Get(`/UserTimezones?UserID=${userID}`,{},[],function(response)
 		{
 			if (response.status == 200)
 			{

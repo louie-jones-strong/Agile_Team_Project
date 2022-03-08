@@ -157,13 +157,13 @@ function LogOutUi()
 
 function DeleteUi()
 {
-	let userId = TryGetUserId();
-	if (!userId)
+	let userID = TryGetUserID();
+	if (!userID)
 	{
 		return;
 	}
 
-	Delete(`/user?UserID=${userId}`,
+	Delete(`/user?UserID=${userID}`,
 		``,
 		{}, function(response)
 		{
@@ -216,7 +216,7 @@ function IsSignedIn()
 	return UserData != null;
 }
 
-function TryGetUserId(allowLoginPrompt=true)
+function TryGetUserID(allowLoginPrompt=true)
 {
 	if (IsSignedIn())
 	{

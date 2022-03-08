@@ -153,8 +153,8 @@ function GetEventsHtml(monthOffset, date)
 
 function GetEventList(monthOffset)
 {
-	let userId = TryGetUserId();
-	if (!userId)
+	let userID = TryGetUserID();
+	if (!userID)
 	{
 		return;
 	}
@@ -183,7 +183,7 @@ function GetEventList(monthOffset)
 	let endIsoStr = dateRangeEnd.toISOString();
 	dateRangeEnd = endIsoStr.substring(0,endIsoStr.length-1)
 
-	Get(`/events?UserID=${userId}&dateRangeStart=${dateRangeStart}&dateRangeEnd=${dateRangeEnd}`,
+	Get(`/events?UserID=${userID}&dateRangeStart=${dateRangeStart}&dateRangeEnd=${dateRangeEnd}`,
 		"", {}, function(response)
 		{
 			let events = JSON.parse(response.responseText);
@@ -206,25 +206,25 @@ function GetEventList(monthOffset)
 		});
 }
 
-function GetEventAttendees(monthOffset, eventId)
+function GetEventAttendees(monthOffset, eventID)
 {
-	let userId = TryGetUserId();
-	if (!userId)
+	let userID = TryGetUserID();
+	if (!userID)
 	{
 		return;
 	}
 
-	Get(`/attendees?EventID=${eventId}`,
+	Get(`/attendees?EventID=${eventID}`,
 		"", {}, function(response)
 		{
 			let attendees = JSON.parse(response.responseText);
-			EventDataCache[monthOffset][eventId].Attendees = attendees;
+			EventDataCache[monthOffset][eventID].Attendees = attendees;
 		});
 }
 function GetUserList()
 {
-	let userId = TryGetUserId();
-	if (!userId)
+	let userID = TryGetUserID();
+	if (!userID)
 	{
 		return;
 	}
@@ -238,8 +238,8 @@ function GetUserList()
 //#region Popups
 function CreateEventPopup()
 {
-	let userId = TryGetUserId();
-	if (!userId)
+	let userID = TryGetUserID();
+	if (!userID)
 	{
 		return;
 	}
@@ -261,15 +261,15 @@ function CreateEventPopup()
 	UpdateAttendeeSuggestions();
 }
 
-function EditEventPopup(monthOffset, eventId)
+function EditEventPopup(monthOffset, eventID)
 {
-	let userId = TryGetUserId();
-	if (!userId)
+	let userID = TryGetUserID();
+	if (!userID)
 	{
 		return;
 	}
 
-	let event = EventDataCache[monthOffset][eventId];
+	let event = EventDataCache[monthOffset][eventID];
 
 	let popupBodyHtml = `<h3 class="center">Edit Event</h3>
 		<form id="editPopupForm" onsubmit="return EditEvent();">`;
@@ -278,7 +278,7 @@ function EditEventPopup(monthOffset, eventId)
 	popupBodyHtml += `
 		</form>
 		<div style="display:flex; justify-content:center;">
-			<button class="negative rounded shaded" onClick="RemoveEventPopup('${eventId}')">Remove</button>
+			<button class="negative rounded shaded" onClick="RemoveEventPopup('${eventID}')">Remove</button>
 			<button class="positive rounded shaded" form="editPopupForm">Save</button>
 		</div>`;
 
@@ -293,10 +293,10 @@ function EditEventPopup(monthOffset, eventId)
 	UpdateAttendeeSuggestions();
 }
 
-function RemoveEventPopup(eventId)
+function RemoveEventPopup(eventID)
 {
-	let userId = TryGetUserId();
-	if (!userId)
+	let userID = TryGetUserID();
+	if (!userID)
 	{
 		return;
 	}
@@ -304,7 +304,7 @@ function RemoveEventPopup(eventId)
 	let popupBodyHtml = `<h3 class="center">Remove Event</h3>
 		<p class="center">Are you sure you want to remove this event?</p>
 		<div style="display:flex; justify-content:center;">
-			<button class="positive rounded shaded" onClick="RemoveEvent('${eventId}')">Remove</button>
+			<button class="positive rounded shaded" onClick="RemoveEvent('${eventID}')">Remove</button>
 			<button class="negative rounded shaded" onClick="ClosePopup()">Cancel</button>
 		</div>`;
 
@@ -337,7 +337,7 @@ function EventPopupBody(event)
 	let popupBodyHtml = "";
 
 	if (event.EventID)
-		popupBodyHtml+=	`<input type="hidden" id="eventId" value="${event.EventID}">`;
+		popupBodyHtml+=	`<input type="hidden" id="eventID" value="${event.EventID}">`;
 
 	popupBodyHtml += `<div id="errorHolder" class="hide center negative rounded" style="padding: 1em;">
 		</div>
@@ -389,15 +389,15 @@ function EventPopupBody(event)
 //#endregion Popups
 
 //#region Attendee
-function RemoveAttendeeFromPopup(userId)
+function RemoveAttendeeFromPopup(userID)
 {
-	let attendee = document.getElementById(`eventAttendee_${userId}`);
+	let attendee = document.getElementById(`eventAttendee_${userID}`);
 	attendee.remove();
-	Attendees.splice(Attendees.indexOf(userId), 1);
+	Attendees.splice(Attendees.indexOf(userID), 1);
 	UpdateAttendeeSuggestions();
 }
 
-function AddAttendeeToPopup(userId)
+function AddAttendeeToPopup(userID)
 {
 	let holder = document.getElementById(`eventAttendeesHolder`);
 
@@ -406,19 +406,19 @@ function AddAttendeeToPopup(userId)
 	for (let index = 0; index < UserList.length; index++)
 	{
 		const user = UserList[index];
-		if (user.UserID == userId)
+		if (user.UserID == userID)
 		{
 			userName = user.Username;
 			break;
 		}
 	}
 
-	Attendees.push(userId);
+	Attendees.push(userID);
 
 	let attendeeHtml = `
-		<div class="eventAttendee" id="eventAttendee_${userId}" value="${userId}">
+		<div class="eventAttendee" id="eventAttendee_${userID}" value="${userID}">
 			${userName}
-			<button onclick="RemoveAttendeeFromPopup(${userId})">X</button>
+			<button onclick="RemoveAttendeeFromPopup(${userID})">X</button>
 		</div>`;
 
 	holder.insertAdjacentHTML('afterbegin', attendeeHtml);
@@ -480,14 +480,14 @@ function UpdateAttendeeSuggestions()
 
 function CreateEvent()
 {
-	let userId = TryGetUserId();
-	if (!userId)
+	let userID = TryGetUserID();
+	if (!userID)
 	{
 		return;
 	}
 
 	let bodyData = {
-		UserID: userId,
+		UserID: userID,
 		EventName: document.getElementById("eventName").value,
 		EventColor: document.getElementById("eventColor").value,
 		EventDescription: document.getElementById("eventDescription").value,
@@ -523,13 +523,13 @@ function CreateEvent()
 
 function EditEvent()
 {
-	let userId = TryGetUserId();
-	if (!userId)
+	let userID = TryGetUserID();
+	if (!userID)
 	{
 		return;
 	}
 
-	let eventID = document.getElementById("eventId").value;
+	let eventID = document.getElementById("eventID").value;
 
 	let bodyData = {
 		EventName: document.getElementById("eventName").value,
@@ -567,8 +567,8 @@ function EditEvent()
 
 function RemoveEvent(eventID)
 {
-	let userId = TryGetUserId();
-	if (!userId)
+	let userID = TryGetUserID();
+	if (!userID)
 	{
 		return;
 	}

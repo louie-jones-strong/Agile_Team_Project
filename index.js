@@ -12,7 +12,7 @@ const db = mysql.createConnection ({
 	host: mySQLCredentials.host,
 	user: mySQLCredentials.user,
 	password: mySQLCredentials.password,
-	database: "welltimed"
+	database: "WellTimed"
 });
 
 

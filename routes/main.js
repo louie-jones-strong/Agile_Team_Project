@@ -85,11 +85,11 @@ module.exports = function(app, auth)
 					return;
 				}
 
-				userId = result[0]['LAST_INSERT_ID()'];
+				userID = result[0]['LAST_INSERT_ID()'];
 
 
 				// get user data
-				let sqlQuery = `SELECT * FROM Users WHERE UserID =${userId}`;
+				let sqlQuery = `SELECT * FROM Users WHERE UserID =${userID}`;
 
 				db.query(sqlQuery, (err, result) => {
 					if (err) {
@@ -289,10 +289,10 @@ module.exports = function(app, auth)
 		let sanitizedEventColor = req.sanitize(req.query.EventColor);
 
 		let attendeesStrings = req.query.Attendees.split(",");
-		let attendeeIds = [];
+		let attendeeIDs = [];
 		attendeesStrings.forEach(attendee => {
 			try {
-				attendeeIds.push(parseInt(attendee));
+				attendeeIDs.push(parseInt(attendee));
 			} catch (error) {
 
 			}
@@ -319,7 +319,7 @@ module.exports = function(app, auth)
 				return;
 			}
 
-			if (attendeeIds.length > 0)
+			if (attendeeIDs.length > 0)
 			{
 				// get last id added
 				db.query(`SELECT LAST_INSERT_ID()`, (err, result) => {
@@ -336,11 +336,11 @@ module.exports = function(app, auth)
 					let sqlQuery = `INSERT INTO EventAttendees
 					(EventID, UserID)
 					VALUES`;
-					for (let index = 0; index < attendeeIds.length; index++)
+					for (let index = 0; index < attendeeIDs.length; index++)
 					{
-						const attendee = attendeeIds[index];
+						const attendee = attendeeIDs[index];
 						sqlQuery += `(${eventID}, ${attendee})`;
-						if (index < attendeeIds.length -1)
+						if (index < attendeeIDs.length -1)
 						{
 							sqlQuery += `,`;
 						}
@@ -437,7 +437,7 @@ app.get("/UserTimezones",function(req, res)
 		return;
 	}
 
-	let sqlQuery = `SELECT * FROM UserTimezone WHERE UserId = ${sanitizedUserID}`
+	let sqlQuery = `SELECT * FROM UserTimezone WHERE UserID = ${sanitizedUserID}`
 
 
 	db.query(sqlQuery, (err, result) => {
@@ -465,7 +465,7 @@ app.post("/AddUserTimezone",function(req, res)
 	}
 
 	let sqlQuery = `INSERT INTO UserTimezone
-		(UserId, timezoneName, TimeZoneOffset)
+		(UserID, timezoneName, TimeZoneOffset)
 		VALUES
 		(${sanitizedUserID}, '${sanitizedTimezoneName}', '${sanitizedTimeZoneOffset}')`
 
