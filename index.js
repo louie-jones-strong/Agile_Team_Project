@@ -20,7 +20,7 @@ const db = mysql.createConnection ({
 db.connect((err) => {
 	if (err)
 	{
-		console.error();
+		console.error(err);
 		console.error(`=================================================`);
 		console.error(`failed to create Connection to your MySQL server.`);
 		console.error(`Did you forget to add your Password!`);
